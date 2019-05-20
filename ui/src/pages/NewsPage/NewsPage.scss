@@ -1,0 +1,44 @@
+.news-page {
+    &__header {
+        margin-bottom: 1em;
+        display: flex;
+        align-items: center;    
+    }
+
+    &__tag {
+        margin: .5em;
+
+        &s {
+            margin: -.5em;
+
+            &-title {
+                margin-right: 1em;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &__clap {
+        &-wrapper {
+            margin-top: 2em;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &-text {
+            margin-right: 1em;
+        }
+    }
+
+    &__hero {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+
+        &-body {
+            background-color: #209cee85;
+        }
+    }
+}

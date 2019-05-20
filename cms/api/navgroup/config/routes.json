@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/navgroups",
+      "handler": "Navgroup.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/navgroups/count",
+      "handler": "Navgroup.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/navgroups/:id",
+      "handler": "Navgroup.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/navgroups",
+      "handler": "Navgroup.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/navgroups/:id",
+      "handler": "Navgroup.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/navgroups/:id",
+      "handler": "Navgroup.destroy",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

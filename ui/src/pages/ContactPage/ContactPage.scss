@@ -1,0 +1,15 @@
+.contact-page {
+    &__card {
+        &:nth-child(n + 2) {
+            margin-top: 2em;
+        }
+    }
+}
+
+.about {
+    &__media {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+}

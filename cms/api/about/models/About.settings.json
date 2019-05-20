@@ -1,0 +1,41 @@
+{
+  "connection": "default",
+  "collectionName": "abouts",
+  "info": {
+    "name": "about",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "image": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    },
+    "title": {
+      "default": "",
+      "type": "string"
+    },
+    "subtitle": {
+      "default": "",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "type": "text"
+    },
+    "contacts": {
+      "collection": "contact",
+      "via": "about"
+    },
+    "navlinks": {
+      "collection": "navlink",
+      "via": "about"
+    }
+  }
+}

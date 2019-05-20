@@ -1,0 +1,27 @@
+{
+  "connection": "default",
+  "collectionName": "navgroups",
+  "info": {
+    "name": "navgroup",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "Title": {
+      "default": "",
+      "type": "string"
+    },
+    "navigation": {
+      "model": "navigation",
+      "via": "navgroups"
+    },
+    "navlinks": {
+      "collection": "navlink",
+      "via": "navgroup"
+    }
+  }
+}

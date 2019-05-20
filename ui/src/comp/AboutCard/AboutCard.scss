@@ -1,0 +1,33 @@
+@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass";
+
+.contact {
+    margin-bottom: 1em;
+
+    &s {
+        display: flex;
+        flex-flow: column nowrap;
+        padding-top: 1em;
+        border-top: 1px solid $grey-lighter
+    }
+
+    &__desc {
+        margin-left: .5em;
+    }
+}
+
+.about {
+    cursor: pointer;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &-wrapper {
+            visibility: 'hidden';
+            max-height: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    }
+}

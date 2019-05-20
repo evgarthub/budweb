@@ -1,0 +1,27 @@
+{
+  "connection": "default",
+  "collectionName": "navigations",
+  "info": {
+    "name": "navigation",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "Home": {
+      "default": "",
+      "type": "string"
+    },
+    "navgroups": {
+      "collection": "navgroup",
+      "via": "navigation"
+    },
+    "navlinks": {
+      "collection": "navlink",
+      "via": "navigation"
+    }
+  }
+}

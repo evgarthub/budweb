@@ -1,0 +1,58 @@
+{
+  "connection": "default",
+  "collectionName": "navlinks",
+  "info": {
+    "name": "navlink",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "Title": {
+      "default": "",
+      "type": "string"
+    },
+    "Link": {
+      "default": "",
+      "type": "string"
+    },
+    "Logo": {
+      "default": "",
+      "type": "enumeration",
+      "enum": [
+        "empty",
+        "email",
+        "phone",
+        "account",
+        "blog",
+        "home",
+        "facebook",
+        "telegram",
+        "viber"
+      ]
+    },
+    "navigation": {
+      "model": "navigation",
+      "via": "navlinks"
+    },
+    "navgroup": {
+      "model": "navgroup",
+      "via": "navlinks"
+    },
+    "footer": {
+      "model": "footer",
+      "via": "navlinks"
+    },
+    "blog": {
+      "model": "blog",
+      "via": "navlinks"
+    },
+    "about": {
+      "model": "about",
+      "via": "navlinks"
+    }
+  }
+}

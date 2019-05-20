@@ -1,0 +1,20 @@
+.footer {
+    &__link {
+        margin: .5em;
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+
+        &s {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        &-text {
+            @media screen and (max-width: 600px) {
+                display: none;
+            }
+        }
+    }
+}

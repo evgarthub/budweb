@@ -1,0 +1,23 @@
+{
+  "connection": "default",
+  "collectionName": "footers",
+  "info": {
+    "name": "footer",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "About": {
+      "default": "",
+      "type": "string"
+    },
+    "navlinks": {
+      "collection": "navlink",
+      "via": "footer"
+    }
+  }
+}

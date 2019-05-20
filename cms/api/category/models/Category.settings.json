@@ -1,0 +1,28 @@
+{
+  "connection": "default",
+  "collectionName": "categories",
+  "info": {
+    "name": "category",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "name": {
+      "default": "",
+      "type": "string",
+      "required": true
+    },
+    "blogs": {
+      "collection": "blog",
+      "via": "categories"
+    },
+    "color": {
+      "default": "",
+      "type": "string"
+    }
+  }
+}

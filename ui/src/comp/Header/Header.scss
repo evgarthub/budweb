@@ -1,0 +1,42 @@
+@import "../../../node_modules/bulma/sass/utilities/initial-variables.sass";
+
+.navbar {
+    box-shadow: 0 0 0 2px $grey-lighter;
+    position: fixed;
+    width: 100%;
+
+    &__brand {
+        &-home {
+            display: flex;
+            align-items: center;
+            width: 100px;
+            margin: 0 1em;
+        }
+    }
+
+    @media screen and (max-width: 1087px) {
+        &-menu {
+            display: flex;
+            overflow: hidden;
+            max-height: 0;
+            padding: 0;
+        }
+
+        &-start {
+            width: 100%;
+            padding: 5px 20px;
+        }
+
+        &-item {
+            border-top: 1px solid #f0f0f0;
+            margin-top: -1px;
+        }
+
+        &-dropdown {
+            padding: 0 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+    }
+}
+

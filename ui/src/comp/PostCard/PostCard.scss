@@ -1,0 +1,40 @@
+.tile-blog {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    color: #4a4a4a;
+    padding: 1.25rem;
+    min-height: 20em;
+
+    &__footer {
+        justify-self: flex-end;
+        margin-top: auto;
+        padding-top: 1em;
+        display: flex;
+        align-items: center;
+    }
+
+    &__pubdate {
+        flex-grow: 1;
+    }
+
+    &__tag {
+        margin: .2em;
+        opacity: .6;
+
+        &:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        &s {
+            display: flex;
+            flex-direction: row-reverse;
+            margin: -.2em;
+            margin-bottom: .5em;
+        }
+    }
+}
+

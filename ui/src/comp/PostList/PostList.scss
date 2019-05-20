@@ -1,0 +1,21 @@
+.post-list {
+    &__tag {
+        cursor: pointer;
+
+        &.is-dark {
+            cursor: default;
+        }
+    }
+}
+
+.grid {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: -.5em;
+
+    &__tile {
+        flex: 1 1 20em;
+        margin: .5em;
+    }
+}

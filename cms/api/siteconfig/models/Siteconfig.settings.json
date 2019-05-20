@@ -1,0 +1,27 @@
+{
+  "connection": "default",
+  "collectionName": "siteconfigs",
+  "info": {
+    "name": "siteconfig",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "footerid": {
+      "default": "",
+      "type": "integer"
+    },
+    "navigationid": {
+      "default": "",
+      "type": "integer"
+    },
+    "gmapurl": {
+      "default": "",
+      "type": "string"
+    }
+  }
+}
