@@ -99,8 +99,7 @@ class NewsPage extends Component {
                                 </a>))}
                             </Content>
                             <footer className='news-page__clap-wrapper'>
-                                <span className='news-page__clap-text'>{label.news.clapText} </span>
-                                <applause-button color='#209cee' style={{ width: '58px', height: '58px' }} />
+                          
                             </footer>
                         </Container>
                     </Section>
