@@ -1,0 +1,737 @@
+type About {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  image: UploadFile
+  title: String
+  subtitle: String
+  description: String
+  contacts(sort: String, limit: Int, start: Int, where: JSON): [Contact]
+  navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+}
+
+input AboutInput {
+  image: ID
+  title: String
+  subtitle: String
+  description: String
+  contacts: [ID]
+  navlinks: [ID]
+}
+
+type Blog {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title: String!
+  intro: String
+  text: String!
+  image: UploadFile
+  isPublished: Boolean
+  categories(sort: String, limit: Int, start: Int, where: JSON): [Category]
+  navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+}
+
+input BlogInput {
+  title: String!
+  intro: String
+  text: String!
+  image: ID
+  categories: [ID]
+  navlinks: [ID]
+  isPublished: Boolean
+}
+
+type Category {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String!
+  color: String
+  blogs(sort: String, limit: Int, start: Int, where: JSON): [Blog]
+}
+
+input CategoryInput {
+  name: String!
+  blogs: [ID]
+  color: String
+}
+
+type Contact {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  description: String!
+  data: String
+  type: String!
+  about: About
+}
+
+input ContactInput {
+  description: String!
+  data: String
+  type: String!
+  about: ID
+}
+
+input createAboutInput {
+  data: AboutInput
+}
+
+type createAboutPayload {
+  about: About
+}
+
+input createBlogInput {
+  data: BlogInput
+}
+
+type createBlogPayload {
+  blog: Blog
+}
+
+input createCategoryInput {
+  data: CategoryInput
+}
+
+type createCategoryPayload {
+  category: Category
+}
+
+input createContactInput {
+  data: ContactInput
+}
+
+type createContactPayload {
+  contact: Contact
+}
+
+input createFooterInput {
+  data: FooterInput
+}
+
+type createFooterPayload {
+  footer: Footer
+}
+
+input createNavgroupInput {
+  data: NavgroupInput
+}
+
+type createNavgroupPayload {
+  navgroup: Navgroup
+}
+
+input createNavigationInput {
+  data: NavigationInput
+}
+
+type createNavigationPayload {
+  navigation: Navigation
+}
+
+input createNavlinkInput {
+  data: NavlinkInput
+}
+
+type createNavlinkPayload {
+  navlink: Navlink
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createSiteconfigInput {
+  data: SiteconfigInput
+}
+
+type createSiteconfigPayload {
+  siteconfig: Siteconfig
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""
+The `DateTime` scalar represents a date and time following the ISO 8601 standard
+"""
+scalar DateTime
+
+input deleteAboutInput {
+  where: InputID
+}
+
+type deleteAboutPayload {
+  about: About
+}
+
+input deleteBlogInput {
+  where: InputID
+}
+
+type deleteBlogPayload {
+  blog: Blog
+}
+
+input deleteCategoryInput {
+  where: InputID
+}
+
+type deleteCategoryPayload {
+  category: Category
+}
+
+input deleteContactInput {
+  where: InputID
+}
+
+type deleteContactPayload {
+  contact: Contact
+}
+
+input deleteFooterInput {
+  where: InputID
+}
+
+type deleteFooterPayload {
+  footer: Footer
+}
+
+input deleteNavgroupInput {
+  where: InputID
+}
+
+type deleteNavgroupPayload {
+  navgroup: Navgroup
+}
+
+input deleteNavigationInput {
+  where: InputID
+}
+
+type deleteNavigationPayload {
+  navigation: Navigation
+}
+
+input deleteNavlinkInput {
+  where: InputID
+}
+
+type deleteNavlinkPayload {
+  navlink: Navlink
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+input deleteSiteconfigInput {
+  where: InputID
+}
+
+type deleteSiteconfigPayload {
+  siteconfig: Siteconfig
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input editAboutInput {
+  image: ID
+  title: String
+  subtitle: String
+  description: String
+  contacts: [ID]
+  navlinks: [ID]
+}
+
+input editBlogInput {
+  title: String
+  intro: String
+  text: String
+  image: ID
+  categories: [ID]
+  navlinks: [ID]
+  isPublished: Boolean
+}
+
+input editCategoryInput {
+  name: String
+  blogs: [ID]
+  color: String
+}
+
+input editContactInput {
+  description: String
+  data: String
+  type: String
+  about: ID
+}
+
+input editFileInput {
+  name: String
+  hash: String
+  sha256: String
+  ext: String
+  mime: String
+  size: String
+  url: String
+  provider: String
+  public_id: String
+  related: [ID]
+}
+
+input editFooterInput {
+  About: String
+  navlinks: [ID]
+}
+
+input editNavgroupInput {
+  Title: String
+  navigation: ID
+  navlinks: [ID]
+}
+
+input editNavigationInput {
+  Home: String
+  navgroups: [ID]
+  navlinks: [ID]
+}
+
+input editNavlinkInput {
+  Title: String
+  Link: String
+  Logo: ENUM_NAVLINK_LOGO
+  navigation: ID
+  navgroup: ID
+  footer: ID
+  blog: ID
+  about: ID
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input editSiteconfigInput {
+  footerid: Int
+  navigationid: Int
+  gmapurl: String
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+}
+
+enum ENUM_NAVLINK_LOGO {
+  empty
+  email
+  phone
+  account
+  blog
+  home
+  facebook
+  telegram
+  viber
+}
+
+input FileInput {
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related: [ID]
+}
+
+type Footer {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  About: String
+  navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+}
+
+input FooterInput {
+  About: String
+  navlinks: [ID]
+}
+
+input InputID {
+  id: ID!
+}
+
+scalar JSON
+
+"""The `Long` scalar type represents 52-bit integers"""
+scalar Long
+
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+
+type Mutation {
+  createAbout(input: createAboutInput): createAboutPayload
+  updateAbout(input: updateAboutInput): updateAboutPayload
+  deleteAbout(input: deleteAboutInput): deleteAboutPayload
+  createBlog(input: createBlogInput): createBlogPayload
+  updateBlog(input: updateBlogInput): updateBlogPayload
+  deleteBlog(input: deleteBlogInput): deleteBlogPayload
+  createCategory(input: createCategoryInput): createCategoryPayload
+  updateCategory(input: updateCategoryInput): updateCategoryPayload
+  deleteCategory(input: deleteCategoryInput): deleteCategoryPayload
+  createContact(input: createContactInput): createContactPayload
+  updateContact(input: updateContactInput): updateContactPayload
+  deleteContact(input: deleteContactInput): deleteContactPayload
+  createFooter(input: createFooterInput): createFooterPayload
+  updateFooter(input: updateFooterInput): updateFooterPayload
+  deleteFooter(input: deleteFooterInput): deleteFooterPayload
+  createNavgroup(input: createNavgroupInput): createNavgroupPayload
+  updateNavgroup(input: updateNavgroupInput): updateNavgroupPayload
+  deleteNavgroup(input: deleteNavgroupInput): deleteNavgroupPayload
+  createNavigation(input: createNavigationInput): createNavigationPayload
+  updateNavigation(input: updateNavigationInput): updateNavigationPayload
+  deleteNavigation(input: deleteNavigationInput): deleteNavigationPayload
+  createNavlink(input: createNavlinkInput): createNavlinkPayload
+  updateNavlink(input: updateNavlinkInput): updateNavlinkPayload
+  deleteNavlink(input: deleteNavlinkInput): deleteNavlinkPayload
+  createSiteconfig(input: createSiteconfigInput): createSiteconfigPayload
+  updateSiteconfig(input: updateSiteconfigInput): updateSiteconfigPayload
+  deleteSiteconfig(input: deleteSiteconfigInput): deleteSiteconfigPayload
+
+  """Create a new role"""
+  createRole(input: createRoleInput): createRolePayload
+
+  """Update an existing role"""
+  updateRole(input: updateRoleInput): updateRolePayload
+
+  """Delete an existing role"""
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+
+  """Create a new user"""
+  createUser(input: createUserInput): createUserPayload
+
+  """Update an existing user"""
+  updateUser(input: updateUserInput): updateUserPayload
+
+  """Delete an existing user"""
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
+}
+
+type Navgroup {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  Title: String
+  navigation: Navigation
+  navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+}
+
+input NavgroupInput {
+  Title: String
+  navigation: ID
+  navlinks: [ID]
+}
+
+type Navigation {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  Home: String
+  navgroups(sort: String, limit: Int, start: Int, where: JSON): [Navgroup]
+  navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+}
+
+input NavigationInput {
+  Home: String
+  navgroups: [ID]
+  navlinks: [ID]
+}
+
+type Navlink {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  Title: String
+  Link: String
+  Logo: ENUM_NAVLINK_LOGO
+  navigation: Navigation
+  navgroup: Navgroup
+  footer: Footer
+  blog: Blog
+  about: About
+}
+
+input NavlinkInput {
+  Title: String
+  Link: String
+  Logo: ENUM_NAVLINK_LOGO
+  navigation: ID
+  navgroup: ID
+  footer: ID
+  blog: ID
+  about: ID
+}
+
+type Query {
+  about(id: ID!): About
+  abouts(sort: String, limit: Int, start: Int, where: JSON): [About]
+  blog(id: ID!): Blog
+  blogs(sort: String, limit: Int, start: Int, where: JSON): [Blog]
+  category(id: ID!): Category
+  categories(sort: String, limit: Int, start: Int, where: JSON): [Category]
+  contact(id: ID!): Contact
+  contacts(sort: String, limit: Int, start: Int, where: JSON): [Contact]
+  footer(id: ID!): Footer
+  footers(sort: String, limit: Int, start: Int, where: JSON): [Footer]
+  navgroup(id: ID!): Navgroup
+  navgroups(sort: String, limit: Int, start: Int, where: JSON): [Navgroup]
+  navigation(id: ID!): Navigation
+  navigations(sort: String, limit: Int, start: Int, where: JSON): [Navigation]
+  navlink(id: ID!): Navlink
+  navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+  siteconfig(id: ID!): Siteconfig
+  siteconfigs(sort: String, limit: Int, start: Int, where: JSON): [Siteconfig]
+  files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  role(id: ID!): UsersPermissionsRole
+
+  """
+  Retrieve all the existing roles. You can't apply filters on this query.
+  """
+  roles(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsRole]
+  user(id: ID!): UsersPermissionsUser
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  me: UsersPermissionsMe
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+type Siteconfig {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  footerid: Int
+  navigationid: Int
+  gmapurl: String
+}
+
+input SiteconfigInput {
+  footerid: Int
+  navigationid: Int
+  gmapurl: String
+}
+
+input updateAboutInput {
+  where: InputID
+  data: editAboutInput
+}
+
+type updateAboutPayload {
+  about: About
+}
+
+input updateBlogInput {
+  where: InputID
+  data: editBlogInput
+}
+
+type updateBlogPayload {
+  blog: Blog
+}
+
+input updateCategoryInput {
+  where: InputID
+  data: editCategoryInput
+}
+
+type updateCategoryPayload {
+  category: Category
+}
+
+input updateContactInput {
+  where: InputID
+  data: editContactInput
+}
+
+type updateContactPayload {
+  contact: Contact
+}
+
+input updateFooterInput {
+  where: InputID
+  data: editFooterInput
+}
+
+type updateFooterPayload {
+  footer: Footer
+}
+
+input updateNavgroupInput {
+  where: InputID
+  data: editNavgroupInput
+}
+
+type updateNavgroupPayload {
+  navgroup: Navgroup
+}
+
+input updateNavigationInput {
+  where: InputID
+  data: editNavigationInput
+}
+
+type updateNavigationPayload {
+  navigation: Navigation
+}
+
+input updateNavlinkInput {
+  where: InputID
+  data: editNavlinkInput
+}
+
+type updateNavlinkPayload {
+  navlink: Navlink
+}
+
+input updateRoleInput {
+  where: InputID
+  data: editRoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateSiteconfigInput {
+  where: InputID
+  data: editSiteconfigInput
+}
+
+type updateSiteconfigPayload {
+  siteconfig: Siteconfig
+}
+
+input updateUserInput {
+  where: InputID
+  data: editUserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UploadFile {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+}
+
+type UsersPermissionsMe {
+  _id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  id: ID!
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+}
+
+type UsersPermissionsRole {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  permissions(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsPermission]
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+type UsersPermissionsUser {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+}
