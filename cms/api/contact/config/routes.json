@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/contacts/:id",
-      "handler": "Contact.destroy",
+      "handler": "Contact.delete",
       "config": {
         "policies": []
       }

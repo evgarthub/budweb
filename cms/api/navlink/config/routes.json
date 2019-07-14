@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/navlinks/:id",
-      "handler": "Navlink.destroy",
+      "handler": "Navlink.delete",
       "config": {
         "policies": []
       }

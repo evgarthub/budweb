@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/navigations/:id",
-      "handler": "Navigation.destroy",
+      "handler": "Navigation.delete",
       "config": {
         "policies": []
       }

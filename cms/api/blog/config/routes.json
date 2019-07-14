@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/blogs/:id",
-      "handler": "Blog.destroy",
+      "handler": "Blog.delete",
       "config": {
         "policies": []
       }

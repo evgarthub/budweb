@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/footers/:id",
-      "handler": "Footer.destroy",
+      "handler": "Footer.delete",
       "config": {
         "policies": []
       }

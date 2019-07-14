@@ -43,7 +43,7 @@
     {
       "method": "DELETE",
       "path": "/siteconfigs/:id",
-      "handler": "Siteconfig.destroy",
+      "handler": "Siteconfig.delete",
       "config": {
         "policies": []
       }

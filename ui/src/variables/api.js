@@ -1,4 +1,4 @@
-const API_URL = "http://api.nashbud.pp.ua";
+const API_URL = 'http://localhost:1337';
 const API_URL_GRAPHQL = `${API_URL}/graphql`;
 
 export default {

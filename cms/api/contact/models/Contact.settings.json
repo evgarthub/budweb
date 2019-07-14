@@ -19,7 +19,7 @@
     "data": {
       "default": "",
       "type": "string",
-      "required": true
+      "required": false
     },
     "type": {
       "default": "phone",

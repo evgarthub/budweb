@@ -2,14 +2,13 @@
   "name": "cms",
   "private": true,
   "version": "0.1.0",
-  "description": "A Strapi application.",
-  "main": "./server.js",
+  "description": "A Strapi application",
   "scripts": {
-    "setup": "cd admin && npm run setup",
-    "start": "node server.js",
-    "strapi": "node_modules/strapi/bin/strapi.js",
-    "lint": "node_modules/.bin/eslint api/**/*.js config/**/*.js plugins/**/*.js",
-    "postinstall": "node node_modules/strapi/lib/utils/post-install.js"
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "lint": "eslint api/**/*.js config/**/*.js plugins/**/*.js"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
@@ -19,32 +18,30 @@
     "eslint-plugin-react": "^7.7.0"
   },
   "dependencies": {
-    "lodash": "^4.17.5",
-    "strapi": "3.0.0-alpha.26.1",
-    "strapi-utils": "3.0.0-alpha.26.1",
-    "strapi-hook-bookshelf": "3.0.0-alpha.26.1",
-    "strapi-hook-knex": "3.0.0-alpha.26.1",
     "knex": "latest",
-    "sqlite3": "latest"
+    "lodash": "^4.17.5",
+    "sqlite3": "latest",
+    "strapi": "^3.0.0-beta.11",
+    "strapi-admin": "^3.0.0-beta.11",
+    "strapi-hook-bookshelf": "3.0.0-beta.11",
+    "strapi-hook-knex": "3.0.0-beta.11",
+    "strapi-plugin-content-manager": "3.0.0-beta.11",
+    "strapi-plugin-content-type-builder": "3.0.0-beta.11",
+    "strapi-plugin-email": "3.0.0-beta.11",
+    "strapi-plugin-graphql": "^3.0.0-next.17",
+    "strapi-plugin-settings-manager": "3.0.0-beta.11",
+    "strapi-plugin-upload": "3.0.0-beta.11",
+    "strapi-plugin-users-permissions": "^3.0.0-beta.11",
+    "strapi-utils": "3.0.0-beta.11"
   },
   "author": {
-    "name": "root",
-    "email": "",
-    "url": ""
+    "name": "A Strapi developer"
   },
-  "maintainers": [
-    {
-      "name": "root",
-      "email": "",
-      "url": ""
-    }
-  ],
   "strapi": {
-    "packageManager": "npm",
-    "uuid": "f78095ee-1a91-460c-92fa-e7cba0fce56e"
+    "uuid": "8c133d6d-391e-4083-beea-4df96ecc9e59"
   },
   "engines": {
-    "node": ">= 10.0.0",
+    "node": "^10.0.0",
     "npm": ">= 6.0.0"
   },
   "license": "MIT"
