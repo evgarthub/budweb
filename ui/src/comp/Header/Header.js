@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger } from 'bloomer';
+import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger, Button, Field, Control, Input } from 'bloomer';
 import logo from '../../assets/logo.svg';
 import './Header.scss';
 import { Link } from "react-router-dom";
-import api from "../../variables/api";
 import { label } from '../../variables/labels';
 import { navExpand, navCollapse } from '../../utils/animations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { doLogin, getNavigation } from '../../utils/fetchAPI';
 
 
 class Header extends Component {
@@ -17,7 +19,8 @@ class Header extends Component {
             links: [],
             groups: [],
             isLoading: false,
-            isActive: false
+            isActive: false,
+
           }
 
     }
@@ -25,31 +28,7 @@ class Header extends Component {
     componentDidMount() {
         this.setState({isLoading: true});
 
-        fetch(api.graphql, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: `query {
-              navigation(id: ${this.state.id}) {
-                Home
-                navlinks {
-                  id
-                  Title
-                  Link
-                }
-                navgroups {
-                  id
-                  Title
-                  navlinks {
-                    id
-                    Title
-                    Link
-                  }
-                }
-              }
-            }`
-          })
-        }).then(response => response.json())
+        getNavigation(this.state.id).then(response => response.json())
             .then(res => {
                 const resData = res.data.navigation;
                 this.setState(pState => ({
@@ -79,12 +58,12 @@ class Header extends Component {
                 <NavbarMenu>
                     <NavbarStart>
                     {
-                        this.state.links.map(link => <Link className='navbar-item' to={link.Link} key={link.id} onClick={this.onClickNav}>{link.Title}</Link>)
+                        this.state.links.map(link => <Link className='navbar-item' to={link.Link} key={`link_${link.id}`} onClick={this.onClickNav}>{link.Title}</Link>)
                     }
 
                     {
                         this.state.groups.map(group => (
-                            <NavbarItem hasDropdown isHoverable key={group.id}>
+                            <NavbarItem hasDropdown isHoverable key={`group_${group.id}`}>
                                 <NavbarLink>{group.Title}</NavbarLink>
                                 <NavbarDropdown isBoxed>
                                 {group.navlinks.map(link => <Link className='navbar-item' to={link.Link} key={link.id} onClick={this.onClickNav}>{link.Title}</Link>)}
@@ -93,10 +72,32 @@ class Header extends Component {
                           )
                         )
                     }
+                    <NavbarItem hasDropdown isHoverable key='login'>
+                      <NavbarLink><FontAwesomeIcon icon={faUser} /></NavbarLink>
+                      <NavbarDropdown isBoxed>
+                        <Field>
+                            <Control>
+                                <Input type="text" placeholder='Text Input' />
+                            </Control>
+                        </Field>
+                        <Button onClick={this.handleLogin}>Войти</Button>
+                        <Button onClick={this.handleRegister}>Зарегистрироваться</Button>
+                      </NavbarDropdown>
+                    </NavbarItem>
                     </NavbarStart>
                 </NavbarMenu>
               </Navbar>
         )
+    }
+
+    handleLogin = () => {
+      doLogin('admin', 'vhxNzVNmy56R2EL').then(resp => {
+        localStorage.setItem('nb_token', resp.data.jwt);
+      });
+    }
+
+    handleRegister = () => {
+
     }
 }
 

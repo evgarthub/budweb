@@ -2,7 +2,7 @@ import api from "../variables/api";
 import axios from 'axios';
 
 const getBlogById = (id) => {
-  axios({
+  return axios({
     url: api.graphql,
     method: 'post',
     data: {
@@ -25,7 +25,44 @@ const getBlogById = (id) => {
   });
 }
 
+const getNavigation = (id) => {
+  return fetch(api.graphql, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `query {
+        navigation(id: ${id}) {
+          Home
+          navlinks {
+            id
+            Title
+            Link
+          }
+          navgroups {
+            id
+            Title
+            navlinks {
+              id
+              Title
+              Link
+            }
+          }
+        }
+      }`
+    })
+  })
+}
+
+const doLogin = (login, pass) => {
+  return axios.post(api.auth, {
+    identifier: login,
+    password: pass,
+  });
+}
+
 export {
-  getBlogById
+  getBlogById,
+  doLogin,
+  getNavigation,
 }
 
