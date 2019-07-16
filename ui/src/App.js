@@ -52,35 +52,34 @@ class App extends Component {
   render() {
     return (
       <>
-      <BrowserRouter>
-      <ScrollToTop>
-        <div className="App">
-        <Helmet
+        <BrowserRouter>
+          <ScrollToTop>
+            <div className="App">
+              <Helmet
                 titleTemplate="%s | Наш будинок"
                 defaultTitle="Наш будинок | Сторінка мешканців будинку">
-                <meta property="og:title" content="Наш будинок - Сторінка мешканців будинку" />
-                <meta name="description" property="og:description" content="Сторінка мешканців будинку. На сайті можливо знайти свіжі оголошення, інформацію, стосовно будинку, різні інструкції та контакти" />
-        </Helmet>
+                  <meta property="og:title" content="Наш будинок - Сторінка мешканців будинку" />
+                  <meta name="description" property="og:description" content="Сторінка мешканців будинку. На сайті можливо знайти свіжі оголошення, інформацію, стосовно будинку, різні інструкції та контакти" />
+              </Helmet>
 
-          <Header id={this.state.navId} />
+              <Header id={this.state.navId} />
 
-          <section className='scroll-box'>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/news" component={ListPage} />
-              <Route path="/news/:id" component={NewsPage} />
-              <Route path="/contacts" component={ContactPage} />
-              <Route path="/infrastructure" component={InfrastructurePage} />
-              <Route path="/polls" component={PollsPage} />
-            </Switch>
+              <section className='scroll-box'>
+                <Switch>
+                  <Route exact path="/" component={HomePage} />
+                  <Route exact path="/news" component={ListPage} />
+                  <Route path="/news/:id" component={NewsPage} />
+                  <Route path="/contacts" component={ContactPage} />
+                  <Route path="/infrastructure" component={InfrastructurePage} />
+                  <Route path="/polls" component={PollsPage} />
+                </Switch>
 
-            <Footer id={this.state.fooId} />
-          </section>
+                <Footer id={this.state.fooId} />
+              </section>
 
-        </div>
-        </ScrollToTop>
-      </BrowserRouter>
-
+            </div>
+          </ScrollToTop>
+        </BrowserRouter>
       </>
     );
   }
