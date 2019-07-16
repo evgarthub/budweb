@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Title, Hero, HeroBody, Container, Section } from 'bloomer';
 import './ContactPage.scss';
 import AboutCard from '../../comp/AboutCard/AboutCard';
-import api from "../../variables/api";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { Helmet } from "react-helmet";
 import { label } from '../../variables/labels';
+import { getAbouts } from '../../utils/fetchAPI';
 
 class ContactPage extends Component {
     constructor() {
@@ -17,40 +17,14 @@ class ContactPage extends Component {
     }
 
     componentDidMount() {
-        fetch(api.graphql, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: `query {
-                abouts {
-                  id
-                  title
-                  subtitle
-                  description
-                  contacts {
-                    description
-                    data
-                    type
-                    id
-                  }
-                  navlinks {
-                    Title
-                    Link
-                    id
-                  }
-                  image {
-                    url
-                  }
-                }
-              }`
-          })
-        }).then(response => response.json())
-            .then(res => {
-                const resData = res.data.abouts;
-                this.setState({
-                    data: resData
-                });
+        getAbouts()
+        .then(response => response.json())
+        .then(res => {
+            const resData = res.data.abouts;
+            this.setState({
+                data: resData
             });
+        });
     }
 
     render() {

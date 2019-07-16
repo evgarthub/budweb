@@ -10,7 +10,7 @@ import InfrastructurePage from './pages/InfrastructurePage/InfrastructurePage';
 import HomePage from './pages/HomePage/HomePage';
 import PollsPage from './pages/PollsPage/PollsPage';
 import ScrollToTop from './comp/Helpers/ScrollToTop';
-import api from "./variables/api";
+import { getSiteConfigById, doLogin } from './utils/fetchAPI';
 import { Helmet } from "react-helmet";
 
 
@@ -22,25 +22,22 @@ class App extends Component {
       isLoading: false,
       configId: 1,
       navId: 1,
-      fooId: 1
+      fooId: 1,
+      userProfile: {
+        email: null,
+        login: null,
+        role: 'guest',
+        isAdmin: false,
+        token: null,
+        expDate: null,
+      }
     }
   }
 
   componentDidMount() {
-    fetch(api.graphql, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `query {
-            siteconfig(id: ${this.state.configId}) {
-              footerid
-              navigationid
-            }
-        }`
-      })
-    }).then(response => response.json())
-    .then(res => {
-      const resData = res.data.siteconfig;
+
+    getSiteConfigById(this.state.configId).then(({ data }) => {
+      const resData = data.data.siteconfig;
       this.setState({
           isLoading: false,
           fooId: resData.footerid,
@@ -62,7 +59,7 @@ class App extends Component {
                   <meta name="description" property="og:description" content="Сторінка мешканців будинку. На сайті можливо знайти свіжі оголошення, інформацію, стосовно будинку, різні інструкції та контакти" />
               </Helmet>
 
-              <Header id={this.state.navId} />
+              <Header id={this.state.navId} user={this.state.userProfile} login={this.handleLogin} signout={this.handleSignOut} />
 
               <section className='scroll-box'>
                 <Switch>
@@ -82,6 +79,44 @@ class App extends Component {
         </BrowserRouter>
       </>
     );
+  }
+
+  handleLogin = (login, password) => {
+    doLogin(login, password)
+    .then(resp => {
+      const { jwt, user } = resp.data;
+
+      switch (resp.status) {
+        case 200:
+          localStorage.setItem('nb_token', resp.data.jwt);
+          this.setState({
+            userProfile: {
+              email: user.email,
+              login: user.username,
+              id: user.id,
+              role: user.isAdmin ? 'admin' : 'authorized',
+              isAdmin: user.isAdmin,
+              token: jwt,
+              expDate: 'infinite',
+            }
+          });
+
+          break;
+
+        default:
+          alert(resp.statusText);
+      }
+
+
+    })
+    .catch(data => {
+      alert(data);
+    });
+  }
+
+  handleSignOut = () => {
+    localStorage.removeItem('nb_token');
+
   }
 }
 

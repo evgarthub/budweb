@@ -25,11 +25,8 @@ const getBlogById = (id) => {
   });
 }
 
-const getNavigation = (id) => {
-  return fetch(api.graphql, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+const getNavigationById = (id) => {
+  return axios.post(api.graphql, {
       query: `query {
         navigation(id: ${id}) {
           Home
@@ -49,8 +46,18 @@ const getNavigation = (id) => {
           }
         }
       }`
-    })
-  })
+  });
+}
+
+const getSiteConfigById = (id) => {
+  return axios.post(api.graphql, {
+      query: `query {
+        siteconfig(id: ${id}) {
+          footerid
+          navigationid
+        }
+      }`
+  });
 }
 
 const doLogin = (login, pass) => {
@@ -58,11 +65,44 @@ const doLogin = (login, pass) => {
     identifier: login,
     password: pass,
   });
+
+
+}
+
+const getAbouts = () => {
+  return axios.post(api.graphql, {
+    body: JSON.stringify({
+      query: `query {
+                abouts {
+                  id
+                  title
+                  subtitle
+                  description
+                  contacts {
+                    description
+                    data
+                    type
+                    id
+                  }
+                  navlinks {
+                    Title
+                    Link
+                    id
+                  }
+                  image {
+                    url
+                  }
+                }
+              }`
+    })
+  })
 }
 
 export {
   getBlogById,
   doLogin,
-  getNavigation,
+  getNavigationById,
+  getAbouts,
+  getSiteConfigById,
 }
 

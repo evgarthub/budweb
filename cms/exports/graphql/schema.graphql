@@ -351,6 +351,7 @@ input editUserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
+  App: Int
 }
 
 enum ENUM_NAVLINK_LOGO {
@@ -687,6 +688,7 @@ input UserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
+  App: Int
 }
 
 type UsersPermissionsMe {
@@ -734,4 +736,5 @@ type UsersPermissionsUser {
   confirmed: Boolean
   blocked: Boolean
   role: UsersPermissionsRole
+  App: Int
 }

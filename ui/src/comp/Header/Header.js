@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger, Button, Field, Control, Input } from 'bloomer';
+import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger } from 'bloomer';
 import logo from '../../assets/logo.svg';
 import './Header.scss';
 import { Link } from "react-router-dom";
@@ -7,7 +7,8 @@ import { label } from '../../variables/labels';
 import { navExpand, navCollapse } from '../../utils/animations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { doLogin, getNavigation } from '../../utils/fetchAPI';
+import { getNavigationById } from '../../utils/fetchAPI';
+import LoginForm from '../LoginForm';
 
 
 class Header extends Component {
@@ -20,7 +21,6 @@ class Header extends Component {
             groups: [],
             isLoading: false,
             isActive: false,
-
           }
 
     }
@@ -28,9 +28,10 @@ class Header extends Component {
     componentDidMount() {
         this.setState({isLoading: true});
 
-        getNavigation(this.state.id).then(response => response.json())
-            .then(res => {
-                const resData = res.data.navigation;
+        getNavigationById(this.state.id)
+            .then(({data}) => {
+                const resData = data.data.navigation;
+
                 this.setState(pState => ({
                     ...pState,
                     isLoading: false,
@@ -66,7 +67,7 @@ class Header extends Component {
                             <NavbarItem hasDropdown isHoverable key={`group_${group.id}`}>
                                 <NavbarLink>{group.Title}</NavbarLink>
                                 <NavbarDropdown isBoxed>
-                                {group.navlinks.map(link => <Link className='navbar-item' to={link.Link} key={link.id} onClick={this.onClickNav}>{link.Title}</Link>)}
+                                  {group.navlinks.map(link => <Link className='navbar-item' to={link.Link} key={link.id} onClick={this.onClickNav}>{link.Title}</Link>)}
                                 </NavbarDropdown>
                             </NavbarItem>
                           )
@@ -74,30 +75,14 @@ class Header extends Component {
                     }
                     <NavbarItem hasDropdown isHoverable key='login'>
                       <NavbarLink><FontAwesomeIcon icon={faUser} /></NavbarLink>
-                      <NavbarDropdown isBoxed>
-                        <Field>
-                            <Control>
-                                <Input type="text" placeholder='Text Input' />
-                            </Control>
-                        </Field>
-                        <Button onClick={this.handleLogin}>Войти</Button>
-                        <Button onClick={this.handleRegister}>Зарегистрироваться</Button>
+                      <NavbarDropdown isBoxed className='navbar__loginbox'>
+                        <LoginForm user={this.props.user} onSignOut={this.props.signout} onSubmit={this.props.login} />
                       </NavbarDropdown>
                     </NavbarItem>
                     </NavbarStart>
                 </NavbarMenu>
               </Navbar>
         )
-    }
-
-    handleLogin = () => {
-      doLogin('admin', 'vhxNzVNmy56R2EL').then(resp => {
-        localStorage.setItem('nb_token', resp.data.jwt);
-      });
-    }
-
-    handleRegister = () => {
-
     }
 }
 
