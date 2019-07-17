@@ -12,34 +12,38 @@ class LoginForm extends Component {
         return (
             <section className='login-form'>
                 { !this.props.user.token
-                ?  (<>
-                    <Field>
-                        <Control>
-                            <Input
-                                type="text"
-                                placeholder='Почта'
-                                name='login'
-                                value={login}
-                                onChange={this.handleInput} />
-                        </Control>
-                    </Field>
-                    <Field>
-                        <Control>
-                            <Input
-                                type="password"
-                                placeholder='Пароль'
-                                name='password'
-                                value={password}
-                                onChange={this.handleInput} />
-                        </Control>
-                    </Field>
-                    <Button onClick={this.handleLogin}>Войти</Button>
-                    <Button onClick={this.handleRegister}>Зарегистрироваться</Button>
-                </>)
-                : ( <>
-                        <span>{`${this.props.user.login} - ${this.props.user.role}`}</span>
-                    <Button onClick={this.handleSignOut}>Выйти</Button>
-                </> )
+                    ? (
+                        <>
+                            <Field>
+                                <Control>
+                                    <Input
+                                        type="text"
+                                        placeholder='Почта'
+                                        name='login'
+                                        value={login}
+                                        onChange={this.handleInput} />
+                                </Control>
+                            </Field>
+                            <Field>
+                                <Control>
+                                    <Input
+                                        type="password"
+                                        placeholder='Пароль'
+                                        name='password'
+                                        value={password}
+                                        onChange={this.handleInput} />
+                                </Control>
+                            </Field>
+                            <Button onClick={this.handleLogin}>Войти</Button>
+                            <Button onClick={this.handleRegister}>Зарегистрироваться</Button>
+                        </>
+                    )
+                    : ( 
+                        <>
+                            <span>{`${this.props.user.login} - ${this.props.user.role}`}</span>
+                            <Button onClick={this.handleSignOut}>Выйти</Button>
+                        </> 
+                    )
                 }
 
             </section>
