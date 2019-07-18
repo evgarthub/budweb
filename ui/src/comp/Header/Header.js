@@ -8,7 +8,7 @@ import { navExpand, navCollapse } from '../../utils/animations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { getNavigationById } from '../../utils/fetchAPI';
-import LoginForm from '../LoginForm';
+import LoginForm from '../UserControl';
 
 
 class Header extends Component {
@@ -74,7 +74,10 @@ class Header extends Component {
                         )
                     }
                     <NavbarItem hasDropdown isHoverable key='login'>
-                      <NavbarLink><FontAwesomeIcon icon={faUser} /></NavbarLink>
+                      <NavbarLink>
+                        <FontAwesomeIcon icon={faUser} /> 
+                        <span className="">{this.props.user.username}</span>
+                      </NavbarLink>
                       <NavbarDropdown isBoxed className='navbar__loginbox'>
                         <LoginForm user={this.props.user} onSignOut={this.props.signout} onSubmit={this.props.login} />
                       </NavbarDropdown>

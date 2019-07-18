@@ -10,7 +10,8 @@ import InfrastructurePage from './pages/InfrastructurePage/InfrastructurePage';
 import HomePage from './pages/HomePage/HomePage';
 import PollsPage from './pages/PollsPage/PollsPage';
 import ScrollToTop from './comp/Helpers/ScrollToTop';
-import { getSiteConfigById, doLogin } from './utils/fetchAPI';
+import { getSiteConfigById } from './utils/fetchAPI';
+import { doLogin, getUserInfo } from './utils/authorization';
 import { Helmet } from "react-helmet";
 
 
@@ -24,12 +25,7 @@ class App extends Component {
       navId: 1,
       fooId: 1,
       userProfile: {
-        email: null,
-        login: null,
-        role: 'guest',
-        isAdmin: false,
-        token: null,
-        expDate: null,
+        username: 'guest',
       }
     }
   }
@@ -44,6 +40,14 @@ class App extends Component {
           navId: resData.navigationid
       });
     });
+
+    getUserInfo()
+      .then(({ data }) => {
+        this.setUserInfo(data);
+      })
+      .catch(data => {
+        console.log(data);
+      });
   }
 
   render() {
@@ -84,30 +88,20 @@ class App extends Component {
   handleLogin = (login, password) => {
     doLogin(login, password)
     .then(resp => {
-      const { jwt, user } = resp.data;
+      const { jwt } = resp.data;
 
       switch (resp.status) {
         case 200:
-          localStorage.setItem('nb_token', resp.data.jwt);
-          this.setState({
-            userProfile: {
-              email: user.email,
-              login: user.username,
-              id: user.id,
-              role: user.isAdmin ? 'admin' : 'authorized',
-              isAdmin: user.isAdmin,
-              token: jwt,
-              expDate: 'infinite',
-            }
-          });
-
+          localStorage.setItem('nb_token', jwt);
+          getUserInfo().then(({ data }) => {
+            this.setUserInfo(data);
+          })
           break;
 
         default:
           alert(resp.statusText);
       }
-
-
+      
     })
     .catch(data => {
       alert(data);
@@ -116,7 +110,15 @@ class App extends Component {
 
   handleSignOut = () => {
     localStorage.removeItem('nb_token');
+    getUserInfo().then(({ data }) => {
+      this.setUserInfo(data);
+    })
+  }
 
+  setUserInfo = (data) => {
+    this.setState({
+      userProfile: { ...data }
+    });
   }
 }
 

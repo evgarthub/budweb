@@ -1,7 +1,8 @@
 import api from "../variables/api";
 import axios from 'axios';
+import { getToken } from './authorization';
 
-const getBlogById = (id) => {
+export const getBlogById = (id) => {
   return axios({
     url: api.graphql,
     method: 'post',
@@ -25,7 +26,7 @@ const getBlogById = (id) => {
   });
 }
 
-const getNavigationById = (id) => {
+export const getNavigationById = (id) => {
   return axios.post(api.graphql, {
       query: `query {
         navigation(id: ${id}) {
@@ -49,7 +50,7 @@ const getNavigationById = (id) => {
   });
 }
 
-const getSiteConfigById = (id) => {
+export const getSiteConfigById = (id) => {
   return axios.post(api.graphql, {
       query: `query {
         siteconfig(id: ${id}) {
@@ -60,16 +61,7 @@ const getSiteConfigById = (id) => {
   });
 }
 
-const doLogin = (login, pass) => {
-  return axios.post(api.auth, {
-    identifier: login,
-    password: pass,
-  });
-
-
-}
-
-const getAbouts = () => {
+export const getAbouts = () => {
   return axios.post(api.graphql, {
     body: JSON.stringify({
       query: `query {
@@ -98,11 +90,11 @@ const getAbouts = () => {
   })
 }
 
-export {
-  getBlogById,
-  doLogin,
-  getNavigationById,
-  getAbouts,
-  getSiteConfigById,
+export const getUserById = (id) => {
+  return axios.get(`${api.users}/${id}`, {
+      headers: {
+          Authorization: `Bearer ${getToken()}`, 
+      }
+  });    
 }
 
