@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Title, Hero, HeroBody, Container } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
 import './InfrastructurePage.scss';
-import api from "../../variables/api";
+import { getGoogleMapString } from "../../utils/fetchAPI";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { label } from '../../variables/labels';
@@ -18,19 +18,9 @@ class InfrastructurePage extends Component {
     }
 
     componentDidMount() {
-        fetch(api.graphql, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: `query {
-                siteconfig(id: ${this.state.configId}) {
-                  gmapurl
-                }
-            }`
-          })
-        }).then(response => response.json())
-        .then(res => {
-          const resData = res.data.siteconfig;
+        getGoogleMapString(this.state.configId)
+        .then(({data}) => {
+          const resData = data.data.siteconfig;
           this.setState({
               isLoading: false,
               gmapsUrl: resData.gmapurl

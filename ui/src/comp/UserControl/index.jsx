@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, Control, Input, Button } from 'bloomer';
+import './styles.scss';
 
 class LoginForm extends Component {
     state = {
@@ -11,7 +12,7 @@ class LoginForm extends Component {
         const { user } = this.props;
 
         const loginForm = (
-            <form>
+            <form className="form form--login" >
                 <Field>
                     <Control>
                         <Input
@@ -19,6 +20,7 @@ class LoginForm extends Component {
                             placeholder='Почта'
                             name='login'
                             value={login}
+                            autoComplete='username'
                             onChange={this.handleInput} />
                     </Control>
                 </Field>
@@ -29,6 +31,7 @@ class LoginForm extends Component {
                             placeholder='Пароль'
                             name='password'
                             value={password}
+                            autoComplete='current-password'
                             onChange={this.handleInput} />
                     </Control>
                 </Field>

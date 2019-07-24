@@ -4,14 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faViber, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import './Footer.scss';
-import api from "../../variables/api";
+import { getFooterById } from "../../utils/fetchAPI";
 import { label } from '../../variables/labels';
 
 class Footer extends Component {
     constructor(props) {
         super();
         this.state = {
-            id: props.id,
             isLoading: false,
             about: null,
             links: []
@@ -21,24 +20,9 @@ class Footer extends Component {
     componentDidMount() {
         this.setState({isLoading: true});
 
-        fetch(api.graphql, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: `query {
-                footer(id: ${this.state.id}) {
-                  About
-                  navlinks {
-                    id
-                    Title
-                    Link
-                  }
-                }
-              }`
-          })
-        }).then(response => response.json())
-            .then(res => {
-                const resData = res.data.footer;
+        getFooterById(this.props.id)
+            .then(({data}) => {
+                const resData = data.data.footer;
                 this.setState(pState => ({
                     ...pState,
                     isLoading: false,

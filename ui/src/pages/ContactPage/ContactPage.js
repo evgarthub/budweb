@@ -18,9 +18,8 @@ class ContactPage extends Component {
 
     componentDidMount() {
         getAbouts()
-        .then(response => response.json())
-        .then(res => {
-            const resData = res.data.abouts;
+        .then(({data}) => {
+            const resData = data.data.abouts;
             this.setState({
                 data: resData
             });

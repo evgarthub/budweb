@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PostCard from '../../comp/PostCard/PostCard';
 import { label } from '../../variables/labels';
-import api from "../../variables/api";
 import "./PostList.scss";
+import { getBlogs } from '../../utils/fetchAPI';
 
 class PostList extends Component {
     constructor({limit, sort}) {
@@ -20,13 +20,12 @@ class PostList extends Component {
     }
 
     fetchData = (sort) => {
-        fetch(`${api.url}${api.blogs}?_sort=created_at:${sort}`)
-            .then(response => response.json())
-            .then(res => {
+        getBlogs(sort)
+            .then(({data}) => {
                 this.setState(() => ({
                     sorted: sort,
                     isLoading: false,
-                    data: res
+                    data: data
                 }));
                 this.forceUpdate()
             });

@@ -3,7 +3,7 @@ import { Title, Hero, HeroBody, Container, Content, Button } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
 import './NewsPage.scss';
 import ReactMarkdown from 'react-markdown';
-import axios from 'axios';
+import { getBlogs } from '../../utils/fetchAPI';
 import api from "../../variables/api";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
@@ -26,32 +26,7 @@ class NewsPage extends Component {
     }
 
     componentDidMount() {
-        axios({
-            url: api.graphql,
-            method: 'post',
-            data: {
-                query: `query {
-                    blog(id: ${this.state.id}) {
-                        title
-                        intro
-                        text
-                        image {
-                            url
-                        }
-                        categories {
-                            id
-                            name
-                            color
-                        }
-                        navlinks {
-                            id
-                            Title
-                            Link
-                        }
-                    }
-                }`
-            }
-        }).then(result => {
+        getBlogs().then(result => {
             const { title, intro, text, image, categories, navlinks } = result.data.data.blog;
             this.setState({
                 isLoading: false,

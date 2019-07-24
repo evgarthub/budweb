@@ -3,27 +3,28 @@ import axios from 'axios';
 import { getToken } from './authorization';
 
 export const getBlogById = (id) => {
-  return axios({
-    url: api.graphql,
-    method: 'post',
-    data: {
-      query: `query {
-        blog(id: ${id}) {
-            title
-            intro
-            text
-            image {
-              url
-            }
-            categories {
-                id
-                name
-                color
-            }
+  axios.post(api.graphql, {
+    query: `query {
+      blog(id: ${id}) {
+        title
+        intro
+        text
+        image {
+          url
         }
-      }`
-    }
-  });
+        categories {
+          id
+          name
+          color
+        }
+        navlinks {
+          id
+          Title
+          Link
+        }
+      }
+    }`
+  })
 }
 
 export const getNavigationById = (id) => {
@@ -61,32 +62,40 @@ export const getSiteConfigById = (id) => {
   });
 }
 
+export const getGoogleMapString = (id) => {
+  return axios.post(api.graphql, {
+    query: `query {
+      siteconfig(id: ${id}) {
+        gmapurl
+      }
+  }`
+  })
+}
+
 export const getAbouts = () => {
   return axios.post(api.graphql, {
-    body: JSON.stringify({
-      query: `query {
-                abouts {
-                  id
-                  title
-                  subtitle
-                  description
-                  contacts {
-                    description
-                    data
-                    type
-                    id
-                  }
-                  navlinks {
-                    Title
-                    Link
-                    id
-                  }
-                  image {
-                    url
-                  }
-                }
-              }`
-    })
+    query: `query {
+      abouts {
+        id
+        title
+        subtitle
+        description
+        contacts {
+          description
+          data
+          type
+          id
+        }
+        navlinks {
+          Title
+          Link
+          id
+        }
+        image {
+          url
+        }
+      }
+    }`
   })
 }
 
@@ -98,3 +107,22 @@ export const getUserById = (id) => {
   });    
 }
 
+export const getFooterById = (id) => {
+  return axios.post(api.graphql, {
+    query: `query {
+      footer(id: ${id}) {
+        About
+        navlinks {
+          id
+          Title
+          Link
+        }
+      }
+    }`
+  });
+} 
+
+export const getBlogs = (sort) => {
+  return axios(`${api.url}${api.blogs}?_sort=created_at:${sort}`)
+            
+}
