@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger } from 'bloomer';
 import logo from '../../assets/logo.svg';
-import './Header.scss';
+import './styles.scss';
 import { Link } from "react-router-dom";
 import { label } from '../../variables/labels';
 import { navExpand, navCollapse } from '../../utils/animations';

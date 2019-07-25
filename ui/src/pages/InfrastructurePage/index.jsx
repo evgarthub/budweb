@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Title, Hero, HeroBody, Container } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
-import './InfrastructurePage.scss';
+import './styles.scss';
 import { getGoogleMapString } from "../../utils/fetchAPI";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Title, Button } from 'bloomer';
 import { Link } from "react-router-dom";
-import './PostCard.scss';
+import './styles.scss';
 import { label } from '../../variables/labels';
 import api from "../../variables/api";
 

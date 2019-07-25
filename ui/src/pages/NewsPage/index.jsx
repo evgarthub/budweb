@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Title, Hero, HeroBody, Container, Content, Button } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
-import './NewsPage.scss';
+import './styles.scss';
 import ReactMarkdown from 'react-markdown';
 import { getBlogs } from '../../utils/fetchAPI';
 import api from "../../variables/api";

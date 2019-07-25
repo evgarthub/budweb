@@ -1,6 +1,6 @@
 import React from 'react';
 import { Title, Container, Section } from 'bloomer';
-import './PollsPage.scss';
+import './styles.scss';
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { label } from '../../variables/labels';

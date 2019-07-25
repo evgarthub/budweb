@@ -1,8 +1,8 @@
 import React from 'react';
-import PostList from '../../comp/PostList/PostList';
+import PostList from '../../comp/PostList';
 import { Title, Container, Section, Notification, Button } from 'bloomer';
 import { Link } from "react-router-dom";
-import "./HomePage.scss";
+import "./styles.scss";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { label } from '../../variables/labels';

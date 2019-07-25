@@ -3,7 +3,7 @@ import { Footer as Foo, Container, Content } from 'bloomer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faViber, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import './Footer.scss';
+import './styles.scss';
 import { getFooterById } from "../../utils/fetchAPI";
 import { label } from '../../variables/labels';
 

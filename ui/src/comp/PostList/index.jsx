@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PostCard from '../../comp/PostCard/PostCard';
+import PostCard from '../PostCard';
 import { label } from '../../variables/labels';
-import "./PostList.scss";
+import "./styles.scss";
 import { getBlogs } from '../../utils/fetchAPI';
 
 class PostList extends Component {

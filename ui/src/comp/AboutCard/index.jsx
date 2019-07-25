@@ -3,7 +3,7 @@ import { Title, Subtitle, Content, Card, CardHeader, Media, MediaLeft, Image, Me
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faPhone, faMapMarkerAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import ReactMarkdown from 'react-markdown';
-import './AboutCard.scss';
+import './styles.scss';
 import api from "../../variables/api";
 import { aboutExpand, aboutCollapse } from '../../utils/animations';
 
