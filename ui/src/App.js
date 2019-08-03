@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import './App.scss';
-import NewsPage from './pages/NewsPage/NewsPage';
-import Header from './comp/Header/Header';
-import Footer from './comp/Footer/Footer';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ListPage from './pages/ListPage/ListPage';
-import ContactPage from './pages/ContactPage/ContactPage';
-import InfrastructurePage from './pages/InfrastructurePage/InfrastructurePage';
-import HomePage from './pages/HomePage/HomePage';
-import PollsPage from './pages/PollsPage/PollsPage';
-import ScrollToTop from './comp/Helpers/ScrollToTop';
-import api from "./variables/api";
 import { Helmet } from "react-helmet";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import './App.scss';
+import Footer from './comp/Footer/Footer';
+import Header from './comp/Header/Header';
+import ScrollToTop from './comp/Helpers/ScrollToTop';
+import ContactPage from './pages/ContactPage/ContactPage';
+import HomePage from './pages/HomePage/HomePage';
+import InfrastructurePage from './pages/InfrastructurePage/InfrastructurePage';
+import ListPage from './pages/ListPage/ListPage';
+import NewsPage from './pages/NewsPage/NewsPage';
+import PollsPage from './pages/PollsPage/PollsPage';
+import TicketPage from './pages/TicketPage';
+import api from "./variables/api";
 
 
 class App extends Component {
@@ -72,6 +73,7 @@ class App extends Component {
               <Route path="/contacts" component={ContactPage} />
               <Route path="/infrastructure" component={InfrastructurePage} />
               <Route path="/polls" component={PollsPage} />
+              <Route path="/ticket" component={TicketPage} />
             </Switch>
 
             <Footer id={this.state.fooId} />
