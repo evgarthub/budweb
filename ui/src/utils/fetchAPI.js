@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getToken } from './authorization';
 
 export const getBlogById = (id) => {
-  axios.post(api.graphql, {
+  return axios.post(api.graphql, {
     query: `query {
       blog(id: ${id}) {
         title

@@ -1,0 +1,22 @@
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    transition: all ease .5s;
+    background-color: white;
+    z-index: 50;
+    
+    &__progress {
+        width: 30%;
+    }
+
+    &--hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

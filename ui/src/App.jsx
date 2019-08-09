@@ -1,125 +1,72 @@
-import React, { Component } from 'react';
-import './App.scss';
-import NewsPage from './pages/NewsPage';
-import Header from './comp/Header';
-import Footer from './comp/Footer';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ListPage from './pages/ListPage';
-import ContactPage from './pages/ContactPage';
-import InfrastructurePage from './pages/InfrastructurePage';
-import HomePage from './pages/HomePage';
-import PollsPage from './pages/PollsPage';
-import ScrollToTop from './comp/Helpers';
-import { getSiteConfigById } from './utils/fetchAPI';
-import { doLogin, getUserInfo } from './utils/authorization';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import './App.scss';
+import { Footer, Header, Loading, ScrollToTop } from './components';
+import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage } from './pages';
+import { AuthContextProvider } from './context';
+import { getSiteConfigById } from './utils/fetchAPI';
 
+const App = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [config, setConfig] = useState({
+    id: 1,
+    navId: 1,
+    fooId: 1,
+  });
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      navisOpened: false,
-      isLoading: false,
-      configId: 1,
-      navId: 1,
-      fooId: 1,
-      userProfile: {
-        username: 'guest',
-      }
-    }
-  }
+  const handleConfigChange = (input) => {
+    setConfig({
+      ...config,
+      ...input,
+    });
+  };
 
-  componentDidMount() {
+  useEffect(() => {
+    getSiteConfigById(config.id).then(({ data }) => {
+      const { footerid, navigationid } = data.data.siteconfig;
 
-    getSiteConfigById(this.state.configId).then(({ data }) => {
-      const resData = data.data.siteconfig;
-      this.setState({
-          isLoading: false,
-          fooId: resData.footerid,
-          navId: resData.navigationid
+      handleConfigChange({
+        fooId: footerid,
+        navId: navigationid,
       });
+
+      setLoading(false);
     });
+  }, []);
 
-    getUserInfo()
-      .then(({ data }) => {
-        this.setUserInfo(data);
-      })
-      .catch(data => {
-        console.log(data);
-      });
-  }
+  return (
+    <BrowserRouter>
+      <AuthContextProvider>
+        <ScrollToTop>
+          <Loading visible={isLoading} />
+          <div className="App">
+            <Helmet
+              titleTemplate="%s | Наш будинок"
+              defaultTitle="Наш будинок | Сторінка мешканців будинку">
+                <meta property="og:title" content="Наш будинок - Сторінка мешканців будинку" />
+                <meta name="description" property="og:description" content="Сторінка мешканців будинку. На сайті можливо знайти свіжі оголошення, інформацію, стосовно будинку, різні інструкції та контакти" />
+            </Helmet>
 
-  render() {
-    return (
-      <>
-        <BrowserRouter>
-          <ScrollToTop>
-            <div className="App">
-              <Helmet
-                titleTemplate="%s | Наш будинок"
-                defaultTitle="Наш будинок | Сторінка мешканців будинку">
-                  <meta property="og:title" content="Наш будинок - Сторінка мешканців будинку" />
-                  <meta name="description" property="og:description" content="Сторінка мешканців будинку. На сайті можливо знайти свіжі оголошення, інформацію, стосовно будинку, різні інструкції та контакти" />
-              </Helmet>
+            <Header id={config.navId} />
 
-              <Header id={this.state.navId} user={this.state.userProfile} login={this.handleLogin} signout={this.handleSignOut} />
+            <section className='scroll-box'>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/news" component={ListPage} />
+                <Route path="/news/:id" component={NewsPage} />
+                <Route path="/contacts" component={ContactPage} />
+                <Route path="/infrastructure" component={InfrastructurePage} />
+                <Route path="/polls" component={PollsPage} />
+              </Switch>
 
-              <section className='scroll-box'>
-                <Switch>
-                  <Route exact path="/" component={HomePage} />
-                  <Route exact path="/news" component={ListPage} />
-                  <Route path="/news/:id" component={NewsPage} />
-                  <Route path="/contacts" component={ContactPage} />
-                  <Route path="/infrastructure" component={InfrastructurePage} />
-                  <Route path="/polls" component={PollsPage} />
-                </Switch>
-
-                <Footer id={this.state.fooId} />
-              </section>
-
-            </div>
-          </ScrollToTop>
-        </BrowserRouter>
-      </>
-    );
-  }
-
-  handleLogin = (login, password) => {
-    doLogin(login, password)
-    .then(resp => {
-      const { jwt } = resp.data;
-
-      switch (resp.status) {
-        case 200:
-          localStorage.setItem('nb_token', jwt);
-          getUserInfo().then(({ data }) => {
-            this.setUserInfo(data);
-          })
-          break;
-
-        default:
-          alert(resp.statusText);
-      }
-      
-    })
-    .catch(data => {
-      alert(data);
-    });
-  }
-
-  handleSignOut = () => {
-    localStorage.removeItem('nb_token');
-    getUserInfo().then(({ data }) => {
-      this.setUserInfo(data);
-    })
-  }
-
-  setUserInfo = (data) => {
-    this.setState({
-      userProfile: { ...data }
-    });
-  }
-}
+              <Footer id={config.fooId} />
+            </section>
+          </div>
+        </ScrollToTop>
+      </AuthContextProvider>
+    </BrowserRouter>
+  );
+};
 
 export default App;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PostList from '../../comp/PostList';
+import { PostList } from '../../components';
 import { Title, Container, Section, Notification, Button } from 'bloomer';
 import { Link } from "react-router-dom";
 import "./styles.scss";

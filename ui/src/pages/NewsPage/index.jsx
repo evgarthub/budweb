@@ -3,7 +3,7 @@ import { Title, Hero, HeroBody, Container, Content, Button } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
 import './styles.scss';
 import ReactMarkdown from 'react-markdown';
-import { getBlogs } from '../../utils/fetchAPI';
+import { getBlogById } from '../../utils/fetchAPI';
 import api from "../../variables/api";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
@@ -26,8 +26,8 @@ class NewsPage extends Component {
     }
 
     componentDidMount() {
-        getBlogs().then(result => {
-            const { title, intro, text, image, categories, navlinks } = result.data.data.blog;
+        getBlogById(this.state.id).then(({ data }) => {
+            const { title, intro, text, image, categories, navlinks } = data.data.blog;
             this.setState({
                 isLoading: false,
                 imageUrl: image && api.url+image.url,

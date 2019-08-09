@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Title, Hero, HeroBody, Container, Section } from 'bloomer';
 import './styles.scss';
-import AboutCard from '../../comp/AboutCard';
+import { AboutCard } from '../../components';
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { Helmet } from "react-helmet";

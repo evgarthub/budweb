@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PostCard from '../PostCard';
+import { PostCard } from '../';
 import { label } from '../../variables/labels';
 import "./styles.scss";
 import { getBlogs } from '../../utils/fetchAPI';
@@ -29,7 +29,7 @@ class PostList extends Component {
                 }));
                 this.forceUpdate()
             });
-    }
+    };
 
     sortAsc = () => {
         this.fetchData('ASC');
