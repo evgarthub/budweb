@@ -32,5 +32,16 @@ export const label = {
     infrastructure: {
         title: "Інфраструктура",
         metaDescription: "Розташування банкоматів, аптек, магазинів та інших об'єктів на мапі"
+    },
+    userProfile: {
+        login: "Логін або Пошта",
+        password: "Пароль",
+        loginButton: "Увійти",
+        logoutButton: "Вийти",
+        email: "Пошта",
+        registerButton: "Зареєструватися",
+        guest: "Гість",
+        appartment: "Квартира",
+        loginLabel: "Логін",
     }
 }

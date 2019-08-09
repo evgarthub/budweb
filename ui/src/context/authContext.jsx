@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
     const [userProfile, setUserProfile] = useState({
-        username: 'guest',
+        username: 'Гiсть',
     });
 
     const handleUpdate = (input) => {
@@ -32,19 +32,19 @@ export const AuthContextProvider = (props) => {
 
                 switch (resp.status) {
                     case 200:
-                    localStorage.setItem('nb_token', jwt);
-                    getUserInfo().then(({ data }) => {
-                        handleUpdate(data);
-                    })
-                    break;
+                        localStorage.setItem('nb_token', jwt);
+                        getUserInfo().then(({ data }) => {
+                            handleUpdate(data);
+                        })
+                        break;
 
                     default:
-                    alert(resp.statusText);
+                        alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${resp.statusText}`);
                 }
             
             })
             .catch(data => {
-                alert(data);
+                alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${data}`);
             });
     }
 

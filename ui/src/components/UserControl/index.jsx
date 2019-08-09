@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Field, Control, Input, Button } from 'bloomer';
 import './styles.scss';
 import { AuthContext } from '../../context/authContext';
+import {label} from '../../variables/labels';
 
 const AuthForm = () => {
     const [formData, setformData] = useState({
@@ -37,13 +38,18 @@ const AuthForm = () => {
         actions.handleSignOut();
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        handleLogin();
+    }
+
     const loginForm =  (
-        <form className="form form--login" >
+        <form className="user-control__form" onSubmit={handleSubmit} >
             <Field>
                 <Control>
                     <Input
                         type="text"
-                        placeholder='Почта'
+                        placeholder={label.userProfile.login}
                         name='login'
                         value={formData.login}
                         autoComplete='username'
@@ -54,27 +60,32 @@ const AuthForm = () => {
                 <Control>
                     <Input
                         type="password"
-                        placeholder='Пароль'
+                        placeholder={label.userProfile.password}
                         name='password'
                         value={formData.password}
                         autoComplete='current-password'
                         onChange={handleInput} />
                 </Control>
             </Field>
-            <Button onClick={handleLogin}>Войти</Button>
-            <Button onClick={handleRegister}>Зарегистрироваться</Button>
+            <Button onClick={handleLogin}>{label.userProfile.loginButton}</Button>
+            <Button onClick={handleRegister}>{label.userProfile.registerButton}</Button>
         </form>
     );
     
     const exitForm = (
-        <>
-            <span>{`${user.username} - ${user.App}`}</span>
-            <Button onClick={handleSignOut}>Выйти</Button>
-        </> 
+        <div className='user-control__form'>
+            <div className='user-control__profile'>
+                <div>{label.userProfile.loginLabel}:</div> <div>{user.username}</div>
+                <div>{label.userProfile.email}:</div> <div>{user.email}</div>
+                <div>{label.userProfile.appartment}:</div> <div>{user.App}</div>
+                <div></div>
+            </div>
+            <Button onClick={handleSignOut}>{label.userProfile.logoutButton}</Button>
+        </div> 
     );
 
     return (
-        <section className='login-form'>
+        <section className='user-control'>
             { user.role && user.role.type === "authenticated" ? exitForm : loginForm }
         </section>
     );

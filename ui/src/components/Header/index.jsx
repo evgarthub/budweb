@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger } from 'bloomer';
 import logo from '../../assets/logo.svg';
 import './styles.scss';
@@ -23,6 +23,12 @@ const Header = (props) => {
       isLoading: false,
       isActive: false,
     });
+
+  const [userDropdownActive, setUserDropdownActive] = useState(false);
+
+  const handleUserDropdownClick = () => {
+    setUserDropdownActive(!userDropdownActive);
+  }; 
 
   useEffect(() => {
     getNavigationById(headerData.id)
@@ -56,7 +62,7 @@ const Header = (props) => {
       <NavbarMenu>
           <NavbarStart>
           {
-              headerData.links.map(link => <Link className='navbar-item' to={link.Link} key={`link_${link.id}`} onClick={onClickNav}>{link.Title}</Link>)
+            headerData.links.map(link => <Link className='navbar-item' to={link.Link} key={`link_${link.id}`} onClick={onClickNav}>{link.Title}</Link>)
           }
 
           {
@@ -70,12 +76,12 @@ const Header = (props) => {
                 )
               )
           }
-          <NavbarItem hasDropdown isHoverable key='login'>
-            <NavbarLink>
+          <NavbarItem hasDropdown isActive={userDropdownActive} key='login'>
+            <NavbarLink onClick={handleUserDropdownClick}>
               <FontAwesomeIcon icon={faUser} /> 
-              <span className="navbar__username">{user.username}</span>
+              <span className="navbar__username">{!userDropdownActive ? user.username : 'Закрити'}</span>
             </NavbarLink>
-            <NavbarDropdown isBoxed className='navbar__loginbox'>
+            <NavbarDropdown className='navbar__loginbox'>
               <LoginForm />
             </NavbarDropdown>
           </NavbarItem>

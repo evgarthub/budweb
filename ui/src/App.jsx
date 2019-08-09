@@ -3,14 +3,15 @@ import { Helmet } from "react-helmet";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.scss';
 import { Footer, Header, Loading, ScrollToTop } from './components';
-import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage } from './pages';
 import { AuthContextProvider } from './context';
+import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage } from './pages';
 import { getSiteConfigById } from './utils/fetchAPI';
+import siteConfig from './variables/config';
 
 const App = () => {
   const [isLoading, setLoading] = useState(true);
   const [config, setConfig] = useState({
-    id: 1,
+    id: siteConfig.siteConfigId,
     navId: 1,
     fooId: 1,
   });

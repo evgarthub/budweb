@@ -1,7 +1,18 @@
-.form--login {
-    margin: -5px;
-    
-    & > * {
-        margin: 5px;
+.user-control {
+    min-width: 250px;
+    margin: 10px;
+
+    &__form {
+        margin: -5px;
+        
+        & > * {
+            margin: 5px;
+        }
+    }
+
+    &__profile {
+        display: grid;
+        grid-template-columns: max-content auto;
+        grid-gap: 5px 10px;
     }
 }
