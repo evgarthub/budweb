@@ -5,6 +5,7 @@ import ListPage from './ListPage';
 import NewsPage from './NewsPage';
 import PollsPage from './PollsPage';
 import RegistrationPage from './RegistrationPage';
+import TicketPage from './TicketPage';
 
 export {
     ContactPage,
@@ -14,4 +15,5 @@ export {
     NewsPage,
     PollsPage,
     RegistrationPage,
+    TicketPage,
 };
