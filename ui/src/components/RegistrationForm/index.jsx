@@ -85,8 +85,8 @@ const RegistrationForm = () => {
 
     if (isRegistered) {
         return (
-            <article class="message is-success">
-                <div class="message-body">
+            <article className="message is-success">
+                <div className="message-body">
                     Вітаємо, {user.login}! Ви успішно зареєструвалися!
                 </div>
             </article>

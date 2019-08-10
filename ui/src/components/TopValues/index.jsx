@@ -5,7 +5,7 @@ import './styles.scss';
 const TopValues = (props) => {
     const { items } = props;
     return (
-        <nav class="top-values level">
+        <nav className="top-values level">
             {items.map((item, i) => (
                 <div key={i} className="level-item has-text-centered">
                     <div>
