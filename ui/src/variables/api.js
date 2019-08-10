@@ -10,4 +10,5 @@ export default {
     userMe: `${API_URL}/users/me`,
     users: `${API_URL}/users`,
     tariffs: `${API_URL}/tariffs`,
+    register: `${API_URL}/auth/local/register`,
 }

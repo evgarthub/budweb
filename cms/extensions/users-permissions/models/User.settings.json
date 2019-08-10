@@ -56,8 +56,17 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "App": {
+    "section": {
       "type": "integer"
+    },
+    "appartment": {
+      "type": "integer"
+    },
+    "floor": {
+      "type": "integer"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

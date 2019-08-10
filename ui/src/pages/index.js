@@ -4,6 +4,7 @@ import InfrastructurePage from './InfrastructurePage';
 import ListPage from './ListPage';
 import NewsPage from './NewsPage';
 import PollsPage from './PollsPage';
+import RegistrationPage from './RegistrationPage';
 
 export {
     ContactPage,
@@ -12,4 +13,5 @@ export {
     ListPage,
     NewsPage,
     PollsPage,
+    RegistrationPage,
 };

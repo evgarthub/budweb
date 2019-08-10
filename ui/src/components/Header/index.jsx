@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navbar, NavbarBrand, NavbarItem, NavbarMenu, NavbarStart, NavbarDropdown, NavbarLink, NavbarBurger } from 'bloomer';
 import logo from '../../assets/logo.svg';
 import './styles.scss';
@@ -8,7 +8,7 @@ import { navExpand, navCollapse } from '../../utils/animations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { getNavigationById } from '../../utils/fetchAPI';
-import LoginForm from '../UserControl';
+import AuthForm from '../UserControl';
 import { AuthContext } from '../../context/authContext';
 
 
@@ -82,7 +82,7 @@ const Header = (props) => {
               <span className="navbar__username">{!userDropdownActive ? user.username : 'Закрити'}</span>
             </NavbarLink>
             <NavbarDropdown className='navbar__loginbox'>
-              <LoginForm />
+              <AuthForm onRegisterClick={handleUserDropdownClick}/>
             </NavbarDropdown>
           </NavbarItem>
           </NavbarStart>

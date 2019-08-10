@@ -40,9 +40,14 @@ export const label = {
         loginButton: "Увійти",
         logoutButton: "Вийти",
         email: "Пошта",
-        registerButton: "Зареєструватися",
+        registerButton: "Зареєструватись",
         guest: "Гість",
         appartment: "Квартира",
         loginLabel: "Логін",
+    },
+    registration: {
+        submitText: "Зареєструватись",
+        title: "Форма реєстрації на сайті",
+        metaDescription: "Форма реєстрації на сайті. Свторення облiкового запису."
     }
 }

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.scss';
 import { Footer, Header, Loading, ScrollToTop } from './components';
 import { AuthContextProvider } from './context';
-import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage } from './pages';
+import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage, RegistrationPage } from './pages';
 import { getSiteConfigById } from './utils/fetchAPI';
 import siteConfig from './variables/config';
 
@@ -59,6 +59,7 @@ const App = () => {
                 <Route path="/contacts" component={ContactPage} />
                 <Route path="/infrastructure" component={InfrastructurePage} />
                 <Route path="/polls" component={PollsPage} />
+                <Route path="/register" component={RegistrationPage} />
               </Switch>
 
               <Footer id={config.fooId} />

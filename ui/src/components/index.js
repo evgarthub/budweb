@@ -6,6 +6,7 @@ import Loading from './Loading';
 import PostCard from './PostCard';
 import PostList from './PostList';
 import UserControl from './UserControl';
+import RegistrationForm from './RegistrationForm';
 
 export {
     AboutCard,
@@ -16,4 +17,5 @@ export {
     PostCard,
     PostList,
     UserControl,
+    RegistrationForm,
 }

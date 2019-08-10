@@ -1,12 +1,13 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { doLogin, getUserInfo } from '../utils/authorization';
+import { doLogin, getUserInfo, doRegistration } from '../utils/authorization';
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
-    const [userProfile, setUserProfile] = useState({
+    const defaultState = {
         username: 'Гiсть',
-    });
+    };
+    const [userProfile, setUserProfile] = useState(defaultState);
 
     const handleUpdate = (input) => {
         setUserProfile({
@@ -48,17 +49,38 @@ export const AuthContextProvider = (props) => {
             });
     }
 
+    const handleRegistration = (login, password, appartment, email, phone) => {
+        doRegistration(login, password, appartment, email, phone)
+            .then(resp => {
+                const { jwt } = resp.data;
+
+                switch (resp.status) {
+                    case 200:
+                        localStorage.setItem('nb_token', jwt);
+                        getUserInfo().then(({ data }) => {
+                            handleUpdate(data);
+                        })
+                        break;
+
+                    default:
+                        alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${resp.statusText}`);
+                }
+            
+            })
+            .catch(data => {
+                alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${data}`);
+            });
+    }
+
     const handleSignOut = () => {
         localStorage.removeItem('nb_token');
-        getUserInfo().then(({ data }) => {
-            handleUpdate(data);
-        })
+        setUserProfile(defaultState);
     }
 
     return (
         <AuthContext.Provider value={{
             user: { ...userProfile },
-            actions: { handleLogin, handleSignOut }
+            actions: { handleLogin, handleSignOut, handleRegistration }
         }} >
             {props.children}
         </AuthContext.Provider>

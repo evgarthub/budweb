@@ -3,8 +3,9 @@ import { Field, Control, Input, Button } from 'bloomer';
 import './styles.scss';
 import { AuthContext } from '../../context/authContext';
 import {label} from '../../variables/labels';
+import { Link } from "react-router-dom";
 
-const AuthForm = () => {
+const AuthForm = (props) => {
     const [formData, setformData] = useState({
         login: '',
         password: '',
@@ -30,17 +31,12 @@ const AuthForm = () => {
         });
     }
 
-    const handleRegister = () => {
-        alert('registration');
-    }
-
     const handleSignOut = () => {
         actions.handleSignOut();
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleLogin();
     }
 
     const loginForm =  (
@@ -69,7 +65,9 @@ const AuthForm = () => {
             </Field>
             <div className='buttons'>
                 <button className='button is-info' onClick={handleLogin}>{label.userProfile.loginButton}</button>
-                <button className='button is-text' onClick={handleRegister}>{label.userProfile.registerButton}</button>
+                <Link to='/register'>
+                    <button className='button is-text' onClick={props.onRegisterClick} >{label.userProfile.registerButton}</button>
+                </Link>
             </div>
             
         </form>
@@ -80,7 +78,7 @@ const AuthForm = () => {
             <div className='user-control__profile'>
                 <div>{label.userProfile.loginLabel}:</div> <div>{user.username}</div>
                 <div>{label.userProfile.email}:</div> <div>{user.email}</div>
-                <div>{label.userProfile.appartment}:</div> <div>{user.App}</div>
+                <div>{label.userProfile.appartment}:</div> <div>{user.appartment}</div>
                 <div></div>
             </div>
             <Button onClick={handleSignOut}>{label.userProfile.logoutButton}</Button>
