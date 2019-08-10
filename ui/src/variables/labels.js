@@ -2,7 +2,8 @@ export const label = {
     home: {
         newsTitle: "Останнi новини",
         messageTitle: "Якщо Ви маєте вільну хвилину, залиште, будь-ласка, відгук про роботу сайту?",
-        messageButton: "Залишити"
+        messageButton: "Залишити",
+        tarifTitle: "Тарифи"
     },
     navigation: {
         logoTitle: "На головну 'Наш Будинок'"

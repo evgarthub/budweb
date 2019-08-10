@@ -67,8 +67,11 @@ const AuthForm = () => {
                         onChange={handleInput} />
                 </Control>
             </Field>
-            <Button onClick={handleLogin}>{label.userProfile.loginButton}</Button>
-            <Button onClick={handleRegister}>{label.userProfile.registerButton}</Button>
+            <div className='buttons'>
+                <button className='button is-info' onClick={handleLogin}>{label.userProfile.loginButton}</button>
+                <button className='button is-text' onClick={handleRegister}>{label.userProfile.registerButton}</button>
+            </div>
+            
         </form>
     );
     

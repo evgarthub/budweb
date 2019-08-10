@@ -9,4 +9,5 @@ export default {
     auth: `${API_URL}/auth/local`,
     userMe: `${API_URL}/users/me`,
     users: `${API_URL}/users`,
+    tariffs: `${API_URL}/tariffs`,
 }

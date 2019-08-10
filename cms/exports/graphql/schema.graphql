@@ -154,6 +154,14 @@ type createSiteconfigPayload {
   siteconfig: Siteconfig
 }
 
+input createTariffInput {
+  data: TariffInput
+}
+
+type createTariffPayload {
+  tariff: Tariff
+}
+
 input createUserInput {
   data: UserInput
 }
@@ -245,6 +253,14 @@ input deleteSiteconfigInput {
 
 type deleteSiteconfigPayload {
   siteconfig: Siteconfig
+}
+
+input deleteTariffInput {
+  where: InputID
+}
+
+type deleteTariffPayload {
+  tariff: Tariff
 }
 
 input deleteUserInput {
@@ -342,6 +358,13 @@ input editSiteconfigInput {
   gmapurl: String
 }
 
+input editTariffInput {
+  name: String
+  value: Float
+  unit: String
+  validFrom: DateTime
+}
+
 input editUserInput {
   username: String
   email: String
@@ -401,7 +424,7 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createAbout(input: createAboutInput): createAboutPayload
@@ -431,6 +454,9 @@ type Mutation {
   createSiteconfig(input: createSiteconfigInput): createSiteconfigPayload
   updateSiteconfig(input: updateSiteconfigInput): updateSiteconfigPayload
   deleteSiteconfig(input: deleteSiteconfigInput): deleteSiteconfigPayload
+  createTariff(input: createTariffInput): createTariffPayload
+  updateTariff(input: updateTariffInput): updateTariffPayload
+  deleteTariff(input: deleteTariffInput): deleteTariffPayload
 
   """Create a new role"""
   createRole(input: createRoleInput): createRolePayload
@@ -526,6 +552,8 @@ type Query {
   navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
   siteconfig(id: ID!): Siteconfig
   siteconfigs(sort: String, limit: Int, start: Int, where: JSON): [Siteconfig]
+  tariff(id: ID!): Tariff
+  tariffs(sort: String, limit: Int, start: Int, where: JSON): [Tariff]
   files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
   role(id: ID!): UsersPermissionsRole
 
@@ -559,6 +587,23 @@ input SiteconfigInput {
   footerid: Int
   navigationid: Int
   gmapurl: String
+}
+
+type Tariff {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  value: Float
+  unit: String
+  validFrom: DateTime
+}
+
+input TariffInput {
+  name: String
+  value: Float
+  unit: String
+  validFrom: DateTime
 }
 
 input updateAboutInput {
@@ -649,6 +694,15 @@ input updateSiteconfigInput {
 
 type updateSiteconfigPayload {
   siteconfig: Siteconfig
+}
+
+input updateTariffInput {
+  where: InputID
+  data: editTariffInput
+}
+
+type updateTariffPayload {
+  tariff: Tariff
 }
 
 input updateUserInput {

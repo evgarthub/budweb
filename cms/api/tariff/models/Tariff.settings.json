@@ -1,0 +1,30 @@
+{
+  "connection": "default",
+  "collectionName": "tariffs",
+  "info": {
+    "name": "tariff",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "value": {
+      "type": "float"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "validFrom": {
+      "type": "date"
+    }
+  }
+}

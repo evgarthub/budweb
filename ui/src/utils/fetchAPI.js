@@ -125,3 +125,15 @@ export const getFooterById = (id) => {
 export const getBlogs = (sort) => {
   return axios(`${api.url}${api.blogs}?_sort=created_at:${sort}`);
 }
+
+export const getTariffs = () => {
+  return axios(api.tariffs, {
+    query: `query {
+      tariffs {
+        name,
+        value,
+        unit
+      }
+    }`
+  });
+}
