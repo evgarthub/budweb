@@ -16,12 +16,13 @@ const RegistrationForm = () => {
 
     const { user, actions } = useContext(AuthContext);
 
+    const successfulReg = () => setIsRegistered(true);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const { login, password, appartment, email, phone } = formData;
-        actions.handleRegistration(login, password, appartment, email, phone);
-        if (user.role.type === "authenticated") setIsRegistered(true);
+        actions.handleRegistration(login, password, appartment, email, phone, successfulReg);
 
         setformData(defaultFields);
     };
@@ -87,7 +88,7 @@ const RegistrationForm = () => {
         return (
             <article className="message is-success">
                 <div className="message-body">
-                    Вітаємо, {user.login}! Ви успішно зареєструвалися!
+                    Вітаємо, {user.username}! Ви успішно зареєструвалися!
                 </div>
             </article>
         );
@@ -140,7 +141,7 @@ const FieldText = (props) => {
             <div className="control">
                 <input className={`input ${!isValid && 'is-danger'}`} name={name} type={type} placeholder={placeholder} onChange={onChange} value={value} autoComplete={autoComplete} />
             </div>
-            <p style={{display: isValid ? 'none' : 'block'}} class="help is-danger"> 
+            <p style={{display: isValid ? 'none' : 'block'}} className="help is-danger"> 
                 Перевiрте введене значення
             </p>
         </div>

@@ -49,7 +49,7 @@ export const AuthContextProvider = (props) => {
             });
     }
 
-    const handleRegistration = (login, password, appartment, email, phone) => {
+    const handleRegistration = (login, password, appartment, email, phone, onSuccess) => {
         doRegistration(login, password, appartment, email, phone)
             .then(resp => {
                 const { jwt } = resp.data;
@@ -59,7 +59,8 @@ export const AuthContextProvider = (props) => {
                         localStorage.setItem('nb_token', jwt);
                         getUserInfo().then(({ data }) => {
                             handleUpdate(data);
-                        })
+                            onSuccess();
+                        });
                         break;
 
                     default:
