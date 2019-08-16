@@ -33,6 +33,7 @@ const AuthForm = (props) => {
 
     const handleSignOut = () => {
         actions.handleSignOut();
+        props.onRegisterClick();
     }
 
     const handleSubmit = (e) => {

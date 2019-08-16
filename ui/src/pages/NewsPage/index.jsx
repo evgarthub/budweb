@@ -33,7 +33,7 @@ const NewsPage = (props) => {
                 navlinks
             });
         });
-    });
+    }, [props.match.params.id]);
 
     return (
         <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
@@ -61,7 +61,7 @@ const NewsPage = (props) => {
                         </header>
                         <Content>
                             <ReactMarkdown source={data.text} />
-                            {this.state.navlinks.map(link => (<a target="_blank" href={link.Link} key={link.id} rel="noopener noreferrer">
+                            {data.navlinks.map(link => (<a target="_blank" href={link.Link} key={link.id} rel="noopener noreferrer">
                                 <Button isColor="success">{link.Title}</Button>
                             </a>))}
                         </Content>

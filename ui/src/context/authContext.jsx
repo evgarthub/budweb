@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
     const defaultState = {
-        username: 'Гiсть',
+        username: 'Вхiд',
     };
     const [userProfile, setUserProfile] = useState(defaultState);
 
