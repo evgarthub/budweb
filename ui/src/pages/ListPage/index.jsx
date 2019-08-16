@@ -1,10 +1,10 @@
+import { Container, Section, Title } from 'bloomer';
 import React from 'react';
-import { Title, Container, Section } from 'bloomer';
-import { PostList } from '../../components';
+import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
+import { PostList } from '../../components';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { label } from '../../variables/labels';
-import { Helmet } from "react-helmet";
 
 const ListPage = () => {
     return (
@@ -21,7 +21,6 @@ const ListPage = () => {
                         <PostList />
                     </Container>
                 </Section>
-
             </section>
         </Transition>
     );

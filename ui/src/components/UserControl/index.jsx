@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Field, Control, Input, Button } from 'bloomer';
-import './styles.scss';
-import { AuthContext } from '../../context/authContext';
-import {label} from '../../variables/labels';
+import { Button, Control, Field, Input } from 'bloomer';
+import React, { useContext, useState } from 'react';
 import { Link } from "react-router-dom";
+import { AuthContext } from '../../context/authContext';
+import { label } from '../../variables/labels';
+import './styles.scss';
 
 const AuthForm = (props) => {
     const [formData, setformData] = useState({

@@ -122,8 +122,13 @@ export const getFooterById = (id) => {
   });
 } 
 
-export const getBlogs = (sort) => {
-  return axios(`${api.url}${api.blogs}?_sort=created_at:${sort}`);
+export const getBlogs = (sort, limit = '') => {
+  let requestUrl = `${api.url}${api.blogs}`;
+  
+  if (!!sort) requestUrl += `?_sort=created_at:${sort}`;
+  if (!!limit) requestUrl += `&_limit=${limit}`;
+
+  return axios(requestUrl);
 }
 
 export const getTariffs = () => {

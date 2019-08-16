@@ -16,18 +16,12 @@ const App = () => {
     fooId: 1,
   });
 
-  const handleConfigChange = (input) => {
-    setConfig({
-      ...config,
-      ...input,
-    });
-  };
-
   useEffect(() => {
     getSiteConfigById(config.id).then(({ data }) => {
       const { footerid, navigationid } = data.data.siteconfig;
 
-      handleConfigChange({
+      setConfig({
+        ...config,
         fooId: footerid,
         navId: navigationid,
       });

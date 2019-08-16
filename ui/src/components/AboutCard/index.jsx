@@ -1,161 +1,87 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Title, Subtitle, Content, Card, CardHeader, Media, MediaLeft, Image, MediaContent, CardHeaderIcon, CardContent, CardFooter, CardFooterItem } from 'bloomer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faPhone, faMapMarkerAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import ReactMarkdown from 'react-markdown';
 import './styles.scss';
 import api from "../../variables/api";
 import { aboutExpand, aboutCollapse } from '../../utils/animations';
+import { getLinkIcon, getLinkType } from '../../utils/helpers';
+import { ChevronDown, ChevronUp } from 'react-feather';
 
-class AboutCard extends Component {
-    constructor(props) {
-        super();
-        this.state = {
-            title: props.title,
-            subtitle: props.subtitle,
-            description: props.description,
-            contacts: props.contacts,
-            links: props.navlinks,
-            imageUrl: `${api.url}${props.image.url}`,
-            isCollapsed: true,
-            hasFooter: !!props.navlinks.length
-        }
-    }
+const AboutCard = (props) => {
+    const { title, subtitle, description, contacts, navlinks: links } = props;
 
-    handleCollapse = ({currentTarget}) => {
-        this.setState(pState => {
-            if(pState.isCollapsed) {
-                aboutExpand(currentTarget);
-            } else {
-                aboutCollapse(currentTarget);
-            }
+    const imageUrl = `${api.url}${props.image.url}`;
+    const hasFooter = !!props.navlinks.length;
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
-            return {
-                isCollapsed: !pState.isCollapsed
-            }
-        });
-    }
-
-    getLinkType = (type, value) => {
-        let t;
-
-        switch(type) {
-            case 'phone':
-                t = 'tel:';
-                break;
-            case 'email':
-                t = 'mailto:';
-                break;
-            case 'address':
-                t = 'https://www.google.com/maps/search/';
-                break;
-            default:
-                t = ''
+    const handleCollapse = ({currentTarget}) => {
+        if(isCollapsed) {
+            aboutExpand(currentTarget);
+        } else {
+            aboutCollapse(currentTarget);
         }
 
-        return t + value;
+        setIsCollapsed(!isCollapsed);
     }
 
-    getLinkIcon = (type) => {
-        let iconName;
+    return (
+        <Card className='contact-page__card about'>
+            <CardHeader onClick={handleCollapse}>
+                <div className="card-header-title">
+                    <Media className='about__media'>
+                        <MediaLeft>
+                            <Image isSize='96x96' src={imageUrl} />
+                        </MediaLeft>
+                        <MediaContent>
+                            <Title isSize={4}>{title}</Title>
+                            <Subtitle isSize={6}>{subtitle}</Subtitle>
+                        </MediaContent>
+                    </Media>
+                </div>
 
-        switch(type) {
-            case 'phone':
-                iconName = faPhone;
-                break;
+                <CardHeaderIcon>
+                    {isCollapsed ? <ChevronDown /> : <ChevronUp />}
+                </CardHeaderIcon>
+            </CardHeader>
+            <CardContent className="about__content-wrapper">
+                <Content className='about__content'>
+                    <ReactMarkdown source={description} />
 
-            case 'address':
-                iconName = faMapMarkerAlt;
-                break;
-            default:
-            case 'email':
-                iconName = faEnvelope;
-                break;
-        }
+                    {
+                        !!contacts.length && (
+                        <section className='contacts'>
+                            {contacts.map(contact => {
+                                const ContactIcon = getLinkIcon(contact.type);
 
-        return iconName;
-    }
+                                return (
+                                    <div key={contact.id} className='contact'>
+                                        <ContactIcon size={16} />
+                                        <span className='contact__desc'>{contact.description}:</span>
+                                        <a  href={getLinkType(contact.type, contact.data)}
+                                            className='contact__value'
+                                            target='_blank'
+                                            rel="noopener noreferrer">
+                                                {contact.data}
+                                        </a>
+                                    </div>
+                                );
+                            })}
+                        </section>)
+                    }
 
-    render() {
-        const { imageUrl, title, subtitle, isCollapsed, description, contacts } = this.state;
-
-        return (
-            <Card className='contact-page__card about'>
-                <CardHeader onClick={event => this.handleCollapse(event)}>
-                    <div className="card-header-title">
-                        <Media className='about__media'>
-                            <MediaLeft>
-                                <Image isSize='96x96' src={imageUrl} />
-                            </MediaLeft>
-                            <MediaContent>
-                                <Title isSize={4}>{title}</Title>
-                                <Subtitle isSize={6}>{subtitle}</Subtitle>
-                            </MediaContent>
-                        </Media>
-                    </div>
-
-                    <CardHeaderIcon>
-                        <FontAwesomeIcon style={{ display: isCollapsed ? 'flex' : 'none' }} icon={faAngleDown} />
-                        <FontAwesomeIcon style={{ display: isCollapsed ? 'none' : 'flex' }} icon={faAngleUp} />
-                    </CardHeaderIcon>
-                </CardHeader>
-                <CardContent className="about__content-wrapper">
-                    <Content className='about__content'>
-                        <ReactMarkdown source={description} />
-
-                        {
-                            contacts.length > 0 && (
-                            <section className='contacts'>
-                            {
-                                contacts.map(contact => {
-                                    return (
-                                        <div key={contact.id} className='contact'>
-                                            <FontAwesomeIcon icon={this.getLinkIcon(contact.type)} />
-                                            <span className='contact__desc'>{contact.description}: </span>
-                                            <a
-                                                href={this.getLinkType(contact.type, contact.data)}
-                                                className='contact__value'
-                                                target='_blank'
-                                                rel="noopener noreferrer">
-                                            {contact.data}
-                                            </a>
-                                        </div>
-                                    );
-                                })
-                            }
-
-                            </section>)
-                        }
-
-                    </Content>
-                </CardContent>
-                {
-                    (() => {
-                        if (this.state.hasFooter) {
-                            return (
-                                <CardFooter>
-                                    {
-                                        this.state.links.map(link => {
-                                            return (
-                                                <CardFooterItem key={link.id}>
-                                                    <a
-                                                        href={link.Link}
-                                                        target='_blank'
-                                                        rel="noopener noreferrer">{link.Title}</a>
-                                                </CardFooterItem>
-                                            )
-                                        })
-                                    }
-                                </CardFooter>
-                            )
-                        }
-                    })()
-                }
-
-
-            </Card>
-        );
-    }
-}
+                </Content>
+            </CardContent>
+            {hasFooter && (
+                <CardFooter>
+                    {links.map(link => (
+                        <CardFooterItem key={link.id}>
+                            <a href={link.Link} target='_blank' rel="noopener noreferrer">{link.Title}</a>
+                        </CardFooterItem>
+                    ))}
+                </CardFooter>
+            )}
+        </Card>
+    );
+};
 
 export default AboutCard;

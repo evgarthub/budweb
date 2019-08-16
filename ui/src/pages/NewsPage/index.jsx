@@ -1,35 +1,30 @@
-import React, { Component } from 'react';
-import { Title, Hero, HeroBody, Container, Content, Button } from 'bloomer';
+import { Button, Container, Content, Hero, HeroBody, Title } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
-import './styles.scss';
+import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet";
 import ReactMarkdown from 'react-markdown';
-import { getBlogById } from '../../utils/fetchAPI';
-import api from "../../variables/api";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
+import { getBlogById } from '../../utils/fetchAPI';
+import api from "../../variables/api";
 import { label } from '../../variables/labels';
-import { Helmet } from "react-helmet";
+import './styles.scss';
 
-class NewsPage extends Component {
-    constructor({ match }) {
-        super();
-        this.state = {
-            id: match.params.id,
-            isLoading: true,
-            title: null,
-            intro: null,
-            text: null,
-            imageUrl: null,
-            categories: [],
-            navlinks: [],
-        }
-    }
+const NewsPage = (props) => {
+    const [data, setData] = useState({
+        title: null,
+        intro: null,
+        text: null,
+        imageUrl: null,
+        categories: [],
+        navlinks: [],
+    });
 
-    componentDidMount() {
-        getBlogById(this.state.id).then(({ data }) => {
+    useEffect(() => {
+        getBlogById(props.match.params.id).then(({ data }) => {
             const { title, intro, text, image, categories, navlinks } = data.data.blog;
-            this.setState({
-                isLoading: false,
+
+            setData({
                 imageUrl: image && api.url+image.url,
                 title,
                 intro,
@@ -38,52 +33,46 @@ class NewsPage extends Component {
                 navlinks
             });
         });
-    }
+    });
 
-    render() {
-        const { title, intro, categories, text, imageUrl } = this.state;
-        return (
-            <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
+    return (
+        <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
 
-                <section className='news-page'>
-                    <Helmet>
-                        <title>{title}</title>
-                        <meta property="og:title" content={title} />
-                        <meta name="description" property="og:description" content={intro} />
-                    </Helmet>
-                    <Hero isColor='info' isSize='medium' className="news-page__hero" style={{backgroundImage: `url(${imageUrl})`}}>
-                        <HeroBody className="news-page__hero-body">
-                            <Container hasTextAlign='centered'>
-                                <Title isSize={3}>{title}</Title>
-                            </Container>
-                        </HeroBody>
-                    </Hero>
-                    <Section>
-                        <Container>
-                            <header className='news-page__header'>
-                                <span className='news-page__tags-title'>{label.news.tags}</span>
-                                <div className='news-page__tags'>
-                                    {categories.map(cat => <span className={`news-page__tag tag ${cat.color}`} key={cat.id}>{cat.name}</span>)}
-                                </div>
-                            </header>
-
-                            <Content>
-                                <ReactMarkdown source={text} />
-                                {this.state.navlinks.map(link => (<a target="_blank" href={link.Link} key={link.id} rel="noopener noreferrer">
-                                    <Button isColor="success">{link.Title}</Button>
-                                </a>))}
-                            </Content>
-                            <footer className='news-page__clap-wrapper'>
-                          
-                            </footer>
+            <section className='news-page'>
+                <Helmet>
+                    <title>{data.title}</title>
+                    <meta property="og:title" content={data.title} />
+                    <meta name="description" property="og:description" content={data.intro} />
+                </Helmet>
+                <Hero isColor='info' isSize='medium' className="news-page__hero" style={{backgroundImage: `url(${data.imageUrl})`}}>
+                    <HeroBody className="news-page__hero-body">
+                        <Container hasTextAlign='centered'>
+                            <Title isSize={3}>{data.title}</Title>
                         </Container>
-                    </Section>
-
-                </section>
-            </Transition>
-
-        );
-    }
+                    </HeroBody>
+                </Hero>
+                <Section>
+                    <Container>
+                        <header className='news-page__header'>
+                            <span className='news-page__tags-title'>{label.news.tags}</span>
+                            <div className='news-page__tags'>
+                                {data.categories.map(cat => <span className={`news-page__tag tag ${cat.color}`} key={cat.id}>{cat.name}</span>)}
+                            </div>
+                        </header>
+                        <Content>
+                            <ReactMarkdown source={data.text} />
+                            {this.state.navlinks.map(link => (<a target="_blank" href={link.Link} key={link.id} rel="noopener noreferrer">
+                                <Button isColor="success">{link.Title}</Button>
+                            </a>))}
+                        </Content>
+                        <footer className='news-page__clap-wrapper'>
+                      
+                        </footer>
+                    </Container>
+                </Section>
+            </section>
+        </Transition>
+    );
 }
 
 export default NewsPage;

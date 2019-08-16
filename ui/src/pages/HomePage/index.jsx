@@ -12,37 +12,18 @@ import { getTariffs } from '../../utils/fetchAPI';
 const HomePage = () => {
     const [tariffs, setTariffs] = useState([
         {
-            title: "Электричество",
+            title: "Завантаження",
             value: 0,
         },
-        {
-            title: "Вода холодная",
-            value: 0,
-        },
-        {
-            title: "Вода горячая",
-            value: 0,
-        },
-        {
-            title: "Отопление",
-            value: 0,
-        },
-        {
-            title: "Обслуживание",
-            value: 0,
-        }
     ]);
 
     useEffect(() => {
-        getTariffs().then(({data}) => {
-            setTariffs(data);
-        })
+        getTariffs().then(({data}) => setTariffs(data));
     }, []);
 
     return (
         <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
             <section className='home-page'>
-
                 <div className='home-page__post-card'>
                     <Section>
                         <Container>
@@ -63,7 +44,6 @@ const HomePage = () => {
                 </div>
             </section>
         </Transition>
-
     );
 }
 

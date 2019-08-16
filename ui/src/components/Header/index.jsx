@@ -5,24 +5,22 @@ import './styles.scss';
 import { Link } from "react-router-dom";
 import { label } from '../../variables/labels';
 import { navExpand, navCollapse } from '../../utils/animations';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { getNavigationById } from '../../utils/fetchAPI';
 import AuthForm from '../UserControl';
 import { AuthContext } from '../../context/authContext';
+import { User } from 'react-feather';
 
 
 const Header = (props) => {
   const { user } = useContext(AuthContext);
 
   const [headerData, setHeaderData] = useState({
-      id: props.id,
-      title: null,
-      links: [],
-      groups: [],
-      isLoading: false,
-      isActive: false,
-    });
+    title: null,
+    links: [],
+    groups: [],
+  });
+
+  const [isActive, setIsActive] = useState(false)
 
   const [userDropdownActive, setUserDropdownActive] = useState(false);
 
@@ -31,27 +29,22 @@ const Header = (props) => {
   }; 
 
   useEffect(() => {
-    getNavigationById(headerData.id)
+    getNavigationById(props.id)
       .then(({data}) => {
         const resData = data.data.navigation;
         setHeaderData({
-          ...headerData,
           isLoading: false,
           title: resData.Home,
           links: resData.navlinks,
           groups: resData.navgroups
         });
       });
-    }, []);
+    }, [props.id]);
 
   const onClickNav = () => {
-    window.innerWidth < 1087 && (headerData.isActive ? navCollapse() : navExpand());
-    setHeaderData({
-      ...headerData,
-      isActive: !headerData.isActive,
-    });
+    window.innerWidth < 1087 && (isActive ? navCollapse() : navExpand());
+    setIsActive(!isActive);
   };
-
   
   return (
     <Navbar>
@@ -61,24 +54,21 @@ const Header = (props) => {
       </NavbarBrand>
       <NavbarMenu>
           <NavbarStart>
-          {
-            headerData.links.map(link => <Link className='navbar-item' to={link.Link} key={`link_${link.id}`} onClick={onClickNav}>{link.Title}</Link>)
-          }
+          {headerData.links.map(link => <Link className='navbar-item' to={link.Link} key={`link_${link.id}`} onClick={onClickNav}>{link.Title}</Link>)}
 
-          {
-              headerData.groups.map(group => (
-                  <NavbarItem hasDropdown isHoverable key={`group_${group.id}`}>
-                      <NavbarLink>{group.Title}</NavbarLink>
-                      <NavbarDropdown isBoxed>
-                        {group.navlinks.map(link => <Link className='navbar-item' to={link.Link} key={link.id} onClick={onClickNav}>{link.Title}</Link>)}
-                      </NavbarDropdown>
-                  </NavbarItem>
-                )
-              )
-          }
+          {headerData.groups.map(group => (
+              <NavbarItem hasDropdown isHoverable key={`group_${group.id}`}>
+                  <NavbarLink>{group.Title}</NavbarLink>
+                  <NavbarDropdown isBoxed>
+                    {group.navlinks.map(link => <Link className='navbar-item' to={link.Link} key={link.id} onClick={onClickNav}>{link.Title}</Link>)}
+                  </NavbarDropdown>
+              </NavbarItem>
+            )
+          )}
+
           <NavbarItem hasDropdown isActive={userDropdownActive} key='login'>
             <NavbarLink onClick={handleUserDropdownClick}>
-              <FontAwesomeIcon icon={faUser} /> 
+              <User />
               <span className="navbar__username">{!userDropdownActive ? user.username : 'Закрити'}</span>
             </NavbarLink>
             <NavbarDropdown className='navbar__loginbox'>

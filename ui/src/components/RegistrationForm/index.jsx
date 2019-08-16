@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { label } from '../../variables/labels';
 import { AuthContext } from '../../context/authContext';
 import './styles.scss';
+import { UserPlus } from 'react-feather';
 
 const RegistrationForm = () => {
     const defaultFields = {
@@ -110,7 +111,7 @@ const RegistrationForm = () => {
                     ))
             }
             <br />
-            <button className='button is-primary'>{label.registration.submitText}</button>
+            <button className='button is-primary'><UserPlus className='registration-form__icon' size={16} /> {label.registration.submitText}</button>
         </form>
     );
 };
