@@ -1,5 +1,6 @@
 import { Button, Control, Field, Input } from 'bloomer';
 import React, { useContext, useState } from 'react';
+import { Loader, Mail, LogOut, LogIn, Home, Key, ChevronsUp, User } from 'react-feather';
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../context/authContext';
 import { label } from '../../variables/labels';
@@ -10,6 +11,7 @@ const AuthForm = (props) => {
         login: '',
         password: '',
     });
+    const [isLoading, setIsLoading] = useState(false);
 
     const { user, actions } = useContext(AuthContext);
 
@@ -24,7 +26,8 @@ const AuthForm = (props) => {
 
     const handleLogin = () => {
         const { login, password } = formData;
-        actions.handleLogin(login, password);
+        setIsLoading(true);
+        actions.handleLogin(login, password, () => setIsLoading(false));
         setformData({
             login: '',
             password: '',
@@ -65,7 +68,12 @@ const AuthForm = (props) => {
                 </Control>
             </Field>
             <div className='buttons'>
-                <button className='button is-info' onClick={handleLogin}>{label.userProfile.loginButton}</button>
+                <button className='button is-info' onClick={handleLogin}>
+                    <span className="icon is-small">
+                        <LogIn size={16} />
+                    </span>
+                    <span>{label.userProfile.loginButton}</span>
+                </button>
                 <Link to='/register'>
                     <button className='button is-text' onClick={props.onRegisterClick} >{label.userProfile.registerButton}</button>
                 </Link>
@@ -76,19 +84,31 @@ const AuthForm = (props) => {
     
     const exitForm = (
         <div className='user-control__form'>
-            <div className='user-control__profile'>
-                <div>{label.userProfile.loginLabel}:</div> <div>{user.username}</div>
-                <div>{label.userProfile.email}:</div> <div>{user.email}</div>
-                <div>{label.userProfile.appartment}:</div> <div>{user.appartment}</div>
-                <div></div>
+            <div className='user-control__profile content'>
+                <User size={16} /> <div>{label.userProfile.loginLabel}:</div> <div>{user.username}</div>
+                <Mail size={16} /> <div> {label.userProfile.email}:</div> <div>{user.email}</div>
+                <Key size={16} /> <div> {label.userProfile.appartment}:</div> <div>{user.appartment}</div>
+                <Home size={16} /> <div> {label.userProfile.section}:</div> <div>{user.section}</div>
+                <ChevronsUp size={16} /> <div> {label.userProfile.floor}:</div> <div>{user.floor}</div>
             </div>
-            <Button onClick={handleSignOut}>{label.userProfile.logoutButton}</Button>
+            <button className='button is-danger' onClick={handleSignOut}>
+                <span className="icon is-small">
+                    <LogOut size={16} />
+                </span>
+                <span>{label.userProfile.logoutButton}</span>
+            </button>
         </div> 
     );
 
+    if (isLoading) {
+        return (
+            <Loader />
+        );
+    }
+
     return (
         <section className='user-control'>
-            { user.role && user.role.type === "authenticated" ? exitForm : loginForm }
+            { user.role && user.role.type  ? exitForm : loginForm }
         </section>
     );
 }

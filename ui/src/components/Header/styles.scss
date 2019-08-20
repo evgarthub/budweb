@@ -39,7 +39,6 @@
         &-item {
             border-top: 1px solid #f0f0f0;
             margin-top: -1px;
-            width: 100%;
         }
 
         &-dropdown {
@@ -48,8 +47,10 @@
         }
 
         &__right-side {
+            border-top: 1px solid #f0f0f0;
             width: 100%;
             display: flex;
+            justify-content: flex-end;
         }
     }
     

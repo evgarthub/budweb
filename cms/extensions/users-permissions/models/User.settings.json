@@ -67,6 +67,10 @@
     },
     "phone": {
       "type": "string"
+    },
+    "requests": {
+      "collection": "request",
+      "via": "user"
     }
   }
 }

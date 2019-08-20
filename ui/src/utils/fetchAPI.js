@@ -132,15 +132,44 @@ export const getBlogs = (sort, limit = '') => {
 }
 
 export const getTariffs = () => {
-  return axios(api.tariffs, {
-    query: `query {
-      tariffs {
-        name,
-        value,
-        unit
-      }
-    }`
+  return axios.get(api.tariffs);
+};
+
+export const getRequests = () => {
+  return axios.get(api.requests, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
   });
 };
+
+export const getRequestsMe = () => {
+  return axios.get(`${api.requests}/me`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+};
+
+export const postRequest = (description, user) => {
+  return axios.post(api.requests, {
+    description,
+    user,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+}
+
+export const updateRequestStatus = (id, status) => {
+  return axios.put(`${api.requests}/${id}`, { status },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+}
 
   

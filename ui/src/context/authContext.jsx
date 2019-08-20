@@ -10,10 +10,7 @@ export const AuthContextProvider = (props) => {
     const [userProfile, setUserProfile] = useState(defaultState);
 
     const handleUpdate = (input) => {
-        setUserProfile({
-            ...userProfile,
-            ...input,
-        })
+        setUserProfile(input)
     };
 
     useEffect(() => {
@@ -26,7 +23,7 @@ export const AuthContextProvider = (props) => {
             });
     }, [])
 
-    const handleLogin = (login, password) => {
+    const handleLogin = (login, password, callback) => {
         doLogin(login, password)
             .then(resp => {
                 const { jwt } = resp.data;
@@ -42,7 +39,10 @@ export const AuthContextProvider = (props) => {
                     default:
                         alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${resp.statusText}`);
                 }
-            
+                
+                if (callback) {
+                    callback();
+                }
             })
             .catch(data => {
                 alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${data}`);

@@ -7,6 +7,7 @@ import { AuthContextProvider } from './context';
 import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage, RegistrationPage, TicketPage } from './pages';
 import { getSiteConfigById } from './utils/fetchAPI';
 import siteConfig from './variables/config';
+import RequestsPage from './pages/RequestsPage';
 
 const App = () => {
   const [isLoading, setLoading] = useState(true);
@@ -55,6 +56,7 @@ const App = () => {
                 <Route path="/polls" component={PollsPage} />
                 <Route path="/register" component={RegistrationPage} />
                 <Route path="/ticket" component={TicketPage} />
+                <Route path="/requests" component={RequestsPage} />
               </Switch>
 
               <Footer id={config.fooId} />

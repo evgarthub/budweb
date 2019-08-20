@@ -138,6 +138,14 @@ type createNavlinkPayload {
   navlink: Navlink
 }
 
+input createRequestInput {
+  data: RequestInput
+}
+
+type createRequestPayload {
+  request: Request
+}
+
 input createRoleInput {
   data: RoleInput
 }
@@ -237,6 +245,14 @@ input deleteNavlinkInput {
 
 type deleteNavlinkPayload {
   navlink: Navlink
+}
+
+input deleteRequestInput {
+  where: InputID
+}
+
+type deleteRequestPayload {
+  request: Request
 }
 
 input deleteRoleInput {
@@ -344,6 +360,12 @@ input editNavlinkInput {
   about: ID
 }
 
+input editRequestInput {
+  description: String
+  user: ID
+  status: ENUM_REQUEST_STATUS
+}
+
 input editRoleInput {
   name: String
   description: String
@@ -378,6 +400,7 @@ input editUserInput {
   appartment: Int
   floor: Int
   phone: String
+  requests: [ID]
 }
 
 enum ENUM_NAVLINK_LOGO {
@@ -390,6 +413,15 @@ enum ENUM_NAVLINK_LOGO {
   facebook
   telegram
   viber
+}
+
+enum ENUM_REQUEST_STATUS {
+  open
+  review
+  progress
+  declined
+  hold
+  done
 }
 
 input FileInput {
@@ -427,7 +459,7 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createAbout(input: createAboutInput): createAboutPayload
@@ -454,6 +486,9 @@ type Mutation {
   createNavlink(input: createNavlinkInput): createNavlinkPayload
   updateNavlink(input: updateNavlinkInput): updateNavlinkPayload
   deleteNavlink(input: deleteNavlinkInput): deleteNavlinkPayload
+  createRequest(input: createRequestInput): createRequestPayload
+  updateRequest(input: updateRequestInput): updateRequestPayload
+  deleteRequest(input: deleteRequestInput): deleteRequestPayload
   createSiteconfig(input: createSiteconfigInput): createSiteconfigPayload
   updateSiteconfig(input: updateSiteconfigInput): updateSiteconfigPayload
   deleteSiteconfig(input: deleteSiteconfigInput): deleteSiteconfigPayload
@@ -553,6 +588,8 @@ type Query {
   navigations(sort: String, limit: Int, start: Int, where: JSON): [Navigation]
   navlink(id: ID!): Navlink
   navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+  request(id: ID!): Request
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
   siteconfig(id: ID!): Siteconfig
   siteconfigs(sort: String, limit: Int, start: Int, where: JSON): [Siteconfig]
   tariff(id: ID!): Tariff
@@ -567,6 +604,21 @@ type Query {
   user(id: ID!): UsersPermissionsUser
   users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
   me: UsersPermissionsMe
+}
+
+type Request {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  description: String
+  user: UsersPermissionsUser
+  status: ENUM_REQUEST_STATUS
+}
+
+input RequestInput {
+  description: String
+  user: ID
+  status: ENUM_REQUEST_STATUS
 }
 
 input RoleInput {
@@ -681,6 +733,15 @@ type updateNavlinkPayload {
   navlink: Navlink
 }
 
+input updateRequestInput {
+  where: InputID
+  data: editRequestInput
+}
+
+type updateRequestPayload {
+  request: Request
+}
+
 input updateRoleInput {
   where: InputID
   data: editRoleInput
@@ -749,6 +810,7 @@ input UserInput {
   appartment: Int
   floor: Int
   phone: String
+  requests: [ID]
 }
 
 type UsersPermissionsMe {
@@ -800,4 +862,5 @@ type UsersPermissionsUser {
   appartment: Int
   floor: Int
   phone: String
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
 }

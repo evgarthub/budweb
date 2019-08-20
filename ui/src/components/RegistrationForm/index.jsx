@@ -96,23 +96,26 @@ const RegistrationForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className='registration-form'>
-            {
-                formDefinition.map((field, i) => (
-                        <FieldText 
-                            key={i} 
-                            name={field.name} 
-                            label={field.label} 
-                            type={field.type} 
-                            placeholder={field.placeholder} 
-                            onChange={field.onChange} 
-                            value={field.value} 
-                            autoComplete={field.autoComplete} />
-                    ))
-            }
-            <br />
-            <button className='button is-primary'><UserPlus className='registration-form__icon' size={16} /> {label.registration.submitText}</button>
-        </form>
+        <div class="box registration-form__wrapper">
+            <form onSubmit={handleSubmit} className='registration-form'>
+                {
+                    formDefinition.map((field, i) => (
+                            <FieldText 
+                                key={i} 
+                                name={field.name} 
+                                label={field.label} 
+                                type={field.type} 
+                                placeholder={field.placeholder} 
+                                onChange={field.onChange} 
+                                value={field.value} 
+                                autoComplete={field.autoComplete} />
+                        ))
+                }
+                <br />
+                <button className='button is-primary'><UserPlus className='registration-form__icon' size={16} /> {label.registration.submitText}</button>
+            </form>
+        </div>
+        
     );
 };
 
