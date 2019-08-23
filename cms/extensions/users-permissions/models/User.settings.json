@@ -56,21 +56,16 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "section": {
-      "type": "integer"
-    },
-    "appartment": {
-      "type": "integer"
-    },
-    "floor": {
-      "type": "integer"
-    },
     "phone": {
       "type": "string"
     },
     "requests": {
       "collection": "request",
       "via": "user"
+    },
+    "appartment": {
+      "model": "appartment",
+      "via": "users"
     }
   }
 }

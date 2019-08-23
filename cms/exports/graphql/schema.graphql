@@ -19,6 +19,27 @@ input AboutInput {
   navlinks: [ID]
 }
 
+type Appartment {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  number: Int!
+  section: Int!
+  floor: Int!
+  space: Float!
+  rooms: Int
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+input AppartmentInput {
+  number: Int!
+  section: Int!
+  floor: Int!
+  users: [ID]
+  space: Float!
+  rooms: Int
+}
+
 type Blog {
   id: ID!
   created_at: DateTime!
@@ -80,6 +101,14 @@ input createAboutInput {
 
 type createAboutPayload {
   about: About
+}
+
+input createAppartmentInput {
+  data: AppartmentInput
+}
+
+type createAppartmentPayload {
+  appartment: Appartment
 }
 
 input createBlogInput {
@@ -191,6 +220,14 @@ type deleteAboutPayload {
   about: About
 }
 
+input deleteAppartmentInput {
+  where: InputID
+}
+
+type deleteAppartmentPayload {
+  appartment: Appartment
+}
+
 input deleteBlogInput {
   where: InputID
 }
@@ -296,6 +333,15 @@ input editAboutInput {
   navlinks: [ID]
 }
 
+input editAppartmentInput {
+  number: Int
+  section: Int
+  floor: Int
+  users: [ID]
+  space: Float
+  rooms: Int
+}
+
 input editBlogInput {
   title: String
   intro: String
@@ -362,8 +408,8 @@ input editNavlinkInput {
 
 input editRequestInput {
   description: String
-  user: ID
   status: ENUM_REQUEST_STATUS
+  user: ID
 }
 
 input editRoleInput {
@@ -396,11 +442,9 @@ input editUserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
-  section: Int
-  appartment: Int
-  floor: Int
   phone: String
   requests: [ID]
+  appartment: ID
 }
 
 enum ENUM_NAVLINK_LOGO {
@@ -459,12 +503,15 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Appartment | createAppartmentPayload | updateAppartmentPayload | deleteAppartmentPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createAbout(input: createAboutInput): createAboutPayload
   updateAbout(input: updateAboutInput): updateAboutPayload
   deleteAbout(input: deleteAboutInput): deleteAboutPayload
+  createAppartment(input: createAppartmentInput): createAppartmentPayload
+  updateAppartment(input: updateAppartmentInput): updateAppartmentPayload
+  deleteAppartment(input: deleteAppartmentInput): deleteAppartmentPayload
   createBlog(input: createBlogInput): createBlogPayload
   updateBlog(input: updateBlogInput): updateBlogPayload
   deleteBlog(input: deleteBlogInput): deleteBlogPayload
@@ -574,6 +621,8 @@ input NavlinkInput {
 type Query {
   about(id: ID!): About
   abouts(sort: String, limit: Int, start: Int, where: JSON): [About]
+  appartment(id: ID!): Appartment
+  appartments(sort: String, limit: Int, start: Int, where: JSON): [Appartment]
   blog(id: ID!): Blog
   blogs(sort: String, limit: Int, start: Int, where: JSON): [Blog]
   category(id: ID!): Category
@@ -611,14 +660,14 @@ type Request {
   created_at: DateTime!
   updated_at: DateTime!
   description: String
-  user: UsersPermissionsUser
   status: ENUM_REQUEST_STATUS
+  user: UsersPermissionsUser
 }
 
 input RequestInput {
   description: String
-  user: ID
   status: ENUM_REQUEST_STATUS
+  user: ID
 }
 
 input RoleInput {
@@ -668,6 +717,15 @@ input updateAboutInput {
 
 type updateAboutPayload {
   about: About
+}
+
+input updateAppartmentInput {
+  where: InputID
+  data: editAppartmentInput
+}
+
+type updateAppartmentPayload {
+  appartment: Appartment
 }
 
 input updateBlogInput {
@@ -806,11 +864,9 @@ input UserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
-  section: Int
-  appartment: Int
-  floor: Int
   phone: String
   requests: [ID]
+  appartment: ID
 }
 
 type UsersPermissionsMe {
@@ -858,9 +914,7 @@ type UsersPermissionsUser {
   confirmed: Boolean
   blocked: Boolean
   role: UsersPermissionsRole
-  section: Int
-  appartment: Int
-  floor: Int
   phone: String
+  appartment: Appartment
   requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
 }

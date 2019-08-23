@@ -1,0 +1,50 @@
+{
+  "connection": "default",
+  "collectionName": "appartments",
+  "info": {
+    "name": "appartment",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "number": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 417
+    },
+    "section": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    "floor": {
+      "type": "integer",
+      "max": 16,
+      "required": true,
+      "min": 1
+    },
+    "users": {
+      "collection": "user",
+      "via": "appartment",
+      "plugin": "users-permissions"
+    },
+    "space": {
+      "type": "decimal",
+      "required": true
+    },
+    "rooms": {
+      "type": "integer",
+      "max": 3,
+      "min": 1
+    }
+  }
+}

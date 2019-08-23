@@ -576,6 +576,17 @@
           "description": {
             "type": "string"
           },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "review",
+              "progress",
+              "declined",
+              "hold",
+              "done"
+            ]
+          },
           "user": {
             "required": [
               "id",
@@ -610,15 +621,6 @@
               "role": {
                 "type": "string"
               },
-              "section": {
-                "type": "integer"
-              },
-              "appartment": {
-                "type": "integer"
-              },
-              "floor": {
-                "type": "integer"
-              },
               "phone": {
                 "type": "string"
               },
@@ -627,19 +629,11 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "appartment": {
+                "type": "string"
               }
             }
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "open",
-              "review",
-              "progress",
-              "declined",
-              "hold",
-              "done"
-            ]
           }
         }
       },
@@ -648,9 +642,6 @@
           "description": {
             "type": "string"
           },
-          "user": {
-            "type": "string"
-          },
           "status": {
             "type": "string",
             "enum": [
@@ -661,6 +652,9 @@
               "hold",
               "done"
             ]
+          },
+          "user": {
+            "type": "string"
           }
         }
       }

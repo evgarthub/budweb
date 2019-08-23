@@ -17,11 +17,6 @@
     "description": {
       "type": "text"
     },
-    "user": {
-      "model": "user",
-      "via": "requests",
-      "plugin": "users-permissions"
-    },
     "status": {
       "enum": [
         "open",
@@ -32,6 +27,11 @@
         "done"
       ],
       "type": "enumeration"
+    },
+    "user": {
+      "model": "user",
+      "via": "requests",
+      "plugin": "users-permissions"
     }
   }
 }

@@ -1162,15 +1162,6 @@
               }
             }
           },
-          "section": {
-            "type": "integer"
-          },
-          "appartment": {
-            "type": "integer"
-          },
-          "floor": {
-            "type": "integer"
-          },
           "phone": {
             "type": "string"
           },
@@ -1187,12 +1178,47 @@
                 "description": {
                   "type": "string"
                 },
-                "user": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
+                },
+                "user": {
+                  "type": "string"
                 }
+              }
+            }
+          },
+          "appartment": {
+            "required": [
+              "id",
+              "number",
+              "section",
+              "floor",
+              "space"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "number": {
+                "type": "integer"
+              },
+              "section": {
+                "type": "integer"
+              },
+              "floor": {
+                "type": "integer"
+              },
+              "users": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "space": {
+                "type": "number"
+              },
+              "rooms": {
+                "type": "integer"
               }
             }
           }
@@ -1233,15 +1259,6 @@
           "role": {
             "type": "string"
           },
-          "section": {
-            "type": "integer"
-          },
-          "appartment": {
-            "type": "integer"
-          },
-          "floor": {
-            "type": "integer"
-          },
           "phone": {
             "type": "string"
           },
@@ -1250,6 +1267,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "appartment": {
+            "type": "string"
           }
         }
       }

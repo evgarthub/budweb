@@ -87,9 +87,9 @@ const AuthForm = (props) => {
             <div className='user-control__profile content'>
                 <User size={16} /> <div>{label.userProfile.loginLabel}:</div> <div>{user.username}</div>
                 <Mail size={16} /> <div> {label.userProfile.email}:</div> <div>{user.email}</div>
-                <Key size={16} /> <div> {label.userProfile.appartment}:</div> <div>{user.appartment}</div>
-                <Home size={16} /> <div> {label.userProfile.section}:</div> <div>{user.section}</div>
-                <ChevronsUp size={16} /> <div> {label.userProfile.floor}:</div> <div>{user.floor}</div>
+                {/* <Key size={16} /> <div> {label.userProfile.appartment}:</div> <div>{user.appartment.number}</div>
+                <Home size={16} /> <div> {label.userProfile.section}:</div> <div>{user.appartment.section}</div>
+                <ChevronsUp size={16} /> <div> {label.userProfile.floor}:</div> <div>{user.appartment.floor}</div> */}
             </div>
             <button className='button is-danger' onClick={handleSignOut}>
                 <span className="icon is-small">
