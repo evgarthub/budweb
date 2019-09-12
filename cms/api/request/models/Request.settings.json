@@ -26,7 +26,8 @@
         "hold",
         "done"
       ],
-      "type": "enumeration"
+      "type": "enumeration",
+      "default": "open"
     },
     "user": {
       "model": "user",

@@ -443,8 +443,8 @@ input editUserInput {
   blocked: Boolean
   role: ID
   phone: String
-  requests: [ID]
   appartment: ID
+  requests: [ID]
 }
 
 enum ENUM_NAVLINK_LOGO {
@@ -865,8 +865,8 @@ input UserInput {
   blocked: Boolean
   role: ID
   phone: String
-  requests: [ID]
   appartment: ID
+  requests: [ID]
 }
 
 type UsersPermissionsMe {

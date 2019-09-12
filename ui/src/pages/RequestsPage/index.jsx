@@ -8,12 +8,13 @@ import { pageEnter, pageExit } from '../../utils/animations';
 import { getRequests, updateRequestStatus, getRequestsMe } from '../../utils/fetchAPI';
 import { getStatusText, getStatusColor } from '../../utils/helpers';
 import { label } from '../../variables/labels';
-import { Save } from 'react-feather';
+import { Save, Loader } from 'react-feather';
 import { isAllowed } from '../../components/Can';
 
 const RequestsPage = () => {
     const { user } = useContext(AuthContext);
     const [data, setData] = useState([]);
+    const [change, setChange] = useState();
     const isAdmin = isAllowed(user.role && user.role.type, "requests:get");
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const RequestsPage = () => {
                 setData(data);
             });
         }
-    }, [user, isAdmin]);   
+    }, [user, isAdmin, change]);   
 
     const headers = [
         {
@@ -36,17 +37,17 @@ const RequestsPage = () => {
         {
             title: 'Секцiя',
             key: 'section',
-            renderer: (rowData) => rowData.user.section,
+            renderer: (rowData) => rowData.user.appartment.section,
         },
         {
             title: 'Поверх',
             key: 'floor',
-            renderer: (rowData) => rowData.user.floor,
+            renderer: (rowData) => rowData.user.appartment.floor,
         },
         {
             title: 'Квартира',
             key: 'user',
-            renderer: (rowData) => rowData.user.appartment,
+            renderer: (rowData) => rowData.user.appartment.number,
         },
         {
             title: 'Опис',
@@ -54,7 +55,7 @@ const RequestsPage = () => {
         },
         {
             title: 'Статус',
-            renderer: (rowData) => isAdmin ? (<SelectContr rowData={rowData} />) : (<StatusText value={rowData.status} />),
+            renderer: (rowData) => isAdmin ? (<SelectControl rowData={rowData} onChange={setChange} />) : (<StatusText value={rowData.status} />),
         },
     ];
 
@@ -83,15 +84,15 @@ const RequestsPage = () => {
     );
 };
 
-const SelectContr = (props) => {
+const SelectControl = (props) => {
     const { id, status } = props.rowData;
     const statuses = ["open", "review", "progress", "declined", "hold", "done"];
     const [newStatus, setNewStatus] = useState(status);
     const selectField = useSelect(status, setNewStatus);
-    
 
     const handleSave = () => {
         updateRequestStatus(id, newStatus);
+        props.onChange({id, newStatus});
     }
 
     return (
@@ -99,15 +100,16 @@ const SelectContr = (props) => {
             <div className='control'>
                 <div className="select">
                     <select type='text' {...selectField} >
-                        {statuses.map(status => (<option value={status}>{getStatusText(status)}</option>))}
+                        {statuses.map(status => (<option key={status} value={status}>{getStatusText(status)}</option>))}
                     </select>
                 </div>
             </div>
             <div className="control">
-                <button className='button' disabled={newStatus === status} onClick={handleSave} ><Save /></button>
+                <button className='button' disabled={newStatus === status} onClick={handleSave} >
+                    <Save />
+                </button>
             </div>
         </div>
-        
     );
 };
 

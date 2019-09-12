@@ -6,13 +6,30 @@
  */
 
 module.exports = {
-    me: async ctx => {
-        const user = ctx.state.user;    
+  find: async ctx => {
+    const user = ctx.state.user;
+
+    if (!user) {
+      return ctx.badRequest(null, [{ messages: [{ id: 'No authorization header was found' }] }]);
+    }
+
+    const data = await strapi.services.request.find(undefined, ['user', 'user.appartment']);  
+
+    if(!data){
+      return ctx.notFound();
+    }
+
+    ctx.send(data);
+  },
+    
+  me: async ctx => {
+        const user = ctx.state.user;
+
         if (!user) {
           return ctx.badRequest(null, [{ messages: [{ id: 'No authorization header was found' }] }]);
         }
     
-        const data = await strapi.services.request.find({user:user.id});  
+        const data = await strapi.services.request.find({user:user.id}, ['user', 'user.appartment']);  
     
         if(!data){
           return ctx.notFound();

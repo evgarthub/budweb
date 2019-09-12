@@ -568,14 +568,14 @@
                 "phone": {
                   "type": "string"
                 },
+                "appartment": {
+                  "type": "string"
+                },
                 "requests": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "appartment": {
-                  "type": "string"
                 }
               }
             }

@@ -172,4 +172,57 @@ export const updateRequestStatus = (id, status) => {
   });
 }
 
+export const getUserAppartment = (id) => {
+  return axios.post(api.graphql,
+    {
+      query: `query {
+        user(id: ${id}) {
+          appartment {
+            number,
+            section,
+            floor,
+            space,
+            rooms
+          }
+        }
+      }`
+    },
+    {
+      headers: {
+          Authorization: `Bearer ${getToken()}`, 
+      }
+    }
+  );   
+}
+
+export const getUserMe = () => {
+  return axios.post(api.graphql,
+    {
+      query: `query {
+        me {
+          username,
+          email,
+          role {
+            type
+          }
+        }
+      }`
+    },
+    {
+      headers: {
+          Authorization: `Bearer ${getToken()}`, 
+      }
+    }
+  );    
+}
+
+export const getMe = () => {
+  return axios.get(api.userMe,
+    {
+      headers: {
+          Authorization: `Bearer ${getToken()}`, 
+      }
+    }
+  );    
+}
   

@@ -96,7 +96,7 @@ const RegistrationForm = () => {
     }
 
     return (
-        <div class="box registration-form__wrapper">
+        <div className="box registration-form__wrapper">
             <form onSubmit={handleSubmit} className='registration-form'>
                 {
                     formDefinition.map((field, i) => (

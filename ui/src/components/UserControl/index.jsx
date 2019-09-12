@@ -1,9 +1,10 @@
-import { Button, Control, Field, Input } from 'bloomer';
+import { Control, Field, Input } from 'bloomer';
 import React, { useContext, useState } from 'react';
-import { Loader, Mail, LogOut, LogIn, Home, Key, ChevronsUp, User } from 'react-feather';
+import { Loader, Mail, LogOut, LogIn, Home, Key, ChevronsUp, User, Codepen, Grid } from 'react-feather';
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../context/authContext';
 import { label } from '../../variables/labels';
+import { getUserAppartment } from '../../utils/fetchAPI';
 import './styles.scss';
 
 const AuthForm = (props) => {
@@ -12,7 +13,6 @@ const AuthForm = (props) => {
         password: '',
     });
     const [isLoading, setIsLoading] = useState(false);
-
     const { user, actions } = useContext(AuthContext);
 
     const handleInput = ({ target }) => {
@@ -87,9 +87,14 @@ const AuthForm = (props) => {
             <div className='user-control__profile content'>
                 <User size={16} /> <div>{label.userProfile.loginLabel}:</div> <div>{user.username}</div>
                 <Mail size={16} /> <div> {label.userProfile.email}:</div> <div>{user.email}</div>
-                {/* <Key size={16} /> <div> {label.userProfile.appartment}:</div> <div>{user.appartment.number}</div>
-                <Home size={16} /> <div> {label.userProfile.section}:</div> <div>{user.appartment.section}</div>
-                <ChevronsUp size={16} /> <div> {label.userProfile.floor}:</div> <div>{user.appartment.floor}</div> */}
+                {user.appartment && (<>
+                    <Key size={16} /> <div> {label.userProfile.appartment}:</div> <div>{user.appartment.number}</div>
+                    <Codepen size={16} /> <div> {label.userProfile.space}:</div> <div>{user.appartment.space} м.кв.</div>
+                    <Grid size={16} /> <div> {label.userProfile.rooms}:</div> <div>{user.appartment.rooms}</div>
+                    <ChevronsUp size={16} /> <div> {label.userProfile.floor}:</div> <div>{user.appartment.floor}</div>
+                    <Home size={16} /> <div> {label.userProfile.section}:</div> <div>{user.appartment.section}</div>
+                </>)}
+                
             </div>
             <button className='button is-danger' onClick={handleSignOut}>
                 <span className="icon is-small">
@@ -102,7 +107,9 @@ const AuthForm = (props) => {
 
     if (isLoading) {
         return (
-            <Loader />
+            <Loader style={{
+                transform: 'rotate(179deg)'
+            }} />
         );
     }
 

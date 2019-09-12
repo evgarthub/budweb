@@ -1165,28 +1165,6 @@
           "phone": {
             "type": "string"
           },
-          "requests": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "appartment": {
             "required": [
               "id",
@@ -1219,6 +1197,28 @@
               },
               "rooms": {
                 "type": "integer"
+              }
+            }
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -1262,14 +1262,14 @@
           "phone": {
             "type": "string"
           },
+          "appartment": {
+            "type": "string"
+          },
           "requests": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "appartment": {
-            "type": "string"
           }
         }
       }

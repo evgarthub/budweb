@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "08/23/2019 11:17:58 AM"
+    "x-generation-date": "09/12/2019 4:24:32 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8450,14 +8450,14 @@
                 "phone": {
                   "type": "string"
                 },
+                "appartment": {
+                  "type": "string"
+                },
                 "requests": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "appartment": {
-                  "type": "string"
                 }
               }
             }
@@ -9320,6 +9320,7 @@
           },
           "status": {
             "type": "string",
+            "default": "open",
             "enum": [
               "open",
               "review",
@@ -9366,14 +9367,14 @@
               "phone": {
                 "type": "string"
               },
+              "appartment": {
+                "type": "string"
+              },
               "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "appartment": {
-                "type": "string"
               }
             }
           }
@@ -9386,6 +9387,7 @@
           },
           "status": {
             "type": "string",
+            "default": "open",
             "enum": [
               "open",
               "review",
@@ -9569,14 +9571,14 @@
                 "phone": {
                   "type": "string"
                 },
+                "appartment": {
+                  "type": "string"
+                },
                 "requests": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
-                },
-                "appartment": {
-                  "type": "string"
                 }
               }
             }
@@ -9676,28 +9678,6 @@
           "phone": {
             "type": "string"
           },
-          "requests": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "appartment": {
             "required": [
               "id",
@@ -9730,6 +9710,28 @@
               },
               "rooms": {
                 "type": "integer"
+              }
+            }
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -9773,14 +9775,14 @@
           "phone": {
             "type": "string"
           },
+          "appartment": {
+            "type": "string"
+          },
           "requests": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "appartment": {
-            "type": "string"
           }
         }
       },
