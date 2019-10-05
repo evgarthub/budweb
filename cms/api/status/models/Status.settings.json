@@ -1,0 +1,30 @@
+{
+  "connection": "default",
+  "collectionName": "statuses",
+  "info": {
+    "name": "status",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "label": {
+      "type": "string"
+    },
+    "requests": {
+      "collection": "request",
+      "via": "status"
+    },
+    "color": {
+      "type": "string"
+    }
+  }
+}

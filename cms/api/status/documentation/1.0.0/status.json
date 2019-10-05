@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/requests": {
+    "/statuses": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -12,7 +12,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Request"
+                    "$ref": "#/components/schemas/Status"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Request"
+          "Status"
         ],
         "parameters": [
           {
@@ -195,7 +195,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Request"
+                  "$ref": "#/components/schemas/Status"
                 }
               }
             }
@@ -233,7 +233,7 @@
         },
         "summary": "",
         "tags": [
-          "Request"
+          "Status"
         ],
         "requestBody": {
           "description": "",
@@ -241,71 +241,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewRequest"
+                "$ref": "#/components/schemas/NewStatus"
               }
             }
           }
         }
       }
     },
-    "/requests/me": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Request"
-        ],
-        "parameters": []
-      }
-    },
-    "/requests/count": {
+    "/statuses/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -357,12 +300,12 @@
         },
         "summary": "",
         "tags": [
-          "Request"
+          "Status"
         ],
         "parameters": []
       }
     },
-    "/requests/{id}": {
+    "/statuses/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -372,7 +315,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Request"
+                  "$ref": "#/components/schemas/Status"
                 }
               }
             }
@@ -410,7 +353,7 @@
         },
         "summary": "",
         "tags": [
-          "Request"
+          "Status"
         ],
         "parameters": [
           {
@@ -434,7 +377,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Request"
+                  "$ref": "#/components/schemas/Status"
                 }
               }
             }
@@ -472,7 +415,7 @@
         },
         "summary": "",
         "tags": [
-          "Request"
+          "Status"
         ],
         "requestBody": {
           "description": "",
@@ -480,7 +423,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewRequest"
+                "$ref": "#/components/schemas/NewStatus"
               }
             }
           }
@@ -546,7 +489,7 @@
         },
         "summary": "",
         "tags": [
-          "Request"
+          "Status"
         ],
         "parameters": [
           {
@@ -565,102 +508,66 @@
   },
   "components": {
     "schemas": {
-      "Request": {
+      "Status": {
         "required": [
-          "id"
+          "id",
+          "value"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "description": {
+          "value": {
             "type": "string"
           },
-          "status": {
-            "required": [
-              "id",
-              "value"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              },
-              "label": {
-                "type": "string"
-              },
-              "requests": {
-                "type": "array",
-                "items": {
+          "label": {
+            "type": "string"
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "user": {
                   "type": "string"
                 }
-              },
-              "color": {
-                "type": "string"
               }
             }
           },
-          "user": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "phone": {
-                "type": "string"
-              },
-              "appartment": {
-                "type": "string"
-              },
-              "requests": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            }
+          "color": {
+            "type": "string"
           }
         }
       },
-      "NewRequest": {
+      "NewStatus": {
+        "required": [
+          "value"
+        ],
         "properties": {
-          "description": {
+          "value": {
             "type": "string"
           },
-          "status": {
+          "label": {
             "type": "string"
           },
-          "user": {
+          "requests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "color": {
             "type": "string"
           }
         }
@@ -669,7 +576,7 @@
   },
   "tags": [
     {
-      "name": "Request"
+      "name": "Status"
     }
   ]
 }

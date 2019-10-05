@@ -18,16 +18,8 @@
       "type": "text"
     },
     "status": {
-      "enum": [
-        "open",
-        "review",
-        "progress",
-        "declined",
-        "hold",
-        "done"
-      ],
-      "type": "enumeration",
-      "default": "open"
+      "model": "status",
+      "via": "requests"
     },
     "user": {
       "model": "user",

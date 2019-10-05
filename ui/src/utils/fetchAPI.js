@@ -155,6 +155,7 @@ export const postRequest = (description, user) => {
   return axios.post(api.requests, {
     description,
     user,
+    status: 1,
   },
   {
     headers: {
@@ -163,14 +164,6 @@ export const postRequest = (description, user) => {
   });
 }
 
-export const updateRequestStatus = (id, status) => {
-  return axios.put(`${api.requests}/${id}`, { status },
-  {
-    headers: {
-      Authorization: `Bearer ${getToken()}`, 
-    },
-  });
-}
 
 export const getUserAppartment = (id) => {
   return axios.post(api.graphql,
@@ -190,7 +183,7 @@ export const getUserAppartment = (id) => {
     {
       headers: {
           Authorization: `Bearer ${getToken()}`, 
-      }
+        }
     }
   );   
 }
@@ -210,19 +203,47 @@ export const getUserMe = () => {
     },
     {
       headers: {
-          Authorization: `Bearer ${getToken()}`, 
+        Authorization: `Bearer ${getToken()}`, 
       }
     }
-  );    
-}
-
-export const getMe = () => {
-  return axios.get(api.userMe,
+    );    
+  }
+  
+  export const getMe = () => {
+    return axios.get(api.userMe,
     {
       headers: {
-          Authorization: `Bearer ${getToken()}`, 
+        Authorization: `Bearer ${getToken()}`, 
       }
     }
   );    
-}
-  
+};
+
+export const getStatuses = () => {
+  return axios.post(api.graphql,
+    {
+      query: `query {
+        statuses {
+          label,
+          value,
+          color,
+          id,
+        }
+      }`
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`, 
+      }
+    }
+    ); 
+};
+
+export const updateRequestStatus = (id, status) => {
+  return axios.put(`${api.requests}/${id}`, { status },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+};

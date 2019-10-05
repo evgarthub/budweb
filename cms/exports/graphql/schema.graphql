@@ -191,6 +191,14 @@ type createSiteconfigPayload {
   siteconfig: Siteconfig
 }
 
+input createStatusInput {
+  data: StatusInput
+}
+
+type createStatusPayload {
+  status: Status
+}
+
 input createTariffInput {
   data: TariffInput
 }
@@ -308,6 +316,14 @@ type deleteSiteconfigPayload {
   siteconfig: Siteconfig
 }
 
+input deleteStatusInput {
+  where: InputID
+}
+
+type deleteStatusPayload {
+  status: Status
+}
+
 input deleteTariffInput {
   where: InputID
 }
@@ -408,7 +424,7 @@ input editNavlinkInput {
 
 input editRequestInput {
   description: String
-  status: ENUM_REQUEST_STATUS
+  status: ID
   user: ID
 }
 
@@ -424,6 +440,13 @@ input editSiteconfigInput {
   footerid: Int
   navigationid: Int
   gmapurl: String
+}
+
+input editStatusInput {
+  value: String
+  label: String
+  requests: [ID]
+  color: String
 }
 
 input editTariffInput {
@@ -457,15 +480,6 @@ enum ENUM_NAVLINK_LOGO {
   facebook
   telegram
   viber
-}
-
-enum ENUM_REQUEST_STATUS {
-  open
-  review
-  progress
-  declined
-  hold
-  done
 }
 
 input FileInput {
@@ -503,7 +517,7 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Appartment | createAppartmentPayload | updateAppartmentPayload | deleteAppartmentPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Appartment | createAppartmentPayload | updateAppartmentPayload | deleteAppartmentPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Status | createStatusPayload | updateStatusPayload | deleteStatusPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createAbout(input: createAboutInput): createAboutPayload
@@ -539,6 +553,9 @@ type Mutation {
   createSiteconfig(input: createSiteconfigInput): createSiteconfigPayload
   updateSiteconfig(input: updateSiteconfigInput): updateSiteconfigPayload
   deleteSiteconfig(input: deleteSiteconfigInput): deleteSiteconfigPayload
+  createStatus(input: createStatusInput): createStatusPayload
+  updateStatus(input: updateStatusInput): updateStatusPayload
+  deleteStatus(input: deleteStatusInput): deleteStatusPayload
   createTariff(input: createTariffInput): createTariffPayload
   updateTariff(input: updateTariffInput): updateTariffPayload
   deleteTariff(input: deleteTariffInput): deleteTariffPayload
@@ -641,6 +658,8 @@ type Query {
   requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
   siteconfig(id: ID!): Siteconfig
   siteconfigs(sort: String, limit: Int, start: Int, where: JSON): [Siteconfig]
+  status(id: ID!): Status
+  statuses(sort: String, limit: Int, start: Int, where: JSON): [Status]
   tariff(id: ID!): Tariff
   tariffs(sort: String, limit: Int, start: Int, where: JSON): [Tariff]
   files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
@@ -660,13 +679,13 @@ type Request {
   created_at: DateTime!
   updated_at: DateTime!
   description: String
-  status: ENUM_REQUEST_STATUS
+  status: Status
   user: UsersPermissionsUser
 }
 
 input RequestInput {
   description: String
-  status: ENUM_REQUEST_STATUS
+  status: ID
   user: ID
 }
 
@@ -691,6 +710,23 @@ input SiteconfigInput {
   footerid: Int
   navigationid: Int
   gmapurl: String
+}
+
+type Status {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  value: String!
+  label: String
+  color: String
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
+}
+
+input StatusInput {
+  value: String!
+  label: String
+  requests: [ID]
+  color: String
 }
 
 type Tariff {
@@ -816,6 +852,15 @@ input updateSiteconfigInput {
 
 type updateSiteconfigPayload {
   siteconfig: Siteconfig
+}
+
+input updateStatusInput {
+  where: InputID
+  data: editStatusInput
+}
+
+type updateStatusPayload {
+  status: Status
 }
 
 input updateTariffInput {

@@ -1,0 +1,27 @@
+.statuses {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    
+
+    &__wrapper {
+        position: relative;
+    }
+
+    &__tag {
+        &:hover {
+            cursor: pointer;
+        }
+
+        & + & {
+            margin-top: 5px;
+        }
+    }
+}
+
+.ag-theme-balham .ag-popup-editor {
+    border: none;
+    background-color: #fff;
+    border-radius: 6px;
+}
