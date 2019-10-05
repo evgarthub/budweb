@@ -74,6 +74,7 @@ const RequestsPage = () => {
             headerName: 'Опис',
             field: 'description',
             autoHeight: true,
+            filter: true,
             cellStyle: { "white-space": "normal" },
         },
         {
