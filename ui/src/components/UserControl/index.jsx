@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/authContext';
 import { label } from '../../variables/labels';
 import { getUserAppartment } from '../../utils/fetchAPI';
 import './styles.scss';
+import { Spinner } from '..';
 
 const AuthForm = (props) => {
     const [formData, setformData] = useState({
@@ -107,9 +108,7 @@ const AuthForm = (props) => {
 
     if (isLoading) {
         return (
-            <Loader style={{
-                transform: 'rotate(179deg)'
-            }} />
+            <Spinner />
         );
     }
 
