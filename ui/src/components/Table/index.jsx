@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -12,6 +11,8 @@ const Table = (props) => {
     const onGridReady = params => {
         gridApi = params.api;
         gridColumnApi = params.columnApi;
+        gridApi.sizeColumnsToFit();
+        gridApi.resetRowHeights()
     }
 
     useEffect(() => {
@@ -19,20 +20,17 @@ const Table = (props) => {
     });
 
     return (
-        <div className="ag-theme-balham">
+        <div className="ag-theme-balham table-comp" style={{
+              height: "450px",
+              width: "100%"
+            }}>
             <AgGridReact
                 columnDefs={columns}
                 rowData={data}
-                domLayout='autoHeight'
                 onGridReady={onGridReady}
                 {...props} />
         </div>
     );
 };
-
-Table.propTypes = {
-    data: PropTypes.array.isRequired,
-    headers: PropTypes.array.isRequired,
-}
 
 export default Table;

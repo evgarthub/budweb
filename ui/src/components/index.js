@@ -9,6 +9,7 @@ import UserControl from './UserControl';
 import RegistrationForm from './RegistrationForm';
 import Table from './Table';
 import Can, { isAllowed } from './Can';
+import { Spinner } from './Spinner';
 
 export {
     AboutCard,
@@ -23,4 +24,5 @@ export {
     Table,
     Can,
     isAllowed,
+    Spinner,
 }

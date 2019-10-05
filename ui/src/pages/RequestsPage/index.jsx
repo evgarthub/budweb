@@ -1,56 +1,74 @@
 import { Container, Hero, HeroBody, Section, Title } from 'bloomer';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
-import { Table, isAllowed } from '../../components/';
+import { isAllowed, Table, Spinner } from '../../components/';
 import { AuthContext } from '../../context/authContext';
 import { pageEnter, pageExit } from '../../utils/animations';
-import { getRequests, updateRequestStatus, getRequestsMe } from '../../utils/fetchAPI';
+import { getRequests, getRequestsMe, getStatuses } from '../../utils/fetchAPI';
 import { label } from '../../variables/labels';
+import { StatusOptionsRenderer, StatusRenderer } from './StatusRenderers';
+import './styles.scss';
 
 const RequestsPage = () => {
     const { user } = useContext(AuthContext);
-    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+    const [data, setData] = useState();
     const isAdmin = isAllowed(user.role && user.role.type, "requests:get");
-    const [statuses, setStatuses] = useState(["open", "review", "progress", "declined", "hold", "done"]);
+    const [statuses, setStatuses] = useState();
 
-    useEffect(() => {
+    
+    const handleUpdate = () => {
+        setLoading(true);
         if (isAdmin) {
             getRequests().then(({data}) => {
                 setData(data);
+                setLoading(false);
             });
         } else {
             getRequestsMe().then(({data}) => {
                 setData(data);
+                setLoading(false);
             });
         }
-    }, [user, isAdmin]);   
+    }
 
+    useEffect(() => {
+        handleUpdate();
+    }, [user, isAdmin]);
+    
+    useEffect(() => {
+        getStatuses().then(({data}) => setStatuses(data.data.statuses));
+    }, []);
+    
     const headers = [
         {
             headerName: 'Номер',
             field: 'id',
             suppressSizeToFit: true,
             width: 90,
+            sortingOrder: ["desc", "asc"],
+            sort: 'desc',
+            valueFormatter: (props) => `#${props.value}`,
         },
         {
             headerName: 'Секцiя',
             field: 'user',
             valueGetter: ({data}) => data.user.appartment.section,
             suppressSizeToFit: true,
-            width: 90,
+            width: 70,
         },
         {
             headerName: 'Поверх',
             valueGetter: ({data}) => data.user.appartment.floor,
             suppressSizeToFit: true,
-            width: 90,
+            width: 70,
         },
         {
             headerName: 'Квартира',
             valueGetter: ({data}) => data.user.appartment.number,
             suppressSizeToFit: true,
-            width: 90,
+            width: 80,
         },
         {
             headerName: 'Опис',
@@ -62,13 +80,18 @@ const RequestsPage = () => {
             headerName: 'Статус',
             suppressSizeToFit: true,
             editable: isAdmin,
-            cellEditor: 'agPopupSelectCellEditor',
+            field: 'status',
+            cellRendererParams: { statuses },
+            cellEditor: 'statusOptionsRenderer',
+            cellRenderer: 'statusRenderer',
             cellEditorParams: {
-                values: [...statuses]
+                statuses,
             },
-            width: 200,
+            width: 160,
         },
     ];
+
+    
 
     return (
         <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
@@ -87,10 +110,22 @@ const RequestsPage = () => {
                 </Hero>
                 <Section>
                     <Container>
-                        <Table data={data} columns={headers} defaultColDef={{
-                            resizable: true,
-                            sortable: true,
-                        }} />
+                    {isLoading 
+                    ? <Spinner />
+                    : <Table
+                            data={data} 
+                            columns={headers} 
+                            defaultColDef={{
+                                resizable: true,
+                                sortable: true,
+                            }}
+                            frameworkComponents= {{
+                                statusRenderer: StatusRenderer,
+                                statusOptionsRenderer: StatusOptionsRenderer,
+                            }}
+                            suppressCellSelection={true} />
+                    }
+                        
                     </Container>
                 </Section>
             </section>

@@ -12,4 +12,5 @@ export default {
     tariffs: `${API_URL}/tariffs`,
     register: `${API_URL}/auth/local/register`,
     requests: `${API_URL}/requests`,
+    statuses: `${API_URL}/statuses`,
 }
