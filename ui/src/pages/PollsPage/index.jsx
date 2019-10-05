@@ -1,10 +1,10 @@
+import { Container, Hero, HeroBody, Section, Title } from 'bloomer';
 import React from 'react';
-import { Title, Container, Section, HeroBody, Hero } from 'bloomer';
-import './styles.scss';
+import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { label } from '../../variables/labels';
-import { Helmet } from "react-helmet";
+import './styles.scss';
 
 const PollsPage = () => {
     return (
@@ -24,7 +24,6 @@ const PollsPage = () => {
                 </Hero>
                 <div className='polls-page__post-card'>
                     <Section>
-                        
                         <Container>
                             <section className="polls-page__poll-wrapper">
                                 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeDZT5dNFQ2dNDNSjArOkomFJglT1yja-zEYlBzC5VfkApqJA/viewform?embedded=true"
@@ -41,7 +40,6 @@ const PollsPage = () => {
                 </div>
             </section>
         </Transition>
-
     );
 }
 

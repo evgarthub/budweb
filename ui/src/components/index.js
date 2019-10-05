@@ -7,6 +7,9 @@ import PostCard from './PostCard';
 import PostList from './PostList';
 import UserControl from './UserControl';
 import RegistrationForm from './RegistrationForm';
+import Table from './Table';
+import Can, { isAllowed } from './Can';
+import { Spinner } from './Spinner';
 
 export {
     AboutCard,
@@ -18,4 +21,8 @@ export {
     PostList,
     UserControl,
     RegistrationForm,
+    Table,
+    Can,
+    isAllowed,
+    Spinner,
 }

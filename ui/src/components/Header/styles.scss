@@ -25,6 +25,7 @@
     @media screen and (max-width: 1087px) {
         &-menu {
             display: flex;
+            flex-flow: row wrap;
             overflow: hidden;
             max-height: 0;
             padding: 0;
@@ -45,7 +46,15 @@
             border-top: 1px solid #f0f0f0;
         }
 
+        &__right-side {
+            border-top: 1px solid #f0f0f0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
     }
-    
+    .message-bar {
+        position: relative;
+    }
 }
 

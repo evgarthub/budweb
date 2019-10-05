@@ -1,32 +1,38 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { doLogin, getUserInfo, doRegistration } from '../utils/authorization';
+import { doLogin, doRegistration } from '../utils/authorization';
+import { getMe } from '../utils/fetchAPI';
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
     const defaultState = {
-        username: 'Гiсть',
+        username: 'Вхiд',
     };
     const [userProfile, setUserProfile] = useState(defaultState);
 
     const handleUpdate = (input) => {
-        setUserProfile({
-            ...userProfile,
-            ...input,
-        })
+        setUserProfile(input);
     };
 
+    const updateCurrentUser = () => {
+        return getMe().then((response) => {
+            switch (response.status) {
+                case 200:
+                    handleUpdate(response.data);
+                    break;
+                default:
+                    createMessage(response.statusText);
+            }
+        })
+    }
+
     useEffect(() => {
-        getUserInfo()
-            .then(({ data }) => {
-                handleUpdate(data);
-            })
-            .catch(data => {
-                console.log(`Something went wrong. Details: ${data}`);
-            });
+        updateCurrentUser().catch(data => {
+            createMessage(data);
+        });
     }, [])
 
-    const handleLogin = (login, password) => {
+    const handleLogin = (login, password, callback) => {
         doLogin(login, password)
             .then(resp => {
                 const { jwt } = resp.data;
@@ -34,18 +40,19 @@ export const AuthContextProvider = (props) => {
                 switch (resp.status) {
                     case 200:
                         localStorage.setItem('nb_token', jwt);
-                        getUserInfo().then(({ data }) => {
-                            handleUpdate(data);
-                        })
+                        updateCurrentUser();
                         break;
 
                     default:
-                        alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${resp.statusText}`);
+                        createMessage(resp.statusText);
                 }
-            
+                
+                if (callback) {
+                    callback();
+                }
             })
             .catch(data => {
-                alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${data}`);
+                createMessage(data);
             });
     }
 
@@ -57,19 +64,18 @@ export const AuthContextProvider = (props) => {
                 switch (resp.status) {
                     case 200:
                         localStorage.setItem('nb_token', jwt);
-                        getUserInfo().then(({ data }) => {
-                            handleUpdate(data);
-                            onSuccess();
+                        updateCurrentUser().then(() => {
+                            onSuccess && onSuccess();
                         });
                         break;
 
                     default:
-                        alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${resp.statusText}`);
+                        createMessage(resp.statusText);
                 }
             
             })
             .catch(data => {
-                alert(`Сталася помилка. Перевiрте введенi данi. Деталi: ${data}`);
+                createMessage(data);
             });
     }
 
@@ -87,3 +93,7 @@ export const AuthContextProvider = (props) => {
         </AuthContext.Provider>
     );
 }
+
+const createMessage = (data) => {
+    console.log(`Сталася помилка. Перевiрте введенi данi. Деталi: ${data}`);
+};

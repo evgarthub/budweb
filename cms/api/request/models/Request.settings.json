@@ -1,0 +1,30 @@
+{
+  "connection": "default",
+  "collectionName": "requests",
+  "info": {
+    "name": "request",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "description": {
+      "type": "text"
+    },
+    "status": {
+      "model": "status",
+      "via": "requests"
+    },
+    "user": {
+      "model": "user",
+      "via": "requests",
+      "plugin": "users-permissions"
+    }
+  }
+}

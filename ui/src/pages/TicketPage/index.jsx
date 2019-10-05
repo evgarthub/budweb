@@ -40,7 +40,6 @@ const TicketPage = () => {
                 </div>
             </section>
         </Transition>
-
     );
 }
 

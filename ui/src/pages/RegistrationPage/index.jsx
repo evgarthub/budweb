@@ -1,11 +1,10 @@
+import { Container, Hero, HeroBody, Section, Title } from 'bloomer';
 import React from 'react';
-import { Title, Container, Section, Hero, HeroBody } from 'bloomer';
-//import './styles.scss';
+import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
+import { RegistrationForm } from '../../components/';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { label } from '../../variables/labels';
-import { Helmet } from "react-helmet";
-import { RegistrationForm } from '../../components/';
 
 const RegistrationPage = () => {
     return (

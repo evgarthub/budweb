@@ -19,6 +19,27 @@ input AboutInput {
   navlinks: [ID]
 }
 
+type Appartment {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  number: Int!
+  section: Int!
+  floor: Int!
+  space: Float!
+  rooms: Int
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+input AppartmentInput {
+  number: Int!
+  section: Int!
+  floor: Int!
+  users: [ID]
+  space: Float!
+  rooms: Int
+}
+
 type Blog {
   id: ID!
   created_at: DateTime!
@@ -82,6 +103,14 @@ type createAboutPayload {
   about: About
 }
 
+input createAppartmentInput {
+  data: AppartmentInput
+}
+
+type createAppartmentPayload {
+  appartment: Appartment
+}
+
 input createBlogInput {
   data: BlogInput
 }
@@ -138,6 +167,14 @@ type createNavlinkPayload {
   navlink: Navlink
 }
 
+input createRequestInput {
+  data: RequestInput
+}
+
+type createRequestPayload {
+  request: Request
+}
+
 input createRoleInput {
   data: RoleInput
 }
@@ -152,6 +189,14 @@ input createSiteconfigInput {
 
 type createSiteconfigPayload {
   siteconfig: Siteconfig
+}
+
+input createStatusInput {
+  data: StatusInput
+}
+
+type createStatusPayload {
+  status: Status
 }
 
 input createTariffInput {
@@ -181,6 +226,14 @@ input deleteAboutInput {
 
 type deleteAboutPayload {
   about: About
+}
+
+input deleteAppartmentInput {
+  where: InputID
+}
+
+type deleteAppartmentPayload {
+  appartment: Appartment
 }
 
 input deleteBlogInput {
@@ -239,6 +292,14 @@ type deleteNavlinkPayload {
   navlink: Navlink
 }
 
+input deleteRequestInput {
+  where: InputID
+}
+
+type deleteRequestPayload {
+  request: Request
+}
+
 input deleteRoleInput {
   where: InputID
 }
@@ -253,6 +314,14 @@ input deleteSiteconfigInput {
 
 type deleteSiteconfigPayload {
   siteconfig: Siteconfig
+}
+
+input deleteStatusInput {
+  where: InputID
+}
+
+type deleteStatusPayload {
+  status: Status
 }
 
 input deleteTariffInput {
@@ -278,6 +347,15 @@ input editAboutInput {
   description: String
   contacts: [ID]
   navlinks: [ID]
+}
+
+input editAppartmentInput {
+  number: Int
+  section: Int
+  floor: Int
+  users: [ID]
+  space: Float
+  rooms: Int
 }
 
 input editBlogInput {
@@ -344,6 +422,12 @@ input editNavlinkInput {
   about: ID
 }
 
+input editRequestInput {
+  description: String
+  status: ID
+  user: ID
+}
+
 input editRoleInput {
   name: String
   description: String
@@ -356,6 +440,13 @@ input editSiteconfigInput {
   footerid: Int
   navigationid: Int
   gmapurl: String
+}
+
+input editStatusInput {
+  value: String
+  label: String
+  requests: [ID]
+  color: String
 }
 
 input editTariffInput {
@@ -374,10 +465,9 @@ input editUserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
-  section: Int
-  appartment: Int
-  floor: Int
   phone: String
+  appartment: ID
+  requests: [ID]
 }
 
 enum ENUM_NAVLINK_LOGO {
@@ -427,12 +517,15 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Appartment | createAppartmentPayload | updateAppartmentPayload | deleteAppartmentPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Status | createStatusPayload | updateStatusPayload | deleteStatusPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createAbout(input: createAboutInput): createAboutPayload
   updateAbout(input: updateAboutInput): updateAboutPayload
   deleteAbout(input: deleteAboutInput): deleteAboutPayload
+  createAppartment(input: createAppartmentInput): createAppartmentPayload
+  updateAppartment(input: updateAppartmentInput): updateAppartmentPayload
+  deleteAppartment(input: deleteAppartmentInput): deleteAppartmentPayload
   createBlog(input: createBlogInput): createBlogPayload
   updateBlog(input: updateBlogInput): updateBlogPayload
   deleteBlog(input: deleteBlogInput): deleteBlogPayload
@@ -454,9 +547,15 @@ type Mutation {
   createNavlink(input: createNavlinkInput): createNavlinkPayload
   updateNavlink(input: updateNavlinkInput): updateNavlinkPayload
   deleteNavlink(input: deleteNavlinkInput): deleteNavlinkPayload
+  createRequest(input: createRequestInput): createRequestPayload
+  updateRequest(input: updateRequestInput): updateRequestPayload
+  deleteRequest(input: deleteRequestInput): deleteRequestPayload
   createSiteconfig(input: createSiteconfigInput): createSiteconfigPayload
   updateSiteconfig(input: updateSiteconfigInput): updateSiteconfigPayload
   deleteSiteconfig(input: deleteSiteconfigInput): deleteSiteconfigPayload
+  createStatus(input: createStatusInput): createStatusPayload
+  updateStatus(input: updateStatusInput): updateStatusPayload
+  deleteStatus(input: deleteStatusInput): deleteStatusPayload
   createTariff(input: createTariffInput): createTariffPayload
   updateTariff(input: updateTariffInput): updateTariffPayload
   deleteTariff(input: deleteTariffInput): deleteTariffPayload
@@ -539,6 +638,8 @@ input NavlinkInput {
 type Query {
   about(id: ID!): About
   abouts(sort: String, limit: Int, start: Int, where: JSON): [About]
+  appartment(id: ID!): Appartment
+  appartments(sort: String, limit: Int, start: Int, where: JSON): [Appartment]
   blog(id: ID!): Blog
   blogs(sort: String, limit: Int, start: Int, where: JSON): [Blog]
   category(id: ID!): Category
@@ -553,8 +654,12 @@ type Query {
   navigations(sort: String, limit: Int, start: Int, where: JSON): [Navigation]
   navlink(id: ID!): Navlink
   navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
+  request(id: ID!): Request
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
   siteconfig(id: ID!): Siteconfig
   siteconfigs(sort: String, limit: Int, start: Int, where: JSON): [Siteconfig]
+  status(id: ID!): Status
+  statuses(sort: String, limit: Int, start: Int, where: JSON): [Status]
   tariff(id: ID!): Tariff
   tariffs(sort: String, limit: Int, start: Int, where: JSON): [Tariff]
   files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
@@ -567,6 +672,21 @@ type Query {
   user(id: ID!): UsersPermissionsUser
   users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
   me: UsersPermissionsMe
+}
+
+type Request {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  description: String
+  status: Status
+  user: UsersPermissionsUser
+}
+
+input RequestInput {
+  description: String
+  status: ID
+  user: ID
 }
 
 input RoleInput {
@@ -590,6 +710,23 @@ input SiteconfigInput {
   footerid: Int
   navigationid: Int
   gmapurl: String
+}
+
+type Status {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  value: String!
+  label: String
+  color: String
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
+}
+
+input StatusInput {
+  value: String!
+  label: String
+  requests: [ID]
+  color: String
 }
 
 type Tariff {
@@ -616,6 +753,15 @@ input updateAboutInput {
 
 type updateAboutPayload {
   about: About
+}
+
+input updateAppartmentInput {
+  where: InputID
+  data: editAppartmentInput
+}
+
+type updateAppartmentPayload {
+  appartment: Appartment
 }
 
 input updateBlogInput {
@@ -681,6 +827,15 @@ type updateNavlinkPayload {
   navlink: Navlink
 }
 
+input updateRequestInput {
+  where: InputID
+  data: editRequestInput
+}
+
+type updateRequestPayload {
+  request: Request
+}
+
 input updateRoleInput {
   where: InputID
   data: editRoleInput
@@ -697,6 +852,15 @@ input updateSiteconfigInput {
 
 type updateSiteconfigPayload {
   siteconfig: Siteconfig
+}
+
+input updateStatusInput {
+  where: InputID
+  data: editStatusInput
+}
+
+type updateStatusPayload {
+  status: Status
 }
 
 input updateTariffInput {
@@ -745,10 +909,9 @@ input UserInput {
   confirmed: Boolean
   blocked: Boolean
   role: ID
-  section: Int
-  appartment: Int
-  floor: Int
   phone: String
+  appartment: ID
+  requests: [ID]
 }
 
 type UsersPermissionsMe {
@@ -796,8 +959,7 @@ type UsersPermissionsUser {
   confirmed: Boolean
   blocked: Boolean
   role: UsersPermissionsRole
-  section: Int
-  appartment: Int
-  floor: Int
   phone: String
+  appartment: Appartment
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
 }

@@ -603,17 +603,17 @@
                 "role": {
                   "type": "string"
                 },
-                "section": {
-                  "type": "integer"
-                },
-                "appartment": {
-                  "type": "integer"
-                },
-                "floor": {
-                  "type": "integer"
-                },
                 "phone": {
                   "type": "string"
+                },
+                "appartment": {
+                  "type": "string"
+                },
+                "requests": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }

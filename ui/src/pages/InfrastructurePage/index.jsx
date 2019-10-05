@@ -1,63 +1,49 @@
-import React, { Component } from 'react';
-import { Title, Hero, HeroBody, Container } from 'bloomer';
+import { Container, Hero, HeroBody, Title } from 'bloomer';
 import { Section } from 'bloomer/lib/layout/Section';
-import './styles.scss';
-import { getGoogleMapString } from "../../utils/fetchAPI";
+import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
 import { pageEnter, pageExit } from '../../utils/animations';
+import { getGoogleMapString } from "../../utils/fetchAPI";
 import { label } from '../../variables/labels';
-import { Helmet } from "react-helmet";
+import './styles.scss';
 
-class InfrastructurePage extends Component {
-    constructor() {
-        super();
-        this.state = {
-            configId: 1,
-            gmapsUrl: null
-        }
-    }
+const InfrastructurePage = () => {
+    const [data, setData] = useState({
+        configId: 1,
+        gmapsUrl: null,
+    });
 
-    componentDidMount() {
-        getGoogleMapString(this.state.configId)
-        .then(({data}) => {
-          const resData = data.data.siteconfig;
-          this.setState({
-              isLoading: false,
-              gmapsUrl: resData.gmapurl
-          });
-        });
-    }
+    useEffect(() => {
+        getGoogleMapString(data.configId)
+            .then(({data}) => setData({ gmapsUrl: data.data.siteconfig.gmapurl }));
+    }, [data.configId]);
 
-    render() {
-        return (
-            <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
-                <section className='infra-page'>
-                    <Helmet>
-                        <title>{label.infrastructure.title}</title>
-                        <meta property="og:title" content={label.infrastructure.title} />
-                        <meta name="description" property="og:description" content={label.infrastructure.metaDescription} />
-                    </Helmet>
-                    <Hero isColor='warning' isSize='small'>
-                        <HeroBody>
-                            <Container hasTextAlign='centered'>
-                                <Title isSize={3}>{label.infrastructure.title}</Title>
-                            </Container>
-                        </HeroBody>
-                    </Hero>
-                    <Section>
-                        <Container>
-                            <section className='infra-page__map-wrapper' dangerouslySetInnerHTML={{ __html: this.state.gmapsUrl }}>
-
-                            </section>
-                            <progress className="infra-page__progress progress is-small is-link" max="100"></progress>
+    return (
+        <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
+            <section className='infra-page'>
+                <Helmet>
+                    <title>{label.infrastructure.title}</title>
+                    <meta property="og:title" content={label.infrastructure.title} />
+                    <meta name="description" property="og:description" content={label.infrastructure.metaDescription} />
+                </Helmet>
+                <Hero isColor='warning' isSize='small'>
+                    <HeroBody>
+                        <Container hasTextAlign='centered'>
+                            <Title isSize={3}>{label.infrastructure.title}</Title>
                         </Container>
-                    </Section>
-
-                </section>
-            </Transition>
-
-        );
-    }
+                    </HeroBody>
+                </Hero>
+                <Section>
+                    <Container>
+                        <section className='infra-page__map-wrapper' dangerouslySetInnerHTML={{ __html: data.gmapsUrl }}>
+                        </section>
+                        <progress className="infra-page__progress progress is-small is-link" max="100"></progress>
+                    </Container>
+                </Section>
+            </section>
+        </Transition>
+    );
 }
 
 export default InfrastructurePage;

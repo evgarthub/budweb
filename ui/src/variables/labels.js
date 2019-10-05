@@ -44,6 +44,10 @@ export const label = {
         guest: "Гість",
         appartment: "Квартира",
         loginLabel: "Логін",
+        section: "Секція",
+        floor: "Поверх",
+        space: 'Площа',
+        rooms: 'Кiмнат'
     },
     registration: {
         submitText: "Зареєструватись",

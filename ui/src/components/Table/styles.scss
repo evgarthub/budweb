@@ -1,0 +1,20 @@
+$table-border-color: #f4f4f4;
+
+.table-comp {
+    .ag-root {
+        border-radius: 4px;
+        border-color: $table-border-color;
+    }
+
+    .ag-row {
+        border-color: $table-border-color;
+    }
+
+    .ag-header {
+        border-color: $table-border-color;
+
+        &-row {
+            background-color: $table-border-color;
+        }
+    }
+}

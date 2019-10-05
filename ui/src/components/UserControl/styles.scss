@@ -12,7 +12,8 @@
 
     &__profile {
         display: grid;
-        grid-template-columns: max-content auto;
+        grid-template-columns: min-content max-content auto;
         grid-gap: 5px 10px;
+        align-items: center;
     }
 }

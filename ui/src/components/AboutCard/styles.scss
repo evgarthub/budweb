@@ -1,16 +1,22 @@
 @import "../../../node_modules/bulma/sass/utilities/initial-variables.sass";
 
 .contact {
+    display: flex;
+    align-items: center;
     margin-bottom: 1em;
 
     &s {
         display: flex;
         flex-flow: column nowrap;
         padding-top: 1em;
-        border-top: 1px solid $grey-lighter
+        border-top: 1px solid $grey-lighter;
     }
 
     &__desc {
+        margin-left: .5em;
+    }
+
+    &__value {
         margin-left: .5em;
     }
 }
