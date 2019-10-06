@@ -6,7 +6,7 @@ import './styles.scss';
 
 const Table = (props) => {
     const { data, columns } = props;
-    let gridApi;
+    let gridApi, gridColumnApi;
 
     const onGridReady = params => {
         gridApi = params.api;
