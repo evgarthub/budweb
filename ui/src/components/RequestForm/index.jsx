@@ -34,9 +34,9 @@ const RequestForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className='registration-form'>
-            <textarea className="textarea" placeholder='Опишите вашу проблему или оставьте пожелание' {...description} />
+            <textarea className="textarea" placeholder={label.ticket.placeholder} {...description} />
             <br />
-            <button className='button is-success'><Send className='registration-form__icon' size={16} /> Отправить</button>
+            <button className='button is-success'><Send className='registration-form__icon' size={16} /> {label.ticket.buttonLabel}</button>
         </form>
     );
 };

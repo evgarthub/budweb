@@ -9,8 +9,10 @@ import { getBlogById } from '../../utils/fetchAPI';
 import api from "../../variables/api";
 import { label } from '../../variables/labels';
 import './styles.scss';
+import { Spinner } from '../../components';
 
 const NewsPage = (props) => {
+    const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState({
         title: null,
         intro: null,
@@ -21,6 +23,7 @@ const NewsPage = (props) => {
     });
 
     useEffect(() => {
+        setLoading(true);
         getBlogById(props.match.params.id).then(({ data }) => {
             const { title, intro, text, image, categories, navlinks } = data.data.blog;
 
@@ -32,8 +35,11 @@ const NewsPage = (props) => {
                 categories,
                 navlinks
             });
+            setLoading(false);
         });
     }, [props.match.params.id]);
+
+    if (isLoading) return (<Spinner />);
 
     return (
         <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
