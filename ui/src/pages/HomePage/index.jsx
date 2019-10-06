@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PostList } from '../../components';
+import { PostList, Spinner } from '../../components';
 import { Title, Container, Section, Notification, Button } from 'bloomer';
 import { Link } from "react-router-dom";
 import "./styles.scss";
@@ -10,6 +10,7 @@ import TopValues from '../../components/TopValues';
 import { getTariffs } from '../../utils/fetchAPI';
 
 const HomePage = () => {
+    const [isLoading, setLoading] = useState(false);
     const [tariffs, setTariffs] = useState([
         {
             title: "Завантаження",
@@ -18,7 +19,11 @@ const HomePage = () => {
     ]);
 
     useEffect(() => {
-        getTariffs().then(({data}) => setTariffs(data));
+        setLoading(true);
+        getTariffs().then(({data}) => {
+            setTariffs(data);
+            setLoading(false);
+        });
     }, []);
 
     return (
@@ -33,7 +38,7 @@ const HomePage = () => {
                             </Notification>
                             <section className='home-page__component'>
                                 <Title isSize={3}>{label.home.tarifTitle}</Title>
-                                <TopValues items={tariffs} />
+                                {isLoading ? <Spinner /> : <TopValues items={tariffs} />}
                             </section>
                             <section className='home-page__component'>
                                 <Title isSize={3}>{label.home.newsTitle}</Title>

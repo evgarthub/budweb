@@ -1,10 +1,9 @@
 import { Control, Field, Input } from 'bloomer';
 import React, { useContext, useState } from 'react';
-import { Loader, Mail, LogOut, LogIn, Home, Key, ChevronsUp, User, Codepen, Grid } from 'react-feather';
+import { Mail, LogOut, LogIn, Home, Key, ChevronsUp, User, Codepen, Grid } from 'react-feather';
 import { Link } from "react-router-dom";
 import { AuthContext } from '../../context/authContext';
 import { label } from '../../variables/labels';
-import { getUserAppartment } from '../../utils/fetchAPI';
 import './styles.scss';
 import { Spinner } from '..';
 
@@ -106,11 +105,7 @@ const AuthForm = (props) => {
         </div> 
     );
 
-    if (isLoading) {
-        return (
-            <Spinner />
-        );
-    }
+    if (isLoading) return (<Spinner />);
 
     return (
         <section className='user-control'>
