@@ -637,6 +637,9 @@
                 }
               }
             }
+          },
+          "order": {
+            "type": "integer"
           }
         }
       },
@@ -665,6 +668,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "order": {
+            "type": "integer"
           }
         }
       }

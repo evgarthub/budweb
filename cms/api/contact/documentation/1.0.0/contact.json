@@ -561,6 +561,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "order": {
+                "type": "integer"
               }
             }
           }
