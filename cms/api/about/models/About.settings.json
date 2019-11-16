@@ -7,15 +7,17 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
     "comment": ""
   },
   "attributes": {
     "image": {
       "model": "file",
       "via": "related",
-      "plugin": "upload",
-      "required": false
+      "plugin": "upload"
     },
     "title": {
       "default": "",
@@ -36,6 +38,9 @@
     "navlinks": {
       "collection": "navlink",
       "via": "about"
+    },
+    "order": {
+      "type": "integer"
     }
   }
 }

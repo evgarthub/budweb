@@ -32,17 +32,13 @@ const HomePage = () => {
                 <div className='home-page__post-card'>
                     <Section>
                         <Container>
-                            <Notification className="home-page__notification" isColor='warning'>
-                                {label.home.messageTitle}
-                                <Link to="/polls"><Button isSize="normal" isColor="black">{label.home.messageButton}</Button></Link>
-                            </Notification>
-                            <section className='home-page__component'>
-                                <Title isSize={3}>{label.home.tarifTitle}</Title>
-                                {isLoading ? <Spinner /> : <TopValues items={tariffs} />}
-                            </section>
                             <section className='home-page__component'>
                                 <Title isSize={3}>{label.home.newsTitle}</Title>
                                 <PostList limit={4} />
+                            </section>
+                            <section className='home-page__component'>
+                                <Title isSize={3}>{label.home.tarifTitle}</Title>
+                                {isLoading ? <Spinner /> : <TopValues items={tariffs} />}
                             </section>
                         </Container>
                     </Section>

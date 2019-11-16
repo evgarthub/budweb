@@ -10,6 +10,7 @@ import RegistrationForm from './RegistrationForm';
 import Table from './Table';
 import Can, { isAllowed } from './Can';
 import { Spinner } from './Spinner';
+import { ActionNavBar } from './ActionNavBar';
 
 export {
     AboutCard,
@@ -25,4 +26,5 @@ export {
     Can,
     isAllowed,
     Spinner,
+    ActionNavBar
 }

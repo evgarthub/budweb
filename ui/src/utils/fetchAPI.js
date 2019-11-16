@@ -75,7 +75,7 @@ export const getGoogleMapString = (id) => {
 export const getAbouts = () => {
   return axios.post(api.graphql, {
     query: `query {
-      abouts {
+      abouts(sort: "order:asc") {
         id
         title
         subtitle

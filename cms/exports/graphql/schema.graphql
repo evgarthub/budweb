@@ -6,6 +6,7 @@ type About {
   title: String
   subtitle: String
   description: String
+  order: Int
   contacts(sort: String, limit: Int, start: Int, where: JSON): [Contact]
   navlinks(sort: String, limit: Int, start: Int, where: JSON): [Navlink]
 }
@@ -17,6 +18,7 @@ input AboutInput {
   description: String
   contacts: [ID]
   navlinks: [ID]
+  order: Int
 }
 
 type Appartment {
@@ -347,6 +349,7 @@ input editAboutInput {
   description: String
   contacts: [ID]
   navlinks: [ID]
+  order: Int
 }
 
 input editAppartmentInput {

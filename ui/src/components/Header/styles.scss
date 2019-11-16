@@ -23,6 +23,15 @@
     }
 
     @media screen and (max-width: 1087px) {
+        &__top {
+            box-shadow: none;
+            background-color: transparent;
+        }
+
+        .navbar-brand {
+            display: none;
+        }
+
         &-menu {
             display: flex;
             flex-flow: row wrap;
@@ -51,6 +60,7 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
+            flex-wrap: wrap;
         }
     }
     .message-bar {

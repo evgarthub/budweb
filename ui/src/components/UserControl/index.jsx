@@ -36,7 +36,7 @@ const AuthForm = (props) => {
 
     const handleSignOut = () => {
         actions.handleSignOut();
-        props.onRegisterClick();
+        if (props.onRegisterClick) props.onRegisterClick();
     }
 
     const handleSubmit = (e) => {

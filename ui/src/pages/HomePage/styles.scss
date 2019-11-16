@@ -5,11 +5,12 @@
 }
 
 .home-page {
-    &__notification {
-    }
 
     &__component {
-        margin-top: 40px;
         position: relative;
+
+        & + & {
+            margin-top: 40px;
+        }
     }
 }
