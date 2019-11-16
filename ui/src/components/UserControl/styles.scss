@@ -1,5 +1,5 @@
 .user-control {
-    min-width: 250px;
+    min-width: 200px;
     margin: 10px;
 
     &__form {
@@ -15,5 +15,11 @@
         grid-template-columns: min-content max-content auto;
         grid-gap: 5px 10px;
         align-items: center;
+        
+        & > div {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 }
