@@ -143,6 +143,42 @@ export const getRequests = () => {
   });
 };
 
+export const getRequestById = id => {
+    return axios.post(api.graphql, 
+        {
+            query: `query {
+                request(id: ${id}) {
+                    description,
+                    id,
+                    created_at,
+                    updated_at,
+                    status {
+                        color,
+                        label,
+                        id,
+                        value
+                    },
+                    user {
+                        appartment {
+                            number,
+                            section,
+                            floor
+                        },
+                        username,
+                        email,
+                        phone
+                    }
+                }
+            }`
+        },
+        {
+            headers: {
+            Authorization: `Bearer ${getToken()}`,
+            },
+        }
+    );
+};
+
 export const getRequestsMe = () => {
   return axios.get(`${api.requests}/me`, {
     headers: {
@@ -247,3 +283,44 @@ export const updateRequestStatus = (id, status) => {
     },
   });
 };
+
+export const getCommentsByRequestId = (requestId) => {
+    return axios.post(api.graphql,
+        {
+        query: `query {
+            comments(where: { 
+                    request: { id: ${requestId} }
+                }) {
+                id,
+                text,
+                created_at,
+                user {
+                    id,
+                    username,
+                    email
+                }
+            }
+        }`
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`, 
+            }
+        }
+    ); 
+};
+
+export const postComment = (text, requestId, userId) => {
+    return axios.post(`${api.comments}`,
+        {
+            text,
+            request: requestId,
+            user: userId,
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`, 
+            }
+        }
+    );
+}

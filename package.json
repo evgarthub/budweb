@@ -1,0 +1,20 @@
+{
+  "name": "budweb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "(cd cms && strapi develop) && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgarthub/budweb.git"
+  },
+  "author": "Yevhen Kifiak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evgarthub/budweb/issues"
+  },
+  "homepage": "https://github.com/evgarthub/budweb#readme"
+}

@@ -647,6 +647,34 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "comments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -662,6 +690,12 @@
           },
           "user": {
             "type": "string"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

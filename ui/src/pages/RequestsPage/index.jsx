@@ -2,12 +2,13 @@ import { Container, Hero, HeroBody, Section, Title } from 'bloomer';
 import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
-import { isAllowed, Table, Spinner } from '../../components/';
+import { isAllowed, Table } from '../../components/';
 import { AuthContext } from '../../context/authContext';
 import { pageEnter, pageExit } from '../../utils/animations';
 import { getRequests, getRequestsMe, getStatuses } from '../../utils/fetchAPI';
 import { label } from '../../variables/labels';
 import { StatusOptionsRenderer, StatusRenderer } from './StatusRenderers';
+import { useHistory } from "react-router-dom";
 import './styles.scss';
 
 const RequestsPage = () => {
@@ -16,6 +17,7 @@ const RequestsPage = () => {
     const [data, setData] = useState();
     const isAdmin = isAllowed(user.role && user.role.type, "requests:get");
     const [statuses, setStatuses] = useState();
+    const history = useHistory();
 
     
     const handleUpdate = () => {
@@ -50,6 +52,13 @@ const RequestsPage = () => {
             sortingOrder: ["desc", "asc"],
             sort: 'desc',
             valueFormatter: (props) => `#${props.value}`,
+        },
+        {
+            headerName: 'Дата створення',
+            field: 'created_at',
+            width: 180,
+            suppressSizeToFit: true,
+            valueFormatter: props => new Date(props.value).toLocaleString()
         },
         {
             headerName: 'Секцiя',
@@ -92,7 +101,9 @@ const RequestsPage = () => {
         },
     ];
 
-    
+    const handleDoubleClick = (props) => {
+        history.push(`/requests/${props.data.id}`)
+    }
 
     return (
         <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
@@ -111,11 +122,10 @@ const RequestsPage = () => {
                 </Hero>
                 <Section>
                     <Container>
-                    {isLoading 
-                    ? <Spinner />
-                    : <Table
+                        <Table
                             data={data} 
-                            columns={headers} 
+                            columns={headers}
+                            isLoading={isLoading}
                             defaultColDef={{
                                 resizable: true,
                                 sortable: true,
@@ -124,9 +134,9 @@ const RequestsPage = () => {
                                 statusRenderer: StatusRenderer,
                                 statusOptionsRenderer: StatusOptionsRenderer,
                             }}
-                            suppressCellSelection={true} />
-                    }
-                        
+                            suppressCellSelection={true}
+                            onDoubleClick={handleDoubleClick}
+                        />
                     </Container>
                 </Section>
             </section>

@@ -6,6 +6,8 @@ import NewsPage from './NewsPage';
 import PollsPage from './PollsPage';
 import RegistrationPage from './RegistrationPage';
 import TicketPage from './TicketPage';
+import { RequestPage } from './RequestPage';
+import RequestsPage from './RequestsPage';
 
 export {
     ContactPage,
@@ -16,4 +18,6 @@ export {
     PollsPage,
     RegistrationPage,
     TicketPage,
+    RequestsPage,
+    RequestPage,
 };

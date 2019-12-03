@@ -66,6 +66,10 @@
     "requests": {
       "collection": "request",
       "via": "user"
+    },
+    "comments": {
+      "collection": "comment",
+      "via": "user"
     }
   }
 }

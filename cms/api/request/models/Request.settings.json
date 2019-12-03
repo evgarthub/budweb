@@ -25,6 +25,10 @@
       "model": "user",
       "via": "requests",
       "plugin": "users-permissions"
+    },
+    "comments": {
+      "collection": "comment",
+      "via": "request"
     }
   }
 }

@@ -1,4 +1,4 @@
-const API_URL = 'https://api.nashbud.pp.ua';
+const API_URL = 'http://localhost:1337';
 
 export default {
     url: API_URL,
@@ -13,4 +13,5 @@ export default {
     register: `${API_URL}/auth/local/register`,
     requests: `${API_URL}/requests`,
     statuses: `${API_URL}/statuses`,
+    comments: `${API_URL}/comments`,
 }

@@ -1,0 +1,64 @@
+.request-page {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+
+    &__header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+    }
+
+    &__status {
+        grid-column: 3;
+    }
+
+    &__date {
+        grid-row: 2;
+        margin-top: 10px;
+
+        &--create {
+            grid-column: 1;
+        }
+
+        &--update {
+            grid-column: 3;
+        }
+    }
+
+    &__info {
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid hsl(0, 0%, 86%);
+    }
+
+    &__content {
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid hsl(0, 0%, 86%);
+    }
+
+    &__title {
+        margin-bottom: 20px;
+    }
+
+    &__appartment {
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid hsl(0, 0%, 86%);
+    }
+
+    &__contact {
+        display: flex;
+        align-items: center;
+
+        & > svg {
+            margin-right: 10px;
+        }
+    }
+
+    &__comments {
+        &-title {
+            margin-bottom: 20px;
+        }
+    }
+}
