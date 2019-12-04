@@ -13,7 +13,7 @@ module.exports = {
       return ctx.badRequest(null, [{ messages: [{ id: 'No authorization header was found' }] }]);
     }
 
-    const data = await strapi.services.request.find(undefined, ['user', 'user.appartment']);  
+    const data = await strapi.services.request.find(undefined, ['user', 'user.appartment', 'status']);  
 
     if(!data){
       return ctx.notFound();
@@ -29,7 +29,7 @@ module.exports = {
           return ctx.badRequest(null, [{ messages: [{ id: 'No authorization header was found' }] }]);
         }
     
-        const data = await strapi.services.request.find({user:user.id}, ['user', 'user.appartment']);  
+        const data = await strapi.services.request.find({user:user.id}, ['user', 'user.appartment', 'status']);  
     
         if(!data){
           return ctx.notFound();

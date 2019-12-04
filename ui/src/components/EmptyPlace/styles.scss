@@ -1,0 +1,15 @@
+.empty-place {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+
+    &__icon {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__title {
+        margin-top: 15px;
+    }
+}
