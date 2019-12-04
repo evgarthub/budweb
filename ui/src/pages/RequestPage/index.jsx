@@ -1,8 +1,8 @@
 import React from 'react';
-import { getRequestById, getCommentsByRequestId, postComment } from '../../utils/fetchAPI';
+import { getRequestById, getCommentsByRequestId, postComment, getStatuses } from '../../utils/fetchAPI';
 import { Spinner } from '../../components';
 import './styles.scss';
-import { Phone, Mail, User, Inbox, MessageCircle, MessageSquare } from 'react-feather';
+import { Phone, Mail, User, MessageSquare, ArrowDown, ChevronDown } from 'react-feather';
 import { AuthContext } from '../../context/authContext';
 import { EmptyPlace } from '../../components/EmptyPlace';
 import { Button } from '../../components/Button';
@@ -52,7 +52,11 @@ export const RequestPage = (props) => {
                     <div className="box">
                         <header className="request-page__header">
                             <div className="request-page__header" className="tag is-dark is-medium">Заявка #{request.id}</div>
-                            <div className={`tag is-medium ${request.status.color} request-page__status`}>{request.status.label}</div>
+                            {user.role.id == 5 
+                                ? <StatusesDropdown className="request-page__status" status={request.status} />
+                                :<div className={`tag is-medium ${request.status.color} request-page__status`}>{request.status.label}</div>}
+                            
+
                             <div className="request-page__date request-page__date--create has-text-grey-light" title="Дата створення">Дата створення: {new Date(request.created_at).toLocaleDateString()}</div>
                             <div className="request-page__date request-page__date--update has-text-grey-light" title="Оновлено статус">Останнє оновлення: {new Date(request.updated_at).toLocaleDateString()}</div>
                         </header>
@@ -91,7 +95,7 @@ export const RequestPage = (props) => {
                     </div>
                     <section className="request-page__comments">
                         <div className="request-page__comments-title is-size-5">Коментарі</div>
-                        {comments.map(com => {
+                        {comments && comments.map(com => {
                             return (
                             <div key={com.id} className={`box comment ${com.user.id != user.id && 'has-background-white-ter'} request-page__comment`}>
                                 <div className="request-page__comment-header">
@@ -107,7 +111,7 @@ export const RequestPage = (props) => {
                         <div>
                             <textarea className="textarea" onChange={handleChange} value={newComment} />
                             <br />
-                            <Button onClick={handleAddComment} disabled={isInvalid} iconBefore={<MessageSquare />}>Додати коментар</Button>
+                            <Button color='blue' onClick={handleAddComment} disabled={isInvalid} iconBefore={<MessageSquare />}>Додати коментар</Button>
                         </div>
                         
                     </section>
@@ -118,4 +122,42 @@ export const RequestPage = (props) => {
     }
 
     return <Spinner />;
-};  
+};
+
+const StatusesDropdown = ({ status, className }) => {
+    const [options, setOptions] = React.useState([]);
+    const [isOpened, setOpened] = React.useState(false);
+
+    React.useEffect(() => {
+        getStatuses().then(({ data }) => {
+            setOptions(data.data.statuses);
+        });
+        
+    }, []);
+
+    const handleClick = () => setOpened(!isOpened);
+
+    return (
+        <div className={`${className} dropdown is-right ${isOpened && 'is-active'}`}>
+            <div className="dropdown-trigger" onClick={handleClick}>
+                <button className="button" aria-haspopup="true" aria-controls="dropdown-menu0">
+                    <span>{status.label}</span>
+                    <span className="icon is-small">
+                        <ChevronDown />
+                    </span>
+                </button>
+            </div>
+            <div className="dropdown-menu" id="dropdown-menu0" role="menu">
+                <div className="dropdown-content">
+                    {options && options.map(status => {
+                        return (
+                            <div className="dropdown-item">
+                                {status.label}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+}
