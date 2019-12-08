@@ -80,6 +80,21 @@ input CategoryInput {
   color: String
 }
 
+type Comment {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  text: String
+  user: UsersPermissionsUser
+  request: Request
+}
+
+input CommentInput {
+  text: String
+  user: ID
+  request: ID
+}
+
 type Contact {
   id: ID!
   created_at: DateTime!
@@ -127,6 +142,14 @@ input createCategoryInput {
 
 type createCategoryPayload {
   category: Category
+}
+
+input createCommentInput {
+  data: CommentInput
+}
+
+type createCommentPayload {
+  comment: Comment
 }
 
 input createContactInput {
@@ -254,6 +277,14 @@ type deleteCategoryPayload {
   category: Category
 }
 
+input deleteCommentInput {
+  where: InputID
+}
+
+type deleteCommentPayload {
+  comment: Comment
+}
+
 input deleteContactInput {
   where: InputID
 }
@@ -377,6 +408,12 @@ input editCategoryInput {
   color: String
 }
 
+input editCommentInput {
+  text: String
+  user: ID
+  request: ID
+}
+
 input editContactInput {
   description: String
   data: String
@@ -429,6 +466,9 @@ input editRequestInput {
   description: String
   status: ID
   user: ID
+  comments: [ID]
+  quality: Int
+  speed: Int
 }
 
 input editRoleInput {
@@ -448,8 +488,8 @@ input editSiteconfigInput {
 input editStatusInput {
   value: String
   label: String
-  requests: [ID]
   color: String
+  requests: [ID]
 }
 
 input editTariffInput {
@@ -470,6 +510,7 @@ input editUserInput {
   role: ID
   phone: String
   appartment: ID
+  comments: [ID]
   requests: [ID]
 }
 
@@ -520,7 +561,7 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Appartment | createAppartmentPayload | updateAppartmentPayload | deleteAppartmentPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Status | createStatusPayload | updateStatusPayload | deleteStatusPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | About | createAboutPayload | updateAboutPayload | deleteAboutPayload | Appartment | createAppartmentPayload | updateAppartmentPayload | deleteAppartmentPayload | Blog | createBlogPayload | updateBlogPayload | deleteBlogPayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Comment | createCommentPayload | updateCommentPayload | deleteCommentPayload | Contact | createContactPayload | updateContactPayload | deleteContactPayload | Footer | createFooterPayload | updateFooterPayload | deleteFooterPayload | Navgroup | createNavgroupPayload | updateNavgroupPayload | deleteNavgroupPayload | Navigation | createNavigationPayload | updateNavigationPayload | deleteNavigationPayload | Navlink | createNavlinkPayload | updateNavlinkPayload | deleteNavlinkPayload | Request | createRequestPayload | updateRequestPayload | deleteRequestPayload | Siteconfig | createSiteconfigPayload | updateSiteconfigPayload | deleteSiteconfigPayload | Status | createStatusPayload | updateStatusPayload | deleteStatusPayload | Tariff | createTariffPayload | updateTariffPayload | deleteTariffPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createAbout(input: createAboutInput): createAboutPayload
@@ -535,6 +576,9 @@ type Mutation {
   createCategory(input: createCategoryInput): createCategoryPayload
   updateCategory(input: updateCategoryInput): updateCategoryPayload
   deleteCategory(input: deleteCategoryInput): deleteCategoryPayload
+  createComment(input: createCommentInput): createCommentPayload
+  updateComment(input: updateCommentInput): updateCommentPayload
+  deleteComment(input: deleteCommentInput): deleteCommentPayload
   createContact(input: createContactInput): createContactPayload
   updateContact(input: updateContactInput): updateContactPayload
   deleteContact(input: deleteContactInput): deleteContactPayload
@@ -647,6 +691,8 @@ type Query {
   blogs(sort: String, limit: Int, start: Int, where: JSON): [Blog]
   category(id: ID!): Category
   categories(sort: String, limit: Int, start: Int, where: JSON): [Category]
+  comment(id: ID!): Comment
+  comments(sort: String, limit: Int, start: Int, where: JSON): [Comment]
   contact(id: ID!): Contact
   contacts(sort: String, limit: Int, start: Int, where: JSON): [Contact]
   footer(id: ID!): Footer
@@ -684,12 +730,18 @@ type Request {
   description: String
   status: Status
   user: UsersPermissionsUser
+  quality: Int
+  speed: Int
+  comments(sort: String, limit: Int, start: Int, where: JSON): [Comment]
 }
 
 input RequestInput {
   description: String
   status: ID
   user: ID
+  comments: [ID]
+  quality: Int
+  speed: Int
 }
 
 input RoleInput {
@@ -728,8 +780,8 @@ type Status {
 input StatusInput {
   value: String!
   label: String
-  requests: [ID]
   color: String
+  requests: [ID]
 }
 
 type Tariff {
@@ -783,6 +835,15 @@ input updateCategoryInput {
 
 type updateCategoryPayload {
   category: Category
+}
+
+input updateCommentInput {
+  where: InputID
+  data: editCommentInput
+}
+
+type updateCommentPayload {
+  comment: Comment
 }
 
 input updateContactInput {
@@ -914,6 +975,7 @@ input UserInput {
   role: ID
   phone: String
   appartment: ID
+  comments: [ID]
   requests: [ID]
 }
 
@@ -964,5 +1026,6 @@ type UsersPermissionsUser {
   role: UsersPermissionsRole
   phone: String
   appartment: Appartment
+  comments(sort: String, limit: Int, start: Int, where: JSON): [Comment]
   requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
 }

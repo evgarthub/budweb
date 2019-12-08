@@ -1,0 +1,26 @@
+.rate {
+    &__header {
+        margin-bottom: 20px;
+    }
+
+    &__star {
+        flex-grow: 1;
+        color: hsl(0, 0%, 71%);
+
+        &--selectable {
+            cursor: pointer;
+        }
+
+        &--active {
+            color: hsl(48, 100%, 67%);
+
+            & > svg {
+                fill: hsl(48, 100%, 67%);
+            }
+        }
+
+        &s {
+            display: flex;
+        }
+    }
+}

@@ -25,6 +25,20 @@
       "model": "user",
       "via": "requests",
       "plugin": "users-permissions"
+    },
+    "comments": {
+      "collection": "comment",
+      "via": "request"
+    },
+    "quality": {
+      "type": "integer",
+      "min": 1,
+      "max": 5
+    },
+    "speed": {
+      "type": "integer",
+      "max": 5,
+      "min": 1
     }
   }
 }

@@ -63,6 +63,10 @@
       "model": "appartment",
       "via": "users"
     },
+    "comments": {
+      "collection": "comment",
+      "via": "user"
+    },
     "requests": {
       "collection": "request",
       "via": "user"

@@ -60,7 +60,7 @@ const MenuComp = (props) => {
 
     return (
         <div className='action-navbar__menu'>
-            {links.map(item => <div className='action-navbar__menu-link'><File /><Link className='action-navbar__menu-link-text' to={item.Link} onClick={handleClick}>{item.Title}</Link></div>)}
+            {links.map(item => <div key={item.id} className='action-navbar__menu-link'><File /><Link className='action-navbar__menu-link-text' to={item.Link} onClick={handleClick}>{item.Title}</Link></div>)}
             <Can role={user.role && user.role.type} perform='requests:getMe'>
             <div className='action-navbar__menu-link'><File /><Link className='action-navbar__menu-link-text' to='/requests' onClick={handleClick}>Заявки</Link></div>
             </Can>
@@ -68,7 +68,7 @@ const MenuComp = (props) => {
                   <div className='action-navbar__menu-group' key={`group_${group.id}`}>
                       <div className='action-navbar__menu-group-title'><Folder /><div className='action-navbar__menu-link-text'>{group.Title}</div></div>
                       <div className='action-navbar__menu-group-list'> 
-                        {group.navlinks.map(link => <div className='action-navbar__menu-link'><File /><Link className='action-navbar__menu-link-text' to={link.Link} key={link.id} onClick={handleClick}>{link.Title}</Link></div>)}
+                        {group.navlinks.map(link => <div key={link.id} className='action-navbar__menu-link'><File /><Link className='action-navbar__menu-link-text' to={link.Link} onClick={handleClick}>{link.Title}</Link></div>)}
                       </div>
                   </div>
                 )

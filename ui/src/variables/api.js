@@ -13,4 +13,5 @@ export default {
     register: `${API_URL}/auth/local/register`,
     requests: `${API_URL}/requests`,
     statuses: `${API_URL}/statuses`,
+    comments: `${API_URL}/comments`,
 }

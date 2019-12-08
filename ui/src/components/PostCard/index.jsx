@@ -13,7 +13,7 @@ const PostCard = (props) => {
     return (
         <div key={id} className='tile-blog grid__tile'>
             <div className='tile-blog__tags'>
-                {categories.map(cat => <span className={`tile-blog__tag tag ${cat.color}`} key={cat.id}>{cat.name}</span>)}
+                {categories.map(cat => <span className={`tile-blog__tag tag is-light ${cat.color}`} key={cat.id}>{cat.name}</span>)}
             </div>
             <Title isSize={5} tag='h3'>{title}</Title>
             <p>{intro}</p>

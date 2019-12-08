@@ -1200,6 +1200,28 @@
               }
             }
           },
+          "comments": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "requests": {
             "type": "array",
             "items": {
@@ -1218,6 +1240,18 @@
                 },
                 "user": {
                   "type": "string"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "quality": {
+                  "type": "integer"
+                },
+                "speed": {
+                  "type": "integer"
                 }
               }
             }
@@ -1264,6 +1298,12 @@
           },
           "appartment": {
             "type": "string"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "requests": {
             "type": "array",

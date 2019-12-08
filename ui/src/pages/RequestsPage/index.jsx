@@ -2,12 +2,12 @@ import { Container, Hero, HeroBody, Section, Title } from 'bloomer';
 import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { Transition } from 'react-transition-group';
-import { isAllowed, Table, Spinner } from '../../components/';
+import { isAllowed, Table } from '../../components/';
 import { AuthContext } from '../../context/authContext';
 import { pageEnter, pageExit } from '../../utils/animations';
-import { getRequests, getRequestsMe, getStatuses } from '../../utils/fetchAPI';
+import { getRequests, getRequestsMe } from '../../utils/fetchAPI';
 import { label } from '../../variables/labels';
-import { StatusOptionsRenderer, StatusRenderer } from './StatusRenderers';
+import { useHistory } from "react-router-dom";
 import './styles.scss';
 
 const RequestsPage = () => {
@@ -15,7 +15,7 @@ const RequestsPage = () => {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState();
     const isAdmin = isAllowed(user.role && user.role.type, "requests:get");
-    const [statuses, setStatuses] = useState();
+    const history = useHistory();
 
     
     const handleUpdate = () => {
@@ -37,19 +37,47 @@ const RequestsPage = () => {
         handleUpdate();
     }, [user, isAdmin]);
     
-    useEffect(() => {
-        getStatuses().then(({data}) => setStatuses(data.data.statuses));
-    }, []);
-    
     const headers = [
         {
             headerName: 'Номер',
             field: 'id',
             suppressSizeToFit: true,
-            width: 90,
+            width: 70,
             sortingOrder: ["desc", "asc"],
             sort: 'desc',
             valueFormatter: (props) => `#${props.value}`,
+        },
+        {
+            headerName: 'Статус',
+            suppressSizeToFit: true,
+            field: 'status',
+            width: 120,
+            valueGetter: ({ data }) => data.status.label,
+        },
+        {
+            headerName: 'Опис',
+            field: 'description',
+            filter: true,
+            minWidth: 300,
+        },
+        {
+            headerName: 'Дата створення',
+            field: 'created_at',
+            width: 180,
+            suppressSizeToFit: true,
+            valueFormatter: props => new Date(props.value).toLocaleString()
+        },
+        {
+            headerName: 'Квартира',
+            valueGetter: ({ data }) => data.user.appartment.number,
+            suppressSizeToFit: true,
+            width: 80,
+        },
+        {
+            headerName: 'Поверх',
+            valueGetter: ({ data }) => data.user.appartment.floor,
+            suppressSizeToFit: true,
+            width: 70,
         },
         {
             headerName: 'Секцiя',
@@ -58,41 +86,11 @@ const RequestsPage = () => {
             suppressSizeToFit: true,
             width: 70,
         },
-        {
-            headerName: 'Поверх',
-            valueGetter: ({data}) => data.user.appartment.floor,
-            suppressSizeToFit: true,
-            width: 70,
-        },
-        {
-            headerName: 'Квартира',
-            valueGetter: ({data}) => data.user.appartment.number,
-            suppressSizeToFit: true,
-            width: 80,
-        },
-        {
-            headerName: 'Опис',
-            field: 'description',
-            autoHeight: true,
-            filter: true,
-            cellStyle: { "white-space": "normal" },
-        },
-        {
-            headerName: 'Статус',
-            suppressSizeToFit: true,
-            editable: isAdmin,
-            field: 'status',
-            cellRendererParams: { statuses },
-            cellEditor: 'statusOptionsRenderer',
-            cellRenderer: 'statusRenderer',
-            cellEditorParams: {
-                statuses,
-            },
-            width: 160,
-        },
     ];
 
-    
+    const handleDoubleClick = (props) => {
+        history.push(`/requests/${props.data.id}`)
+    }
 
     return (
         <Transition timeout={0} in={true} appear={true} onEnter={pageEnter} onExit={pageExit}>
@@ -111,22 +109,19 @@ const RequestsPage = () => {
                 </Hero>
                 <Section>
                     <Container>
-                    {isLoading 
-                    ? <Spinner />
-                    : <Table
+                        <Table
                             data={data} 
-                            columns={headers} 
+                            columns={headers}
+                            isLoading={isLoading}
                             defaultColDef={{
                                 resizable: true,
                                 sortable: true,
                             }}
-                            frameworkComponents= {{
-                                statusRenderer: StatusRenderer,
-                                statusOptionsRenderer: StatusOptionsRenderer,
-                            }}
-                            suppressCellSelection={true} />
-                    }
-                        
+                            suppressCellSelection={true}
+                            onClick={handleDoubleClick}
+                            rowHeight={40}
+                            rowClass="requests-page__row"
+                        />
                     </Container>
                 </Section>
             </section>

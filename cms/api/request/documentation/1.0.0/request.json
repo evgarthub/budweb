@@ -591,14 +591,14 @@
               "label": {
                 "type": "string"
               },
+              "color": {
+                "type": "string"
+              },
               "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "color": {
-                "type": "string"
               }
             }
           },
@@ -642,6 +642,12 @@
               "appartment": {
                 "type": "string"
               },
+              "comments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "requests": {
                 "type": "array",
                 "items": {
@@ -649,6 +655,34 @@
                 }
               }
             }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "quality": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "integer"
           }
         }
       },
@@ -662,6 +696,18 @@
           },
           "user": {
             "type": "string"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "quality": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "integer"
           }
         }
       }

@@ -2,6 +2,41 @@ import api from "../variables/api";
 import axios from 'axios';
 import { getToken } from './authorization';
 
+const requestData = `
+    request {
+        description,
+        id,
+        quality,
+        speed,
+        created_at,
+        updated_at,
+        status {
+            color,
+            label,
+            id,
+            value
+        },
+        user {
+            appartment {
+                number,
+                section,
+                floor
+            },
+            username,
+            email,
+            phone
+        },
+        comments {
+            text,
+            user {
+                id,
+                username
+            },
+            created_at
+        }
+    }
+`
+
 export const getBlogById = (id) => {
   return axios.post(api.graphql, {
     query: `query {
@@ -143,6 +178,52 @@ export const getRequests = () => {
   });
 };
 
+export const getRequestById = id => {
+    return axios.post(api.graphql, 
+        {
+            query: `query {
+                request(id: ${id}) {
+                    description,
+                    id,
+                    quality,
+                    speed,
+                    created_at,
+                    updated_at,
+                    status {
+                        color,
+                        label,
+                        id,
+                        value
+                    },
+                    user {
+                        appartment {
+                            number,
+                            section,
+                            floor
+                        },
+                        username,
+                        email,
+                        phone
+                    },
+                    comments {
+                        text,
+                        user {
+                            id,
+                            username
+                        },
+                        created_at
+                    }
+                }
+            }`
+        },
+        {
+            headers: {
+            Authorization: `Bearer ${getToken()}`,
+            },
+        }
+    );
+};
+
 export const getRequestsMe = () => {
   return axios.get(`${api.requests}/me`, {
     headers: {
@@ -240,10 +321,115 @@ export const getStatuses = () => {
 };
 
 export const updateRequestStatus = (id, status) => {
-  return axios.put(`${api.requests}/${id}`, { status },
+  return axios.post(api.graphql, { 
+      query: `
+        mutation {
+            updateRequest (input:{
+                where: {
+                    id: ${id}
+                },
+                data:{
+                    status: ${status}
+                }
+            }) {
+                ${requestData}
+            }
+        }
+      `
+   },
   {
     headers: {
       Authorization: `Bearer ${getToken()}`, 
     },
   });
 };
+
+export const updateRequestSpeed = (id, speed) => {
+  return axios.post(api.graphql, { 
+      query: `
+        mutation {
+            updateRequest (input:{
+                where: {
+                    id: ${id}
+                },
+                data:{
+                    speed: ${speed}
+                }
+            }) {
+                ${requestData}
+            }
+        }
+      `
+   },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+};
+
+export const updateRequestQuality = (id, quality) => {
+  return axios.post(api.graphql, { 
+      query: `
+        mutation {
+            updateRequest (input:{
+                where: {
+                    id: ${id}
+                },
+                data:{
+                    quality: ${quality}
+                }
+            }) {
+                ${requestData}
+            }
+        }
+      `
+   },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+};
+
+export const getCommentsByRequestId = (requestId) => {
+    return axios.post(api.graphql,
+        {
+        query: `query {
+            comments(where: { 
+                    request: { id: ${requestId} }
+                }) {
+                id,
+                text,
+                created_at,
+                user {
+                    id,
+                    username,
+                    email
+                }
+            }
+        }`
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`, 
+            }
+        }
+    ); 
+};
+
+export const postComment = (text, requestId, userId) => {
+    return axios.post(`${api.comments}`,
+        {
+            text,
+            request: requestId,
+            user: userId,
+        },
+        {
+            headers: {
+                Authorization: `Bearer ${getToken()}`, 
+            }
+        }
+    );
+}
+

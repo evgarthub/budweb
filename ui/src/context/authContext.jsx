@@ -86,6 +86,7 @@ export const AuthContextProvider = (props) => {
 
     return (
         <AuthContext.Provider value={{
+            isAuthenticated: !!localStorage.getItem('nb_token'),
             user: { ...userProfile },
             actions: { handleLogin, handleSignOut, handleRegistration }
         }} >
