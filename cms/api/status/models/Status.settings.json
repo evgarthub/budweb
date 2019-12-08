@@ -19,12 +19,12 @@
     "label": {
       "type": "string"
     },
+    "color": {
+      "type": "string"
+    },
     "requests": {
       "collection": "request",
       "via": "status"
-    },
-    "color": {
-      "type": "string"
     }
   }
 }

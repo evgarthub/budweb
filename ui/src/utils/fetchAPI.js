@@ -2,6 +2,41 @@ import api from "../variables/api";
 import axios from 'axios';
 import { getToken } from './authorization';
 
+const requestData = `
+    request {
+        description,
+        id,
+        quality,
+        speed,
+        created_at,
+        updated_at,
+        status {
+            color,
+            label,
+            id,
+            value
+        },
+        user {
+            appartment {
+                number,
+                section,
+                floor
+            },
+            username,
+            email,
+            phone
+        },
+        comments {
+            text,
+            user {
+                id,
+                username
+            },
+            created_at
+        }
+    }
+`
+
 export const getBlogById = (id) => {
   return axios.post(api.graphql, {
     query: `query {
@@ -150,6 +185,8 @@ export const getRequestById = id => {
                 request(id: ${id}) {
                     description,
                     id,
+                    quality,
+                    speed,
                     created_at,
                     updated_at,
                     status {
@@ -295,36 +332,55 @@ export const updateRequestStatus = (id, status) => {
                     status: ${status}
                 }
             }) {
-                request {
-                    description,
-                    id,
-                    created_at,
-                    updated_at,
-                    status {
-                        color,
-                        label,
-                        id,
-                        value
-                    },
-                    user {
-                        appartment {
-                            number,
-                            section,
-                            floor
-                        },
-                        username,
-                        email,
-                        phone
-                    },
-                    comments {
-                        text,
-                        user {
-                            id,
-                            username
-                        },
-                        created_at
-                    }
+                ${requestData}
+            }
+        }
+      `
+   },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+};
+
+export const updateRequestSpeed = (id, speed) => {
+  return axios.post(api.graphql, { 
+      query: `
+        mutation {
+            updateRequest (input:{
+                where: {
+                    id: ${id}
+                },
+                data:{
+                    speed: ${speed}
                 }
+            }) {
+                ${requestData}
+            }
+        }
+      `
+   },
+  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`, 
+    },
+  });
+};
+
+export const updateRequestQuality = (id, quality) => {
+  return axios.post(api.graphql, { 
+      query: `
+        mutation {
+            updateRequest (input:{
+                where: {
+                    id: ${id}
+                },
+                data:{
+                    quality: ${quality}
+                }
+            }) {
+                ${requestData}
             }
         }
       `

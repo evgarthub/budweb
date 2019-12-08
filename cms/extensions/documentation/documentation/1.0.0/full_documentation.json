@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/03/2019 9:21:11 PM"
+    "x-generation-date": "12/08/2019 5:08:42 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -9469,13 +9469,13 @@
                 "appartment": {
                   "type": "string"
                 },
-                "requests": {
+                "comments": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "comments": {
+                "requests": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -9831,13 +9831,13 @@
               "appartment": {
                 "type": "string"
               },
-              "requests": {
+              "comments": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "comments": {
+              "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -9867,6 +9867,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "quality": {
+                "type": "integer"
+              },
+              "speed": {
+                "type": "integer"
               }
             }
           }
@@ -10466,14 +10472,14 @@
               "label": {
                 "type": "string"
               },
+              "color": {
+                "type": "string"
+              },
               "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "color": {
-                "type": "string"
               }
             }
           },
@@ -10517,13 +10523,13 @@
               "appartment": {
                 "type": "string"
               },
-              "requests": {
+              "comments": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "comments": {
+              "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -10552,6 +10558,12 @@
                 }
               }
             }
+          },
+          "quality": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "integer"
           }
         }
       },
@@ -10571,6 +10583,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "quality": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "integer"
           }
         }
       },
@@ -10627,6 +10645,9 @@
           "label": {
             "type": "string"
           },
+          "color": {
+            "type": "string"
+          },
           "requests": {
             "type": "array",
             "items": {
@@ -10651,12 +10672,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "quality": {
+                  "type": "integer"
+                },
+                "speed": {
+                  "type": "integer"
                 }
               }
             }
-          },
-          "color": {
-            "type": "string"
           }
         }
       },
@@ -10671,14 +10695,14 @@
           "label": {
             "type": "string"
           },
+          "color": {
+            "type": "string"
+          },
           "requests": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "color": {
-            "type": "string"
           }
         }
       },
@@ -10816,13 +10840,13 @@
                 "appartment": {
                   "type": "string"
                 },
-                "requests": {
+                "comments": {
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
-                "comments": {
+                "requests": {
                   "type": "array",
                   "items": {
                     "type": "string"
@@ -10961,6 +10985,28 @@
               }
             }
           },
+          "comments": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "requests": {
             "type": "array",
             "items": {
@@ -10985,28 +11031,12 @@
                   "items": {
                     "type": "string"
                   }
-                }
-              }
-            }
-          },
-          "comments": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
                 },
-                "text": {
-                  "type": "string"
+                "quality": {
+                  "type": "integer"
                 },
-                "user": {
-                  "type": "string"
-                },
-                "request": {
-                  "type": "string"
+                "speed": {
+                  "type": "integer"
                 }
               }
             }
@@ -11054,13 +11084,13 @@
           "appartment": {
             "type": "string"
           },
-          "requests": {
+          "comments": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "comments": {
+          "requests": {
             "type": "array",
             "items": {
               "type": "string"

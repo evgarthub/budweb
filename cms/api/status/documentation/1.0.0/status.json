@@ -523,6 +523,9 @@
           "label": {
             "type": "string"
           },
+          "color": {
+            "type": "string"
+          },
           "requests": {
             "type": "array",
             "items": {
@@ -547,12 +550,15 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "quality": {
+                  "type": "integer"
+                },
+                "speed": {
+                  "type": "integer"
                 }
               }
             }
-          },
-          "color": {
-            "type": "string"
           }
         }
       },
@@ -567,14 +573,14 @@
           "label": {
             "type": "string"
           },
+          "color": {
+            "type": "string"
+          },
           "requests": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "color": {
-            "type": "string"
           }
         }
       }

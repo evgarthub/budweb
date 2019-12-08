@@ -1200,6 +1200,28 @@
               }
             }
           },
+          "comments": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "request": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "requests": {
             "type": "array",
             "items": {
@@ -1224,28 +1246,12 @@
                   "items": {
                     "type": "string"
                   }
-                }
-              }
-            }
-          },
-          "comments": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
                 },
-                "text": {
-                  "type": "string"
+                "quality": {
+                  "type": "integer"
                 },
-                "user": {
-                  "type": "string"
-                },
-                "request": {
-                  "type": "string"
+                "speed": {
+                  "type": "integer"
                 }
               }
             }
@@ -1293,13 +1299,13 @@
           "appartment": {
             "type": "string"
           },
-          "requests": {
+          "comments": {
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "comments": {
+          "requests": {
             "type": "array",
             "items": {
               "type": "string"

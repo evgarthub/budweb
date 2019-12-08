@@ -467,6 +467,8 @@ input editRequestInput {
   status: ID
   user: ID
   comments: [ID]
+  quality: Int
+  speed: Int
 }
 
 input editRoleInput {
@@ -486,8 +488,8 @@ input editSiteconfigInput {
 input editStatusInput {
   value: String
   label: String
-  requests: [ID]
   color: String
+  requests: [ID]
 }
 
 input editTariffInput {
@@ -508,8 +510,8 @@ input editUserInput {
   role: ID
   phone: String
   appartment: ID
-  requests: [ID]
   comments: [ID]
+  requests: [ID]
 }
 
 enum ENUM_NAVLINK_LOGO {
@@ -728,6 +730,8 @@ type Request {
   description: String
   status: Status
   user: UsersPermissionsUser
+  quality: Int
+  speed: Int
   comments(sort: String, limit: Int, start: Int, where: JSON): [Comment]
 }
 
@@ -736,6 +740,8 @@ input RequestInput {
   status: ID
   user: ID
   comments: [ID]
+  quality: Int
+  speed: Int
 }
 
 input RoleInput {
@@ -774,8 +780,8 @@ type Status {
 input StatusInput {
   value: String!
   label: String
-  requests: [ID]
   color: String
+  requests: [ID]
 }
 
 type Tariff {
@@ -969,8 +975,8 @@ input UserInput {
   role: ID
   phone: String
   appartment: ID
-  requests: [ID]
   comments: [ID]
+  requests: [ID]
 }
 
 type UsersPermissionsMe {
@@ -1020,6 +1026,6 @@ type UsersPermissionsUser {
   role: UsersPermissionsRole
   phone: String
   appartment: Appartment
-  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
   comments(sort: String, limit: Int, start: Int, where: JSON): [Comment]
+  requests(sort: String, limit: Int, start: Int, where: JSON): [Request]
 }

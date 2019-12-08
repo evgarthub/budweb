@@ -1,6 +1,6 @@
 import React from 'react';
-import { getRequestById, getCommentsByRequestId, postComment, getStatuses, updateRequestStatus } from '../../utils/fetchAPI';
-import { Spinner } from '../../components';
+import { getRequestById, getCommentsByRequestId, postComment, getStatuses, updateRequestStatus, updateRequestSpeed, updateRequestQuality } from '../../utils/fetchAPI';
+import { Spinner, Rate } from '../../components';
 import './styles.scss';
 import { Phone, Mail, User, MessageSquare, ChevronDown } from 'react-feather';
 import { AuthContext } from '../../context/authContext';
@@ -45,7 +45,23 @@ export const RequestPage = (props) => {
         updateRequestStatus(requestId, statusId).then(({ data }) => {
             setRequest(data.data.updateRequest.request);
         });
-    }
+    };
+
+    const handleSpeed = (amount) => {
+        if (user.role.id != 5) {
+            updateRequestSpeed(requestId, amount).then(({ data }) => {
+                setRequest(data.data.updateRequest.request);
+            });
+        }
+    };
+
+    const handleQuality = (amount) => {
+        if (user.role.id != 5) {
+            updateRequestQuality(requestId, amount).then(({ data }) => {
+                setRequest(data.data.updateRequest.request);
+            });
+        }
+    };
     
     if (request) {
         return (
@@ -63,25 +79,25 @@ export const RequestPage = (props) => {
                             <div className="request-page__date request-page__date--update has-text-grey-light" title="Оновлено статус">Останнє оновлення: {new Date(request.updated_at).toLocaleDateString()}</div>
                         </header>
                         <nav className="level is-mobile request-page__appartment">
-                                <div className="level-item has-text-centered">
-                                    <div>
-                                        <p className="heading">Секцiя</p>
-                                        <p className="title">{request.user.appartment.section}</p>
-                                    </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Секцiя</p>
+                                    <p className="title">{request.user.appartment.section}</p>
                                 </div>
-                                <div className="level-item has-text-centered">
-                                    <div>
-                                        <p className="heading">Поверх</p>
-                                        <p className="title">{request.user.appartment.floor}</p>
-                                    </div>
+                            </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Поверх</p>
+                                    <p className="title">{request.user.appartment.floor}</p>
                                 </div>
-                                <div className="level-item has-text-centered">
-                                    <div>
-                                        <p className="heading">Квартира</p>
-                                        <p className="title">{request.user.appartment.number}</p>
-                                    </div>
+                            </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Квартира</p>
+                                    <p className="title">{request.user.appartment.number}</p>
                                 </div>
-                            </nav>
+                            </div>
+                        </nav>
                         <article className="request-page__content content">
                             <div className="request-page__title is-size-5">Опис</div>
                             {request.description}
@@ -94,21 +110,38 @@ export const RequestPage = (props) => {
                                 {request.user.phone && <div className="request-page__contact"><Phone size={16} /> <a href={`tel:${request.user.phone}`}>{request.user.phone}</a></div>}
                             </div>
                         </div>
+                        {
+                            request.status.id === '6' && (
+                                <section className="request-page__rates">
+                                    <div className="request-page__title is-size-5">Оцiнiть виконання заявки</div>
+                                    <nav className="level is-mobile">
+                                        
+                                        <div className="level-item has-text-centered">
+                                            <Rate value={request.speed} title="Швидкість" onChange={user.role.id != 5 ? handleSpeed : null} />
+                                        </div>
+                                        <div className="level-item has-text-centered">
+                                            <Rate value={request.quality} title="Якість" onChange={user.role.id != 5 ? handleQuality : null} />
+                                        </div>
+                                    </nav>
+                                </section>
+                            )
+                        }
                     </div>
                     <section className="request-page__comments">
                         <div className="request-page__comments-title is-size-5">Коментарі</div>
                         {request.comments && request.comments.map(com => {
                             return (
-                            <div key={com.id} className={`box comment ${com.user.id != user.id && 'has-background-white-ter'} request-page__comment`}>
-                                <div className="request-page__comment-header">
-                                    <strong>{com.user.username}</strong>
-                                    <small className="has-text-grey-light">{new Date(com.created_at).toLocaleString()}</small>
+                                <div key={com.id} className={`box comment ${com.user.id != user.id && 'has-background-white-ter'} request-page__comment`}>
+                                    <div className="request-page__comment-header">
+                                        <strong>{com.user.username}</strong>
+                                        <small className="has-text-grey-light">{new Date(com.created_at).toLocaleString()}</small>
+                                    </div>
+                                    <p>
+                                        {com.text}
+                                    </p>
                                 </div>
-                                <p>
-                                    {com.text}
-                                </p>
-                            </div>
-                        )})}
+                            );
+                        })}
                         {!request.comments.length && <EmptyPlace title="Коментарі відсутні" />}
                         <div>
                             <textarea className="textarea" onChange={handleChange} value={newComment} />
@@ -159,7 +192,7 @@ const StatusesDropdown = ({ status, className, onChange }) => {
                         const handleClick = () => handleChoise(status.id);
 
                         return (
-                            <div className="dropdown-item" onClick={handleClick}>
+                            <div key={status.id} className="dropdown-item" onClick={handleClick}>
                                 {status.label}
                             </div>
                         )

@@ -54,22 +54,22 @@ export const Button = (props) => {
     const styles = `button 
         ${getColorClass()}
         ${getSizeClass()}
-        ${!!isLight && 'is-light'}
-        ${!!isRounded && 'is-rounded'}
-        ${!!isOutlined && 'is-outlined'}
-        ${!!isInverted && 'is-inverted'}
-        ${!!isLoading && 'is-loading'}`;
+        ${!!isLight ? 'is-light' : ''}
+        ${!!isRounded ? 'is-rounded' : ''}
+        ${!!isOutlined ? 'is-outlined' : ''}
+        ${!!isInverted ? 'is-inverted' : ''}
+        ${!!isLoading ? 'is-loading' : ''}`;
 
     return (
         <button className={styles} onClick={handleClick} disabled={disabled}>
             {iconBefore &&
-                <span class="icon">
+                <span className="icon">
                     {iconBefore}
                 </span>
             }
             {props.children && <span>{props.children}</span>}
             {iconAfter &&
-                <span class="icon">
+                <span className="icon">
                     {iconAfter}
                 </span>
             }

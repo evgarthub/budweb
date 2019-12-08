@@ -12,6 +12,7 @@ import Can, { isAllowed } from './Can';
 import { Spinner } from './Spinner';
 import { ActionNavBar } from './ActionNavBar';
 import { PrivateRoute } from './PrivateRoute';
+import { Rate } from './Rate';
 
 export {
     AboutCard,
@@ -28,5 +29,6 @@ export {
     isAllowed,
     Spinner,
     ActionNavBar,
-    PrivateRoute
+    PrivateRoute,
+    Rate,
 }

@@ -559,13 +559,13 @@
               "appartment": {
                 "type": "string"
               },
-              "requests": {
+              "comments": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "comments": {
+              "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -595,6 +595,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "quality": {
+                "type": "integer"
+              },
+              "speed": {
+                "type": "integer"
               }
             }
           }

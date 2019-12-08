@@ -591,14 +591,14 @@
               "label": {
                 "type": "string"
               },
+              "color": {
+                "type": "string"
+              },
               "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "color": {
-                "type": "string"
               }
             }
           },
@@ -642,13 +642,13 @@
               "appartment": {
                 "type": "string"
               },
-              "requests": {
+              "comments": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "comments": {
+              "requests": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -677,6 +677,12 @@
                 }
               }
             }
+          },
+          "quality": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "integer"
           }
         }
       },
@@ -696,6 +702,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "quality": {
+            "type": "integer"
+          },
+          "speed": {
+            "type": "integer"
           }
         }
       }
