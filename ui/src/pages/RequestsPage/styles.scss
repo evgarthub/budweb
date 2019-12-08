@@ -1,3 +1,16 @@
+.requests-page {
+    &__row {
+        font-size: 14px;
+        &:hover {
+            cursor: pointer;
+        }
+
+        & > * {
+            line-height: 40px!important;
+        }
+    }
+}
+
 .statuses {
     display: flex;
     flex-direction: column;

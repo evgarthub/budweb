@@ -8,7 +8,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "lint": "eslint api/**/*.js config/**/*.js plugins/**/*.js"
+    "lint": "eslint api/**/*.js config/**/*.js plugins/**/*.js",
+    "debug": "node --inspect=127.0.0.1:9229 ./node_modules/strapi/bin/strapi.js develop"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

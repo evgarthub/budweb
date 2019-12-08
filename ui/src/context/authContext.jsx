@@ -86,6 +86,7 @@ export const AuthContextProvider = (props) => {
 
     return (
         <AuthContext.Provider value={{
+            isAuthenticated: userProfile && !!userProfile.role,
             user: { ...userProfile },
             actions: { handleLogin, handleSignOut, handleRegistration }
         }} >

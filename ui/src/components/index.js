@@ -11,6 +11,7 @@ import Table from './Table';
 import Can, { isAllowed } from './Can';
 import { Spinner } from './Spinner';
 import { ActionNavBar } from './ActionNavBar';
+import { PrivateRoute } from './PrivateRoute';
 
 export {
     AboutCard,
@@ -26,5 +27,6 @@ export {
     Can,
     isAllowed,
     Spinner,
-    ActionNavBar
+    ActionNavBar,
+    PrivateRoute
 }

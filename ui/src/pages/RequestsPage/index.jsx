@@ -51,7 +51,7 @@ const RequestsPage = () => {
             headerName: 'Статус',
             suppressSizeToFit: true,
             field: 'status',
-            width: 100,
+            width: 120,
             valueGetter: ({ data }) => data.status.label,
         },
         {
@@ -118,7 +118,9 @@ const RequestsPage = () => {
                                 sortable: true,
                             }}
                             suppressCellSelection={true}
-                            onDoubleClick={handleDoubleClick}
+                            onClick={handleDoubleClick}
+                            rowHeight={40}
+                            rowClass="requests-page__row"
                         />
                     </Container>
                 </Section>

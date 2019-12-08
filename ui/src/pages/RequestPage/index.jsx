@@ -1,8 +1,8 @@
 import React from 'react';
-import { getRequestById, getCommentsByRequestId, postComment, getStatuses } from '../../utils/fetchAPI';
+import { getRequestById, getCommentsByRequestId, postComment, getStatuses, updateRequestStatus } from '../../utils/fetchAPI';
 import { Spinner } from '../../components';
 import './styles.scss';
-import { Phone, Mail, User, MessageSquare, ArrowDown, ChevronDown } from 'react-feather';
+import { Phone, Mail, User, MessageSquare, ChevronDown } from 'react-feather';
 import { AuthContext } from '../../context/authContext';
 import { EmptyPlace } from '../../components/EmptyPlace';
 import { Button } from '../../components/Button';
@@ -10,7 +10,6 @@ import { Button } from '../../components/Button';
 export const RequestPage = (props) => {
     const requestId = props.match.params.id;
     const [request, setRequest] = React.useState();
-    const [comments, setComments] = React.useState();
     const [newComment, setNewComment] = React.useState();
     const [isInvalid, setIsInvalid] = React.useState(true);
     const { user } = React.useContext(AuthContext);
@@ -18,9 +17,6 @@ export const RequestPage = (props) => {
     React.useEffect(() => {
         getRequestById(requestId).then(({data}) => {
             setRequest(data.data.request);
-        })
-        getCommentsByRequestId(requestId).then(({data}) => {
-            setComments(data.data.comments);
         })
     }, []);
 
@@ -39,11 +35,17 @@ export const RequestPage = (props) => {
         postComment(newComment, requestId, user.id).then(({data}) => {
             setNewComment('');
 
-            getCommentsByRequestId(requestId).then(({data}) => {
-                setComments(data.data.comments);
+            getRequestById(requestId).then(({data}) => {
+                setRequest(data.data.request);
             })
         });
     };
+
+    const handleStatusUpdate = (statusId) => {
+        updateRequestStatus(requestId, statusId).then(({ data }) => {
+            setRequest(data.data.updateRequest.request);
+        });
+    }
     
     if (request) {
         return (
@@ -53,7 +55,7 @@ export const RequestPage = (props) => {
                         <header className="request-page__header">
                             <div className="request-page__header" className="tag is-dark is-medium">Заявка #{request.id}</div>
                             {user.role.id == 5 
-                                ? <StatusesDropdown className="request-page__status" status={request.status} />
+                                ? <StatusesDropdown className="request-page__status" status={request.status} onChange={handleStatusUpdate} />
                                 :<div className={`tag is-medium ${request.status.color} request-page__status`}>{request.status.label}</div>}
                             
 
@@ -95,7 +97,7 @@ export const RequestPage = (props) => {
                     </div>
                     <section className="request-page__comments">
                         <div className="request-page__comments-title is-size-5">Коментарі</div>
-                        {comments && comments.map(com => {
+                        {request.comments && request.comments.map(com => {
                             return (
                             <div key={com.id} className={`box comment ${com.user.id != user.id && 'has-background-white-ter'} request-page__comment`}>
                                 <div className="request-page__comment-header">
@@ -107,7 +109,7 @@ export const RequestPage = (props) => {
                                 </p>
                             </div>
                         )})}
-                        {!comments.length && <EmptyPlace title="Коментарі відсутні" />}
+                        {!request.comments.length && <EmptyPlace title="Коментарі відсутні" />}
                         <div>
                             <textarea className="textarea" onChange={handleChange} value={newComment} />
                             <br />
@@ -124,7 +126,7 @@ export const RequestPage = (props) => {
     return <Spinner />;
 };
 
-const StatusesDropdown = ({ status, className }) => {
+const StatusesDropdown = ({ status, className, onChange }) => {
     const [options, setOptions] = React.useState([]);
     const [isOpened, setOpened] = React.useState(false);
 
@@ -132,10 +134,14 @@ const StatusesDropdown = ({ status, className }) => {
         getStatuses().then(({ data }) => {
             setOptions(data.data.statuses);
         });
-        
     }, []);
 
+
     const handleClick = () => setOpened(!isOpened);
+    const handleChoise = (id) => {
+        setOpened(false);
+        onChange(id);
+    };
 
     return (
         <div className={`${className} dropdown is-right ${isOpened && 'is-active'}`}>
@@ -150,8 +156,10 @@ const StatusesDropdown = ({ status, className }) => {
             <div className="dropdown-menu" id="dropdown-menu0" role="menu">
                 <div className="dropdown-content">
                     {options && options.map(status => {
+                        const handleClick = () => handleChoise(status.id);
+
                         return (
-                            <div className="dropdown-item">
+                            <div className="dropdown-item" onClick={handleClick}>
                                 {status.label}
                             </div>
                         )

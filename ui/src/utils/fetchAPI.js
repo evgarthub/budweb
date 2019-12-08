@@ -167,6 +167,14 @@ export const getRequestById = id => {
                         username,
                         email,
                         phone
+                    },
+                    comments {
+                        text,
+                        user {
+                            id,
+                            username
+                        },
+                        created_at
                     }
                 }
             }`
@@ -276,7 +284,51 @@ export const getStatuses = () => {
 };
 
 export const updateRequestStatus = (id, status) => {
-  return axios.put(`${api.requests}/${id}`, { status },
+  return axios.post(api.graphql, { 
+      query: `
+        mutation {
+            updateRequest (input:{
+                where: {
+                    id: ${id}
+                },
+                data:{
+                    status: ${status}
+                }
+            }) {
+                request {
+                    description,
+                    id,
+                    created_at,
+                    updated_at,
+                    status {
+                        color,
+                        label,
+                        id,
+                        value
+                    },
+                    user {
+                        appartment {
+                            number,
+                            section,
+                            floor
+                        },
+                        username,
+                        email,
+                        phone
+                    },
+                    comments {
+                        text,
+                        user {
+                            id,
+                            username
+                        },
+                        created_at
+                    }
+                }
+            }
+        }
+      `
+   },
   {
     headers: {
       Authorization: `Bearer ${getToken()}`, 
@@ -324,3 +376,4 @@ export const postComment = (text, requestId, userId) => {
         }
     );
 }
+

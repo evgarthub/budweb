@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.scss';
-import { Footer, Header, Loading, ScrollToTop } from './components';
+import { Footer, Header, Loading, ScrollToTop, PrivateRoute } from './components';
 import { AuthContextProvider } from './context';
 import { ContactPage, HomePage, InfrastructurePage, ListPage, NewsPage, PollsPage, RegistrationPage, TicketPage, RequestsPage, RequestPage } from './pages';
 import { getSiteConfigById } from './utils/fetchAPI';
@@ -49,14 +49,14 @@ const App = () => {
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/news/:id" component={NewsPage} exact={true} />
-                <Route path="/requests/:id" component={RequestPage} exact={true} />
+                <PrivateRoute path="/requests/:id" component={RequestPage} exact={true} />
                 <Route exact path="/news" component={ListPage} />
                 <Route path="/contacts" component={ContactPage} />
                 <Route path="/infrastructure" component={InfrastructurePage} />
                 <Route path="/polls" component={PollsPage} />
                 <Route path="/register" component={RegistrationPage} />
                 <Route path="/ticket" component={TicketPage} />
-                <Route path="/requests" component={RequestsPage} />
+                <PrivateRoute path="/requests" component={RequestsPage} />
               </Switch>
 
               <Footer id={config.fooId} />

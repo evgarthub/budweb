@@ -6,7 +6,7 @@ import './styles.scss';
 import { Spinner } from '../Spinner';
 
 const Table = (props) => {
-    const { data, columns, isLoading, onDoubleClick } = props;
+    const { data, columns, isLoading, onClick } = props;
     let gridApi, gridColumnApi;
 
     const onGridReady = params => {
@@ -20,8 +20,8 @@ const Table = (props) => {
         if (gridApi) gridApi.sizeColumnsToFit();
     });
 
-    const handleDoubleClick = props => {
-        if (onDoubleClick) onDoubleClick(props);
+    const handleClick = props => {
+        if (onClick) onClick(props);
     }
 
     if (!isLoading) {
@@ -34,7 +34,7 @@ const Table = (props) => {
                     columnDefs={columns}
                     rowData={data}
                     onGridReady={onGridReady}
-                    onRowDoubleClicked={handleDoubleClick}
+                    onRowClicked={handleClick}
                     {...props} 
                 />
             </div>
