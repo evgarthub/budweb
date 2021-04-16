@@ -7,7 +7,7 @@
     "ag-grid-react": "^22.0.0",
     "animejs": "^3.0.1",
     "chalk": "^2.4.2",
-    "jsrsasign": "^8.0.12",
+    "jsrsasign": "^10.2.0",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
