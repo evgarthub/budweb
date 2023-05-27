@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_schedule_timetables",
+  "info": {
+    "displayName": "Timetable"
+  },
+  "options": {},
+  "attributes": {
+    "fromDay": {
+      "type": "enumeration",
+      "enum": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "default": "Monday",
+      "required": false
+    },
+    "tillDay": {
+      "type": "enumeration",
+      "enum": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "default": "Sunday"
+    },
+    "fromTime": {
+      "type": "time"
+    },
+    "tillTime": {
+      "type": "time"
+    }
+  }
+}
